@@ -11,7 +11,7 @@
             --gold: #fde047;
             --rose: #f472b6;
             --deep-bg: #020010;
-            --glass-bg: rgba(10, 5, 30, 0.65);
+            --glass-bg: rgba(5, 2, 20, 0.6);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -22,365 +22,186 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1.5rem 1rem;
+            padding: 1rem;
             position: relative;
             overflow-x: hidden;
-            background: radial-gradient(ellipse at 30% 20%, #1a0030 0%, #020010 70%);
+            background: radial-gradient(ellipse at 40% 30%, #1a0030 0%, #020010 70%);
             color: #f3e8ff;
             perspective: 1200px;
         }
 
-        /* Canvas Latar Belakang Aurora + Partikel */
-        #bgCanvas {
-            position: fixed; inset: 0; z-index: 0; pointer-events: none;
-            width: 100%; height: 100%;
-        }
-
-        /* Container Partikel Sakura & Emas */
-        #particleCanvas {
-            position: fixed; inset: 0; z-index: 1; pointer-events: none;
-        }
-
-        /* Rain Emoji (tetap dipakai, tapi lebih halus) */
-        #rainContainer {
-            position: fixed; inset: 0; z-index: 9999; pointer-events: none; overflow: hidden;
-        }
+        #bgCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+        #particleCanvas { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+        #rainContainer { position: fixed; inset: 0; z-index: 9999; pointer-events: none; overflow: hidden; }
 
         .rain-item {
-            position: absolute;
-            top: -40px;
+            position: absolute; top: -40px;
             animation: rainFall linear forwards;
             user-select: none;
-            filter: drop-shadow(0 0 6px rgba(244, 114, 182, 0.5));
-            opacity: 0.9;
+            filter: drop-shadow(0 0 6px rgba(244,114,182,0.7));
+            opacity: 0.95;
         }
-
         @keyframes rainFall {
-            0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 1; }
-            80% { opacity: 0.7; }
-            100% { transform: translateY(105vh) rotate(360deg) scale(1.2); opacity: 0; }
+            0% { transform: translateY(0) rotate(0deg) scale(0.9); opacity: 1; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(105vh) rotate(360deg) scale(1.3); opacity: 0; }
         }
 
-        /* Vinyl Widget Lebih Glossy */
+        .fullscreen-btn {
+            position: fixed; top: 1.5rem; left: 1.5rem; z-index: 10000;
+            background: rgba(15,8,35,0.8); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.3); border-radius: 50%;
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            color: var(--gold); font-size: 1.2rem; cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.7); transition: 0.3s;
+        }
+        .fullscreen-btn:hover { transform: scale(1.1); border-color: var(--rose); }
+
         .vinyl-widget {
-            position: fixed;
-            top: 1.5rem; right: 1.5rem; z-index: 10000;
-            background: rgba(15, 8, 35, 0.8);
-            backdrop-filter: blur(25px) saturate(200%);
-            -webkit-backdrop-filter: blur(25px) saturate(200%);
-            border: 1px solid rgba(253, 224, 71, 0.5);
-            border-radius: 60px;
+            position: fixed; top: 1.5rem; right: 1.5rem; z-index: 10000;
+            background: rgba(15,8,35,0.8); backdrop-filter: blur(25px) saturate(200%);
+            border: 1px solid rgba(253,224,71,0.5); border-radius: 60px;
             padding: 0.45rem 1.2rem 0.45rem 0.45rem;
             display: flex; align-items: center; gap: 0.8rem;
-            cursor: pointer;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 1px 2px rgba(255,255,255,0.3);
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2);
-            will-change: transform;
+            cursor: pointer; box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+            transition: 0.4s cubic-bezier(0.25,0.8,0.25,1.2);
         }
-        .vinyl-widget:hover {
-            transform: scale(1.07) translateY(-2px);
-            border-color: var(--rose);
-            box-shadow: 0 20px 50px rgba(244,114,182,0.6);
-        }
+        .vinyl-widget:hover { transform: scale(1.07); border-color: var(--rose); }
         .vinyl-disc {
             width: 36px; height: 36px;
             background: radial-gradient(circle, #fde047 18%, #111 19%, #222 50%, #f472b6 88%);
-            border-radius: 50%;
-            box-shadow: 0 0 18px rgba(244,114,182,0.7), inset 0 0 8px rgba(0,0,0,0.5);
-            animation: spinDisc 3s linear infinite;
-            animation-play-state: paused;
+            border-radius: 50%; box-shadow: 0 0 18px rgba(244,114,182,0.7);
+            animation: spinDisc 3s linear infinite; animation-play-state: paused;
         }
         .vinyl-widget.playing .vinyl-disc { animation-play-state: running; }
-        .vinyl-text { font-size: 0.75rem; font-weight: 800; color: var(--gold); letter-spacing: 0.8px; text-shadow: 0 0 10px var(--rose); }
+        .vinyl-text { font-size: 0.75rem; font-weight: 800; color: var(--gold); letter-spacing: 1px; }
         @keyframes spinDisc { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Header Info */
-        .header-info {
-            display: flex; justify-content: space-between; align-items: center;
-            width: 100%; font-size: 0.8rem; font-weight: 800; margin-bottom: 0.8rem;
-            gap: 0.8rem;
-        }
-        .lives, .timer {
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            background: rgba(20, 10, 40, 0.6);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .lives { color: var(--rose); border-color: rgba(244,114,182,0.4); }
-        .timer { color: var(--gold); border-color: rgba(253,224,71,0.4); }
-
-        /* Wrapper Kaca Ultra-HD */
         .wrapper {
             position: relative; z-index: 10;
-            width: 100%; max-width: 36rem;
+            width: 100%; max-width: 38rem;
             background: var(--glass-bg);
-            backdrop-filter: blur(45px) saturate(200%);
-            -webkit-backdrop-filter: blur(45px) saturate(200%);
-            border-radius: 3rem;
-            padding: 2.8rem 2.2rem;
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 40px 120px rgba(0,0,0,0.9), inset 0 1px 3px rgba(255,255,255,0.4), 0 0 60px rgba(244,114,182,0.2);
+            backdrop-filter: blur(50px) saturate(220%);
+            -webkit-backdrop-filter: blur(50px) saturate(220%);
+            border-radius: 3.5rem;
+            padding: 3rem 2.5rem;
+            border: 1px solid rgba(255,255,255,0.25);
+            box-shadow: 0 50px 130px rgba(0,0,0,0.95), inset 0 1px 4px rgba(255,255,255,0.5);
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            will-change: transform;
         }
-        .wrapper:hover {
-            box-shadow: 0 45px 130px rgba(0,0,0,0.95), inset 0 1px 4px rgba(255,255,255,0.5), 0 0 80px rgba(244,114,182,0.3);
-        }
-
-        @keyframes shake {
-            0%,100%{transform:translateX(0);}
-            20%{transform:translateX(-12px);}
-            40%{transform:translateX(12px);}
-            60%{transform:translateX(-6px);}
-            80%{transform:translateX(6px);}
-        }
-        .shake { animation: shake 0.45s ease; }
 
         .luxury-badge {
-            display: inline-block;
-            padding: 0.4rem 1.2rem;
-            border-radius: 50px;
-            background: rgba(244,114,182,0.15);
-            border: 1px solid rgba(253,224,71,0.5);
-            color: var(--gold);
-            font-size: 0.7rem; font-weight: 800; letter-spacing: 2.5px;
-            text-transform: uppercase; margin-bottom: 0.8rem;
-            backdrop-filter: blur(10px);
-            text-shadow: 0 0 8px var(--rose);
+            display: inline-block; padding: 0.5rem 1.3rem;
+            border-radius: 50px; background: rgba(244,114,182,0.2);
+            border: 1px solid rgba(253,224,71,0.6);
+            color: var(--gold); font-size: 0.7rem; font-weight: 800;
+            letter-spacing: 3px; text-transform: uppercase; margin-bottom: 0.8rem;
+            backdrop-filter: blur(10px); text-shadow: 0 0 10px var(--rose);
         }
 
         .luxury-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.3rem; font-weight: 800; line-height: 1.3;
+            font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 800;
             text-align: center;
-            background: linear-gradient(135deg, #ffffff 10%, #fde047 40%, #f472b6 80%);
+            background: linear-gradient(135deg, #fff 0%, #fde047 30%, #f472b6 70%, #fff 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
-            filter: drop-shadow(0 0 20px rgba(244,114,182,0.5));
-            animation: titleShimmer 4s ease-in-out infinite alternate;
-            background-size: 200% 200%;
+            filter: drop-shadow(0 0 25px rgba(244,114,182,0.7));
+            animation: shimmer 4s infinite alternate;
+            background-size: 300% 300%;
         }
-        @keyframes titleShimmer {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
+        @keyframes shimmer { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
 
-        .section {
-            display: none; flex-direction: column; align-items: center; gap: 1.5rem;
-            animation: fadeUp 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
-            width: 100%;
-        }
-        .section.active { display: flex; }
-        @keyframes fadeUp {
-            0% { opacity: 0; transform: translateY(30px) scale(0.96); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
+        .section { display: none; flex-direction: column; align-items: center; gap: 1.5rem; width: 100%; }
+        .section.active { display: flex; animation: fadeUp 0.7s cubic-bezier(0.22,0.61,0.36,1); }
+        @keyframes fadeUp { 0% { opacity: 0; transform: translateY(30px) scale(0.96); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
 
         .card-box {
-            background: rgba(5, 2, 20, 0.7);
-            backdrop-filter: blur(20px);
-            border-radius: 2rem;
-            padding: 1.8rem;
-            border: 1px solid rgba(255,255,255,0.15);
-            width: 100%;
-            box-shadow: inset 0 2px 6px rgba(0,0,0,0.7), 0 8px 30px rgba(0,0,0,0.4);
+            background: rgba(10, 5, 25, 0.75); backdrop-filter: blur(25px);
+            border-radius: 2rem; padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
         }
-        .card-box p { font-size: 0.95rem; font-weight: 500; color: #e9d5ff; line-height: 1.9; text-align: center; }
+        .card-box p { font-size: 1rem; font-weight: 500; color: #e9d5ff; line-height: 2; text-align: center; }
 
-        .puzzle-input {
-            display: flex; gap: 0.7rem; width: 100%; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem;
-        }
+        .puzzle-input { display: flex; gap: 0.8rem; width: 100%; flex-wrap: wrap; justify-content: center; }
         .modern-input {
-            font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.95rem; font-weight: 700;
-            padding: 0.9rem 1.3rem;
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(15px);
-            border: 1.5px solid rgba(253,224,71,0.4);
-            border-radius: 1.5rem; color: #fff; text-align: center;
-            outline: none; width: 220px;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(0,0,0,0.4);
+            font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; font-weight: 700;
+            padding: 1rem 1.4rem; background: rgba(255,255,255,0.07);
+            backdrop-filter: blur(15px); border: 1.5px solid rgba(253,224,71,0.5);
+            border-radius: 1.8rem; color: #fff; text-align: center; outline: none;
+            width: 240px; transition: 0.3s; box-shadow: 0 0 20px rgba(0,0,0,0.4);
         }
-        .modern-input:focus {
-            border-color: var(--rose);
-            box-shadow: 0 0 30px rgba(244,114,182,0.5), 0 0 0 2px rgba(244,114,182,0.3);
-            background: rgba(255,255,255,0.12);
-        }
+        .modern-input:focus { border-color: var(--rose); box-shadow: 0 0 35px rgba(244,114,182,0.6); }
 
         .btn-hd {
-            font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.85rem; font-weight: 800;
-            padding: 0.9rem 2rem;
-            border-radius: 60px; border: none;
+            font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem; font-weight: 800;
+            padding: 0.95rem 2.2rem; border-radius: 60px; border: none;
             background: linear-gradient(135deg, #f472b6 0%, #a855f7 100%);
             color: #fff; cursor: pointer;
-            box-shadow: 0 15px 35px rgba(244,114,182,0.45), inset 0 1px 2px rgba(255,255,255,0.5);
-            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1.2);
-            text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
-            letter-spacing: 0.5px; backdrop-filter: blur(10px);
-            will-change: transform;
+            box-shadow: 0 15px 35px rgba(244,114,182,0.5), inset 0 1px 2px rgba(255,255,255,0.5);
+            transition: 0.35s; letter-spacing: 0.5px;
         }
-        .btn-hd:hover {
-            transform: translateY(-4px) scale(1.04);
-            box-shadow: 0 20px 45px rgba(244,114,182,0.7), 0 0 25px rgba(168,85,247,0.4);
-        }
-        .btn-hd:active { transform: translateY(0px) scale(0.98); }
-        .btn-hd.gold {
-            background: linear-gradient(135deg, #fde047 0%, #f59e0b 100%);
-            color: #0a0015; box-shadow: 0 15px 35px rgba(253,224,71,0.5);
-        }
+        .btn-hd:hover { transform: translateY(-4px); box-shadow: 0 25px 45px rgba(244,114,182,0.8); }
+        .btn-hd.gold { background: linear-gradient(135deg, #fde047 0%, #f59e0b 100%); color: #0a0015; }
 
-        .progress {
-            display: flex; justify-content: center; gap: 0.4rem;
-            padding: 0.5rem 1rem;
-            background: rgba(0,0,0,0.4); backdrop-filter: blur(10px);
-            border-radius: 50px; border: 1px solid rgba(255,255,255,0.1);
-            width: 100%;
+        .cake-scene { perspective: 900px; width: 220px; height: 220px; margin: 1rem auto; cursor: pointer; position: relative; }
+        .god-rays {
+            position: absolute; top: -50px; left: 50%; transform: translateX(-50%);
+            width: 180px; height: 200px;
+            background: radial-gradient(ellipse at center, rgba(253,224,71,0.5) 0%, transparent 70%);
+            filter: blur(25px); opacity: 0.7; pointer-events: none; z-index: -1;
+            animation: pulseRay 2s infinite alternate;
         }
-        .progress .dot { font-size: 0.9rem; opacity: 0.3; transition: all 0.3s; }
-        .progress .dot.done { opacity: 1; transform: scale(1.2); filter: drop-shadow(0 0 6px gold); }
-        .progress .dot.current { opacity: 1; animation: pulseDot 0.7s ease-in-out infinite alternate; }
-
-        .progress-bar-container {
-            width: 100%; height: 8px; background: rgba(255,255,255,0.08);
-            border-radius: 12px; margin: 0.5rem 0; overflow: hidden;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
-        }
-        .progress-bar-fill {
-            height: 100%; background: linear-gradient(90deg, #f472b6, #fde047);
-            border-radius: 12px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 15px rgba(244,114,182,0.6);
-        }
-
-        .modal-overlay {
-            position: fixed; inset: 0;
-            background: rgba(2, 1, 10, 0.9); backdrop-filter: blur(20px);
-            z-index: 10001; display: none; align-items: center; justify-content: center; padding: 1rem;
-        }
-        .modal-card {
-            background: rgba(15, 8, 30, 0.9); backdrop-filter: blur(30px);
-            border: 1.5px solid var(--rose); border-radius: 2.5rem;
-            padding: 2.5rem 2rem; max-width: 30rem; width: 100%; text-align: center;
-            box-shadow: 0 0 80px rgba(244,114,182,0.5), 0 20px 50px rgba(0,0,0,0.8);
-        }
-
-        /* ========== KUE 3D CSS ========== */
-        .cake-scene {
-            perspective: 800px;
-            width: 200px; height: 200px; margin: 1rem auto;
-            cursor: pointer;
-        }
-        .cake-3d {
-            position: relative;
-            width: 100%; height: 100%;
-            transform-style: preserve-3d;
-            transform: rotateX(5deg) rotateY(10deg);
-            transition: transform 0.2s;
-        }
-        .cake-3d:hover { transform: rotateX(2deg) rotateY(15deg) scale(1.02); }
-        .cake-layer {
-            position: absolute;
-            left: 50%; transform: translateX(-50%);
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.7), inset 0 -5px 10px rgba(0,0,0,0.4), inset 0 2px 5px rgba(255,255,255,0.3);
-        }
-        .cake-bottom {
-            width: 140px; height: 45px; bottom: 30px;
-            background: linear-gradient(180deg, #e879a0 0%, #9b2c6b 100%);
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-        .cake-middle {
-            width: 120px; height: 35px; bottom: 70px;
-            background: linear-gradient(180deg, #f5a3c7 0%, #c4457a 100%);
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-        .cake-top {
-            width: 100px; height: 30px; bottom: 100px;
-            background: linear-gradient(180deg, #fde047 0%, #f59e0b 100%);
-            border: 2px solid rgba(255,255,255,0.4);
-            box-shadow: 0 8px 20px rgba(253,224,71,0.4);
-        }
-        .candle {
-            position: absolute; left: 50%; transform: translateX(-50%);
-            width: 8px; height: 35px; bottom: 125px;
-            background: linear-gradient(180deg, #d8b4fe 0%, #7e22ce 100%);
-            border-radius: 4px 4px 0 0;
-            box-shadow: 0 0 15px rgba(168,85,247,0.5);
-        }
+        @keyframes pulseRay { 0% { opacity: 0.5; transform: translateX(-50%) scale(1); } 100% { opacity: 0.9; transform: translateX(-50%) scale(1.2); } }
+        .cake-3d { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transform: rotateX(5deg) rotateY(15deg); }
+        .cake-layer { position: absolute; left: 50%; transform: translateX(-50%); border-radius: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.8), inset 0 -8px 15px rgba(0,0,0,0.5); }
+        .cake-bottom { width: 150px; height: 50px; bottom: 30px; background: linear-gradient(180deg, #f5a3c7 0%, #9b2c6b 100%); border: 2px solid rgba(255,255,255,0.4); }
+        .cake-middle { width: 130px; height: 40px; bottom: 75px; background: linear-gradient(180deg, #fbcfe8 0%, #db2777 100%); border: 2px solid rgba(255,255,255,0.5); }
+        .cake-top { width: 110px; height: 35px; bottom: 110px; background: linear-gradient(180deg, #fde047 0%, #f59e0b 100%); border: 2px solid rgba(255,255,255,0.6); }
+        .candle { position: absolute; left: 50%; transform: translateX(-50%); width: 10px; height: 45px; bottom: 140px; background: linear-gradient(180deg, #e9d5ff 0%, #7e22ce 100%); border-radius: 5px 5px 0 0; box-shadow: 0 0 20px rgba(168,85,247,0.6); }
         .flame {
-            position: absolute; left: 50%; transform: translateX(-50%);
-            bottom: 155px;
-            width: 16px; height: 22px;
-            background: radial-gradient(circle, #ffffff 10%, #fde047 50%, #f43f5e 90%);
+            position: absolute; left: 50%; transform: translateX(-50%); bottom: 175px;
+            width: 20px; height: 28px;
+            background: radial-gradient(circle, #fff 10%, #fde047 50%, #f43f5e 90%);
             border-radius: 50% 50% 40% 40%;
             animation: flicker 0.2s infinite alternate;
-            filter: drop-shadow(0 0 12px #fde047) drop-shadow(0 0 20px #f472b6);
+            filter: drop-shadow(0 0 15px #fde047) drop-shadow(0 0 25px #f472b6);
         }
-        @keyframes flicker {
-            0% { transform: translateX(-50%) scale(1, 1) rotate(-1deg); }
-            100% { transform: translateX(-50%) scale(1.1, 1.25) rotate(2deg); }
-        }
+        @keyframes flicker { 0% { transform: translateX(-50%) scale(1,1) rotate(-2deg); } 100% { transform: translateX(-50%) scale(1.15,1.3) rotate(3deg); } }
 
         .smoke-particle {
-            position: absolute; bottom: 170px; left: 50%;
-            width: 6px; height: 6px;
-            background: rgba(255,255,255,0.7);
-            border-radius: 50%;
-            animation: riseSmoke 1s ease-out forwards;
-            pointer-events: none;
+            position: absolute; bottom: 195px; left: 50%; width: 8px; height: 8px;
+            background: rgba(255,255,255,0.8); border-radius: 50%;
+            animation: riseSmoke 1.2s ease-out forwards; pointer-events: none;
         }
-        @keyframes riseSmoke {
-            0% { transform: translate(-50%, 0) scale(1); opacity: 0.8; }
-            100% { transform: translate(-50%, -45px) scale(2.5); opacity: 0; }
-        }
+        @keyframes riseSmoke { 0% { transform: translate(-50%,0) scale(1); opacity:0.9; } 100% { transform: translate(-50%,-70px) scale(3); opacity:0; } }
 
         .glass-orb {
-            position: absolute; bottom: -100px;
-            width: 55px; height: 55px; border-radius: 50%;
+            position: absolute; bottom: -110px; width: 60px; height: 60px; border-radius: 50%;
             background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.95), rgba(244,114,182,0.4) 50%, rgba(20,5,40,0.7) 90%);
             backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.6);
             box-shadow: 0 20px 40px rgba(0,0,0,0.7);
-            cursor: pointer; pointer-events: auto;
-            animation: orbFloat linear forwards;
-            z-index: 50;
+            cursor: pointer; pointer-events: auto; animation: orbFloat linear forwards; z-index: 50;
         }
-        @keyframes orbFloat { 0% { transform: translateY(0) scale(0.9); } 100% { transform: translateY(-130vh) scale(1.1); } }
+        @keyframes orbFloat { 0% { transform: translateY(0) scale(0.9); } 100% { transform: translateY(-140vh) scale(1.1); } }
 
         @media (max-width: 600px) {
             .luxury-title { font-size: 1.8rem; }
-            .wrapper { padding: 2rem 1.2rem; border-radius: 2.2rem; }
-            .modern-input { width: 150px; font-size: 0.85rem; }
-            .btn-hd { font-size: 0.75rem; padding: 0.8rem 1.5rem; }
-            .cake-scene { width: 160px; height: 160px; }
+            .wrapper { padding: 2rem 1.2rem; border-radius: 2.5rem; }
+            .modern-input { width: 160px; }
         }
     </style>
 </head>
 <body>
-
-    <!-- Canvas Aurora & Nebula -->
     <canvas id="bgCanvas"></canvas>
-    <!-- Partikel Sakura & Emas -->
     <canvas id="particleCanvas"></canvas>
-
     <div id="rainContainer"></div>
+
+    <div class="fullscreen-btn" onclick="toggleFullscreen()" title="Fullscreen">⛶</div>
 
     <div class="vinyl-widget" id="vinylWidget" onclick="toggleMusic()">
         <div class="vinyl-disc"></div>
         <div class="vinyl-text" id="vinylText">PLAY MUSIC</div>
     </div>
-
-    <div class="modal-overlay" id="secretModal">
-        <div class="modal-card">
-            <div style="font-size:3.8rem;" id="modalEmoji">💌</div>
-            <div style="font-size:0.8rem; font-weight:800; color:var(--rose); margin-bottom:1rem; letter-spacing:1px;" id="modalTitle">CATATAN RAHASIA</div>
-            <p style="font-size:0.95rem; font-weight:500; color:#e9d5ff; line-height:1.9; margin-bottom:1.8rem;" id="modalText"></p>
-            <button class="btn-hd" onclick="closeModal()">✨ Lanjutkan Petualangan</button>
-        </div>
-    </div>
-
-    <div id="orbContainer" style="position:fixed; inset:0; pointer-events:none; z-index:20; overflow:hidden;"></div>
 
     <div class="wrapper">
         <div class="section active" id="home">
@@ -388,15 +209,9 @@
                 <span class="luxury-badge">CHAPTER 21 · MEMORY VAULT</span>
                 <h1 class="luxury-title">Happy Birthday<br>Sifta Ainun Nafisa</h1>
             </div>
-            <div style="font-size:4rem; text-align:center; filter:drop-shadow(0 0 30px rgba(244,114,182,0.8));">🌸</div>
+            <div style="font-size:4.5rem; filter:drop-shadow(0 0 40px rgba(244,114,182,0.9));">🌸</div>
             <div class="card-box">
-                <p>
-                    “Halo, <span style="color:var(--rose);">Sifta Ainun Nafisa</span>.<br>
-                    Selamat datang di <span style="color:var(--rose);">Memory Vault</span> — tempat khusus untuk merayakan perjalanan, kedewasaan, dan momen indah.<br>
-                    Pecahkan 10 teka-teki untuk membuka pesan spesial di usiamu yang ke-21.<br><br>
-                    <span style="color:var(--gold); font-size:0.85rem;">(Tips: Letuskan gelembung kaca & nikmati hujan ultah di layar!)</span><br><br>
-                    <span style="color:var(--rose); font-weight:700;">— Akbar (Idel Akbar Ramadan).</span>
-                </p>
+                <p>“Halo, <span style="color:var(--rose);">Sifta Ainun Nafisa</span>.<br>Selamat datang di Memory Vault, tempat merayakan perjalananmu.<br>Pecahkan 10 teka-teki untuk membuka pesan spesial di usia ke-21.”<br><br>— Akbar</p>
             </div>
             <button class="btn-hd" onclick="startGame()">🌠 MULAI PETUALANGAN</button>
         </div>
@@ -404,11 +219,10 @@
         <div id="puzzleContainer" class="section" style="display:none;"></div>
 
         <div class="section" id="ending">
-            <div style="text-align:center;">
-                <span class="luxury-badge">MAKE A WISH</span>
-                <h2 class="luxury-title" style="font-size:1.9rem;">Tiup Lilin Ulang Tahun</h2>
-            </div>
+            <span class="luxury-badge">MAKE A WISH</span>
+            <h2 class="luxury-title" style="font-size:2rem;">Tiup Lilin Ulang Tahun</h2>
             <div class="cake-scene" onclick="blowCandle()" id="cakeWidget">
+                <div class="god-rays"></div>
                 <div class="cake-3d">
                     <div class="cake-layer cake-bottom"></div>
                     <div class="cake-layer cake-middle"></div>
@@ -417,245 +231,321 @@
                     <div class="flame" id="candleFlame"></div>
                 </div>
             </div>
-            <div id="blowText" style="font-size:0.9rem; font-weight:800; color:var(--gold); margin-top:0.5rem; text-shadow:0 0 8px var(--rose);">
-                ✨ KLIK / TIUP LILIN! ✨
+            <div id="blowText" style="font-weight:800; color:var(--gold);">✨ KLIK / TIUP LILIN! ✨</div>
+            <div class="card-box" id="letterBox" style="display:none;">
+                <p>🌸 <strong>HAPPY 21ST BIRTHDAY, SIFTA!</strong><br>Selamat ulang tahun! Semoga bahagia selalu. ☕✨<br>— Akbar</p>
             </div>
-            <div class="card-box" id="letterBox" style="display:none; text-align:center;">
-                <p style="font-size:0.95rem; line-height:2;">
-                    <span style="color:var(--rose); font-size:1.2rem; font-family:'Cinzel', serif; font-weight:800;">HAPPY 21ST BIRTHDAY, SIFTA! 🌸</span><br><br>
-                    Selamat ulang tahun ke-21! (21 September 2005).<br>
-                    Waktu terus berjalan, cerita kita di bab berbeda. Terima kasih pernah jadi bagian terbaik & memberi banyak pelajaran.<br>
-                    Semoga impianmu tercapai, dikelilingi orang baik, dan bahagia selalu.<br><br>
-                    <span style="color:var(--gold);">Jatah kopi ultah tetap berlaku ya! ☕✨</span><br><br>
-                    <span style="color:var(--rose);">— Akbar (Idel Akbar Ramadan).</span>
-                </p>
+            <div id="reasonSection" style="display:none; width:100%; text-align:center;">
+                <p id="loveReasonText" style="color:var(--gold);">Klik untuk pesan positif!</p>
+                <button class="btn-hd" onclick="generateLoveReason()">⭐ Pesan Positif</button>
             </div>
-            <div id="reasonSection" style="display:none; width:100%; text-align:center; background:rgba(244,114,182,0.1); backdrop-filter:blur(15px); padding:1.2rem; border-radius:1.8rem; border:1px solid rgba(244,114,182,0.3); margin-top:1rem;">
-                <p id="loveReasonText" style="font-size:0.9rem; font-weight:700; color:var(--gold); margin-bottom:0.8rem;">Klik untuk pesan positif!</p>
-                <button class="btn-hd" onclick="generateLoveReason()">⭐ Pesan Positif untuk Sifta</button>
-            </div>
-            <button class="btn-hd gold" id="resetBtn" style="display:none; margin-top:1rem;" onclick="location.reload()">🔄 Main Lagi</button>
+            <button class="btn-hd gold" id="resetBtn" style="display:none;" onclick="location.reload()">🔄 Main Lagi</button>
         </div>
     </div>
 
     <script>
-        // ==================== BACKGROUND AURORA & NEBULA CANVAS ====================
+        // ==================== AUDIO ENGINE DENGAN DUA LAGU ====================
+        const BACKSOUND_URL = 'https://raw.githubusercontent.com/akbarnawasunda/san/main/Super%20Simple%20Songs%20-%20Kids%20Song%20-%20Happy%20Birthday.mp3';
+        const CELEBRATION_URL = 'https://raw.githubusercontent.com/akbarnawasunda/san/main/freesound_community-happy_birthday_remastered-73308.mp3';
+
+        let audioCtx = null;
+        let backsound = null;      // Lagu sebelum tiup lilin
+        let celebration = null;    // Lagu setelah tiup lilin
+        let isPlaying = false;
+
+        function getAudioCtx() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            return audioCtx;
+        }
+
+        // Toggle musik (hanya untuk backsound awal)
+        function toggleMusic() {
+            const widget = document.getElementById('vinylWidget');
+            const text = document.getElementById('vinylText');
+            
+            if (!backsound) {
+                backsound = new Audio(BACKSOUND_URL);
+                backsound.loop = true;
+                backsound.volume = 0.35;
+            }
+
+            if (isPlaying) {
+                backsound.pause();
+                widget.classList.remove('playing');
+                text.textContent = 'PLAY MUSIC';
+                isPlaying = false;
+            } else {
+                backsound.play().then(() => {
+                    widget.classList.add('playing');
+                    text.textContent = 'PLAYING...';
+                    isPlaying = true;
+                }).catch(() => alert('Gagal memutar backsound. Cek koneksi internet.'));
+            }
+        }
+
+        // Fungsi ganti ke lagu perayaan (otomatis setelah tiup lilin)
+        function switchToCelebrationMusic() {
+            // Hentikan backsound jika sedang bermain
+            if (backsound && isPlaying) {
+                backsound.pause();
+                backsound.currentTime = 0;
+                document.getElementById('vinylWidget').classList.remove('playing');
+                document.getElementById('vinylText').textContent = 'PLAY MUSIC';
+                isPlaying = false;
+            }
+
+            // Mainkan lagu perayaan
+            if (!celebration) {
+                celebration = new Audio(CELEBRATION_URL);
+                celebration.loop = false; // tidak di-loop, biar sekali saja
+                celebration.volume = 0.5;
+            }
+            celebration.currentTime = 0;
+            celebration.play().then(() => {
+                // Update widget visual meskipun bukan backsound
+                document.getElementById('vinylWidget').classList.add('playing');
+                document.getElementById('vinylText').textContent = 'CELEBRATING!';
+                // Setelah selesai, kembalikan teks
+                celebration.onended = () => {
+                    document.getElementById('vinylWidget').classList.remove('playing');
+                    document.getElementById('vinylText').textContent = 'PLAY MUSIC';
+                };
+            }).catch(e => console.log('Gagal putar celebration'));
+        }
+
+        function playPopSound() {
+            try {
+                const ctx = getAudioCtx();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.frequency.setValueAtTime(800, ctx.currentTime);
+                gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+                osc.start(); osc.stop(ctx.currentTime + 0.1);
+            } catch(e) {}
+        }
+
+        // ==================== FULLSCREEN ====================
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+
+        // ==================== CANVAS BACKGROUND ====================
         const bgCanvas = document.getElementById('bgCanvas');
         const bgCtx = bgCanvas.getContext('2d');
-        let bgWidth, bgHeight;
-
-        function resizeBg() {
-            bgWidth = bgCanvas.width = window.innerWidth;
-            bgHeight = bgCanvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeBg);
-        resizeBg();
-
-        const auroraColors = ['rgba(138, 43, 226, 0.15)', 'rgba(244, 114, 182, 0.1)', 'rgba(253, 224, 71, 0.05)'];
-        let time = 0;
-
-        function drawBackground() {
-            bgCtx.clearRect(0, 0, bgWidth, bgHeight);
-            // Aurora bergerak
-            for (let i = 0; i < 3; i++) {
-                const gradient = bgCtx.createLinearGradient(0, bgHeight*0.2, bgWidth*0.7, bgHeight*0.8);
-                gradient.addColorStop(0, auroraColors[i]);
-                gradient.addColorStop(0.5, 'rgba(20, 5, 50, 0.2)');
-                gradient.addColorStop(1, 'rgba(2, 0, 16, 0)');
-                bgCtx.fillStyle = gradient;
+        let w, h;
+        function resizeBg() { w = bgCanvas.width = window.innerWidth; h = bgCanvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeBg); resizeBg();
+        let t = 0;
+        function drawBg() {
+            bgCtx.clearRect(0,0,w,h);
+            for (let i=0; i<3; i++) {
+                const grd = bgCtx.createLinearGradient(0, h*0.2, w*0.8, h*0.9);
+                grd.addColorStop(0, `hsla(${280 + i*20}, 80%, 60%, 0.15)`);
+                grd.addColorStop(0.5, 'rgba(20,5,50,0.1)');
+                grd.addColorStop(1, 'rgba(0,0,0,0)');
+                bgCtx.fillStyle = grd;
                 bgCtx.beginPath();
-                bgCtx.moveTo(0, bgHeight*0.3 + Math.sin(time*0.005 + i)*30);
-                bgCtx.quadraticCurveTo(bgWidth*0.5, bgHeight*0.1 + Math.cos(time*0.003 + i)*50, bgWidth, bgHeight*0.25 + Math.sin(time*0.004 + i)*40);
-                bgCtx.lineTo(bgWidth, bgHeight);
-                bgCtx.lineTo(0, bgHeight);
-                bgCtx.fill();
+                bgCtx.moveTo(0, h*0.4 + Math.sin(t*0.004 + i)*25);
+                bgCtx.quadraticCurveTo(w*0.5, h*0.2 + Math.cos(t*0.002 + i)*35, w, h*0.35 + Math.sin(t*0.005 + i)*30);
+                bgCtx.lineTo(w,h); bgCtx.lineTo(0,h); bgCtx.fill();
             }
-            // Bintang berkilau
-            for (let i=0;i<70;i++) {
-                const x = (i*37 + time*0.02) % bgWidth;
-                const y = (i*53) % bgHeight;
-                const alpha = 0.5 + Math.sin(time*0.02 + i)*0.4;
+            for (let i=0; i<80; i++) {
+                const x = (i*41 + t*0.03) % w, y = (i*67) % h;
+                const alpha = 0.4 + Math.sin(t*0.03 + i)*0.4;
                 bgCtx.fillStyle = `rgba(255,255,255,${alpha})`;
-                bgCtx.beginPath();
-                bgCtx.arc(x, y, 0.8+Math.sin(i)*0.4, 0, Math.PI*2);
-                bgCtx.fill();
+                bgCtx.beginPath(); bgCtx.arc(x, y, 0.7+Math.sin(i)*0.3, 0, Math.PI*2); bgCtx.fill();
             }
-            time++;
-            requestAnimationFrame(drawBackground);
+            t++; requestAnimationFrame(drawBg);
         }
-        drawBackground();
+        drawBg();
 
-        // ==================== PARTIKEL SAKURA & EMAS ====================
-        const particleCanvas = document.getElementById('particleCanvas');
-        const pCtx = particleCanvas.getContext('2d');
-        particleCanvas.width = window.innerWidth;
-        particleCanvas.height = window.innerHeight;
-        window.addEventListener('resize', ()=>{
-            particleCanvas.width = window.innerWidth;
-            particleCanvas.height = window.innerHeight;
-        });
-
-        const particles = [];
-        const emojis = ['🌸','✨','💛','🩷'];
-        for (let i=0;i<45;i++) {
-            particles.push({
-                x: Math.random()*particleCanvas.width,
-                y: Math.random()*particleCanvas.height,
-                size: 6+Math.random()*12,
-                speedY: 0.2+Math.random()*0.7,
-                speedX: -0.3+Math.random()*0.6,
-                emoji: emojis[Math.floor(Math.random()*emojis.length)],
-                alpha: 0.5+Math.random()*0.5
+        // ==================== PARTIKEL ====================
+        const pCanvas = document.getElementById('particleCanvas');
+        const pCtx = pCanvas.getContext('2d');
+        pCanvas.width = window.innerWidth; pCanvas.height = window.innerHeight;
+        window.addEventListener('resize', ()=> { pCanvas.width = window.innerWidth; pCanvas.height = window.innerHeight; });
+        const dust = [];
+        for (let i=0; i<60; i++) {
+            dust.push({
+                x: Math.random()*pCanvas.width, y: Math.random()*pCanvas.height,
+                r: 1+Math.random()*2.5, sy: 0.15+Math.random()*0.4, sx: -0.2+Math.random()*0.4,
+                alpha: 0.3+Math.random()*0.6, color: Math.random()>0.6?'#fde047':'#f472b6'
             });
         }
-
-        function drawParticles() {
-            pCtx.clearRect(0,0,particleCanvas.width,particleCanvas.height);
-            particles.forEach(p => {
-                p.y += p.speedY;
-                p.x += p.speedX;
-                if (p.y > particleCanvas.height+20) p.y = -20;
-                if (p.x > particleCanvas.width+20) p.x = -20;
-                if (p.x < -20) p.x = particleCanvas.width+20;
-                pCtx.font = `${p.size}px "Segoe UI Emoji"`;
-                pCtx.fillStyle = `rgba(255,255,255,${p.alpha})`;
-                pCtx.fillText(p.emoji, p.x, p.y);
+        function drawDust() {
+            pCtx.clearRect(0,0,pCanvas.width,pCanvas.height);
+            dust.forEach(p => {
+                p.y += p.sy; p.x += p.sx;
+                if (p.y > pCanvas.height+10) p.y = -10;
+                if (p.x > pCanvas.width+10) p.x = -10;
+                if (p.x < -10) p.x = pCanvas.width+10;
+                pCtx.beginPath(); pCtx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+                pCtx.fillStyle = p.color; pCtx.globalAlpha = p.alpha;
+                pCtx.fill(); pCtx.shadowColor = p.color; pCtx.shadowBlur = 6;
+                pCtx.fill(); pCtx.shadowBlur = 0;
             });
-            requestAnimationFrame(drawParticles);
+            requestAnimationFrame(drawDust);
         }
-        drawParticles();
+        drawDust();
 
-        // Rain emoji tetap ada
-        const rainItems = ['💖','🎂','🥳','✨','🎈','🎉','⭐','💕','💫','🌸'];
-        function spawnRainItem() {
+        // Rain emoji
+        const rainItems = ['💖','🎂','🥳','✨','🎈','🎉','⭐','💕','💫','🌸','🎀','💝','🕯️','🍰'];
+        function spawnRain() {
             const c = document.getElementById('rainContainer');
-            const item = document.createElement('div');
-            item.className='rain-item';
-            item.textContent=rainItems[Math.floor(Math.random()*rainItems.length)];
-            item.style.left=Math.random()*95+'%';
-            item.style.fontSize=(1+Math.random()*1.3)+'rem';
-            const d=4+Math.random()*5;
-            item.style.animationDuration=d+'s';
-            c.appendChild(item);
-            setTimeout(()=>{if(item.parentNode)item.remove();},d*1000);
+            const el = document.createElement('div'); el.className='rain-item';
+            el.textContent = rainItems[Math.floor(Math.random()*rainItems.length)];
+            el.style.left = Math.random()*95+'%'; el.style.fontSize = (1.1+Math.random()*1.6)+'rem';
+            const dur = 4+Math.random()*5; el.style.animationDuration = dur+'s';
+            c.appendChild(el); setTimeout(()=> el.remove(), dur*1000);
         }
-        setInterval(spawnRainItem,400);
-        function spawnMegaRainBurst(count){for(let i=0;i<count;i++)setTimeout(spawnRainItem,i*25);}
-
-        // Audio Engine
-        let audioCtx=null,bgAudio=null,isPlaying=false;
-        function getAudioCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
-        function toggleMusic(){
-            const w=document.getElementById('vinylWidget'),t=document.getElementById('vinylText');
-            if(!bgAudio){bgAudio=new Audio('art_roseman-happy-birthday-cartoon-569643.mp3');bgAudio.loop=true;bgAudio.volume=0.3;}
-            if(isPlaying){bgAudio.pause();w.classList.remove('playing');t.textContent='PLAY MUSIC';isPlaying=false;}
-            else{bgAudio.play().then(()=>{w.classList.add('playing');t.textContent='PLAYING...';isPlaying=true;}).catch(()=>alert('File MP3 tidak ditemukan!'));}
-        }
-        function playPopSound(){try{const ctx=getAudioCtx();const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.setValueAtTime(700+Math.random()*300,ctx.currentTime);g.gain.setValueAtTime(0.2,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+0.1);o.start();o.stop(ctx.currentTime+0.1);}catch(e){}}
-        function playBuzzer(){try{const ctx=getAudioCtx();const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.type='sawtooth';o.frequency.setValueAtTime(140,ctx.currentTime);g.gain.setValueAtTime(0.15,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+0.25);o.start();o.stop(ctx.currentTime+0.25);}catch(e){}}
+        setInterval(spawnRain, 300);
+        function megaRain(n) { for(let i=0;i<n;i++) setTimeout(spawnRain, i*20); }
 
         // Gelembung kaca
-        function spawnGlassOrb(){
-            const c=document.getElementById('orbContainer');
-            const orb=document.createElement('div');orb.className='glass-orb';
-            orb.style.left=Math.random()*85+5+'%';
-            const d=6+Math.random()*5;orb.style.animationDuration=d+'s';
-            orb.onclick=(e)=>{e.stopPropagation();playPopSound();spawnMegaRainBurst(10);orb.remove();};
-            c.appendChild(orb);
-            setTimeout(()=>{if(orb.parentNode)orb.remove();},d*1000);
+        function spawnOrb() {
+            const orb = document.createElement('div'); orb.className='glass-orb';
+            orb.style.left = Math.random()*85+5+'%'; const d=6+Math.random()*5; orb.style.animationDuration=d+'s';
+            orb.onclick=()=>{ playPopSound(); megaRain(10); orb.remove(); };
+            document.getElementById('orbContainer').appendChild(orb);
+            setTimeout(()=> orb.remove(), d*1000);
         }
-        setInterval(spawnGlassOrb,2000);
+        setInterval(spawnOrb, 2000);
 
-        // Puzzle Data
-        const puzzles=[ /* ... sama seperti sebelumnya ... */ 
-            {id:'p1',emoji:'💫',title:'Teka-teki 1',question:'Usia Sifta sekarang? (2 digit)',hint:'💡 21',answer:['21','dua puluh satu'],type:'text',placeholder:'??'},
-            {id:'p2',emoji:'🎂',title:'Teka-teki 2',question:'Tanggal lahir Sifta (DD-MM-YYYY)',hint:'💡 21 September 2005',answer:['21-09-2005','21/09/2005','21 09 2005','21 september 2005','21 sept 2005'],type:'text',placeholder:'DD-MM-YYYY'},
-            {id:'p3',emoji:'✍️',title:'Teka-teki 3',question:'Profesi Akbar yang suka merangkai kata?',hint:'💡 Penulis',answer:['penulis','writer','author'],type:'text',placeholder:'.......',secretNote:'“Sifta, di antara ribuan kata, mendoakanmu adalah yang paling tulus.” ⭐'},
-            {id:'p4',emoji:'🤝',title:'Teka-teki 4',question:'Sebutan untuk hal baik yang pernah kita lewati?',hint:'💡 Kenangan',answer:['kenangan','memori','pelajaran','sejarah'],type:'text',placeholder:'.......'},
-            {id:'p5',emoji:'🌙',title:'Teka-teki 5',question:'Waktu tersyahdu untuk bertukar cerita?',hint:'💡 Malam',answer:['malam','malam hari'],type:'text',placeholder:'.....'},
-            {id:'p6',emoji:'😏',title:'Teka-teki 6',question:'Akbar itu sosok mantan yang gimana?',hint:'💡 Pilih yang paling pas.',type:'choice',choices:['Nyebelin Dikit','Dewasa & Baik Hati','Kece/Ganteng','Sangat Menghargai Sifta','Semuanya! ✨'],answer:'semuanya! ✨',secretNote:'“Apapun pilihannya, Akbar selalu doakan yang terbaik buat Sifta.” 🌸'},
-            {id:'p7',emoji:'📅',title:'Teka-teki 7',question:'Tanggal lahir Akbar? (DD-MM-YYYY)',hint:'💡 1 November 2005',answer:['01-11-2005','1-11-2005','01/11/2005','1/11/2005','01 11 2005'],type:'text',placeholder:'DD-MM-YYYY'},
-            {id:'p8',emoji:'🏙️',title:'Teka-teki 8',question:'Akbar dari kota mana?',hint:'💡 Parijs van Java',answer:['bandung'],type:'text',placeholder:'.......'},
-            {id:'p9',emoji:'📚',title:'Teka-teki 9',question:'Nama lengkap pembuat kuis?',hint:'💡 Idel Akbar ...',answer:['idel akbar ramadan','idel akbar','akbar'],type:'text',placeholder:'...............',secretNote:'“Terima kasih sudah menjadi chapter terbaik.” ✨'},
-            {id:'p10',emoji:'🎬',title:'Teka-teki 10 (FINAL)',question:'Akbar hobi nonton animasi dari?',hint:'💡 Negeri Tirai Bambu',answer:['donghua'],type:'text',placeholder:'.......'}
+        // ==================== PUZZLE ====================
+        const puzzles = [
+            {id:'p1', title:'Teka-teki 1', q:'Usia Sifta sekarang?', h:'💡 21', a:['21','dua puluh satu'], type:'text', ph:'??'},
+            {id:'p2', title:'Teka-teki 2', q:'Tanggal lahir Sifta (DD-MM-YYYY)', h:'💡 21 September 2005', a:['21-09-2005','21/09/2005','21 09 2005','21 september 2005'], type:'text', ph:'DD-MM-YYYY'},
+            {id:'p3', title:'Teka-teki 3', q:'Profesi Akbar?', h:'💡 Penulis', a:['penulis','writer','author'], type:'text', ph:'.......', secret:'“Mendoakanmu adalah kata terindah.”'},
+            {id:'p4', title:'Teka-teki 4', q:'Sebutan hal baik masa lalu?', h:'💡 Kenangan', a:['kenangan','memori','pelajaran'], type:'text', ph:'.......'},
+            {id:'p5', title:'Teka-teki 5', q:'Waktu syahdu bertukar cerita?', h:'💡 Malam', a:['malam','malam hari'], type:'text', ph:'.....'},
+            {id:'p6', title:'Teka-teki 6', q:'Akbar itu mantan yang?', h:'💡 Pilih!', type:'choice', c:['Nyebelin','Dewasa & Baik','Kece','Menghargai Sifta','Semuanya! ✨'], a:'semuanya! ✨', secret:'Apapun pilihannya, doa terbaik selalu.'},
+            {id:'p7', title:'Teka-teki 7', q:'Tanggal lahir Akbar?', h:'💡 1 November 2005', a:['01-11-2005','1-11-2005','01/11/2005'], type:'text', ph:'DD-MM-YYYY'},
+            {id:'p8', title:'Teka-teki 8', q:'Akbar dari kota?', h:'💡 Parijs van Java', a:['bandung'], type:'text', ph:'.......'},
+            {id:'p9', title:'Teka-teki 9', q:'Nama lengkap pembuat?', h:'💡 Idel Akbar ...', a:['idel akbar ramadan','idel akbar','akbar'], type:'text', ph:'...............', secret:'Chapter terbaik.'},
+            {id:'p10', title:'Teka-teki 10', q:'Akbar hobi nonton animasi?', h:'💡 Donghua', a:['donghua'], type:'text', ph:'.......'}
         ];
 
-        const state={currentPuzzle:0,lives:3,timer:300,timerInterval:null,gameActive:false,gameOver:false,completed:false};
-        const puzzleContainer=document.getElementById('puzzleContainer');
-        const homeSection=document.getElementById('home');
-        const endingSection=document.getElementById('ending');
+        const state = { idx:0, lives:3, timer:300, iv:null, active:false, over:false, done:false };
+        const pc = document.getElementById('puzzleContainer'), home = document.getElementById('home'), end = document.getElementById('ending');
 
-        function startGame(){if(state.gameActive)return;getAudioCtx();resetState();state.gameActive=true;homeSection.classList.remove('active');puzzleContainer.style.display='flex';puzzleContainer.classList.add('active');renderPuzzle(0);startTimer();if(!isPlaying)toggleMusic();}
-        function resetState(){if(state.timerInterval)clearInterval(state.timerInterval);state.currentPuzzle=0;state.lives=3;state.timer=300;state.gameActive=false;state.gameOver=false;state.completed=false;}
-        function startTimer(){updateTimerDisplay();state.timerInterval=setInterval(()=>{state.timer--;updateTimerDisplay();if(state.timer<=0){clearInterval(state.timerInterval);gameOver('⏰ Waktu habis!');}},1000);}
-        function updateTimerDisplay(){const m=Math.floor(state.timer/60),s=state.timer%60;const el=document.getElementById('timerDisplay');if(el)el.textContent=`⏱ ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;}
-        function updateLivesDisplay(){const hearts='❤️'.repeat(state.lives)+'🖤'.repeat(Math.max(0,3-state.lives));const el=document.getElementById('livesDisplay');if(el)el.innerHTML=`💫 ${hearts}`;}
-
-        function renderPuzzle(index){
-            if(index>=puzzles.length){completeGame();return;}
-            if(state.lives<=0){gameOver('💔 Nyawa habis!');return;}
-            state.currentPuzzle=index;const p=puzzles[index];
-            puzzleContainer.innerHTML='';
-            const headerInfo=document.createElement('div');headerInfo.className='header-info';
-            headerInfo.innerHTML='<div class="lives" id="livesDisplay"></div><div class="timer" id="timerDisplay"></div>';
-            puzzleContainer.appendChild(headerInfo);
-            const prog=document.createElement('div');prog.className='progress';
-            for(let i=0;i<puzzles.length;i++){const dot=document.createElement('span');dot.className='dot';dot.textContent=i<index?'⭐':(i===index?'🌠':'⚪');if(i<index)dot.classList.add('done');if(i===index)dot.classList.add('current');prog.appendChild(dot);}
-            puzzleContainer.appendChild(prog);
-            const progBar=document.createElement('div');progBar.className='progress-bar-container';
-            const fill=document.createElement('div');fill.className='progress-bar-fill';fill.style.width=`${(index/puzzles.length)*100}%`;
-            progBar.appendChild(fill);puzzleContainer.appendChild(progBar);
-            const badge=document.createElement('div');badge.style.textAlign='center';badge.innerHTML=`<span class="luxury-badge">${p.title} · ${index+1}/${puzzles.length}</span>`;puzzleContainer.appendChild(badge);
-            const box=document.createElement('div');box.className='card-box';
-            const q=document.createElement('p');q.textContent=p.question;box.appendChild(q);
-            if(p.hint){const h=document.createElement('span');h.style.cssText='display:block;text-align:center;font-size:0.8rem;color:#c084fc;margin-top:0.6rem;font-weight:700;';h.textContent=p.hint;box.appendChild(h);}
-            puzzleContainer.appendChild(box);
-            const inputArea=document.createElement('div');inputArea.className='puzzle-input';
-            if(p.type==='choice'){p.choices.forEach(c=>{const btn=document.createElement('button');btn.className='btn-hd';btn.textContent=c;btn.style.fontSize='0.8rem';btn.onclick=()=>checkAnswer(c,p);inputArea.appendChild(btn);});}
-            else{const input=document.createElement('input');input.type='text';input.className='modern-input';input.placeholder=p.placeholder||'...';input.id='puzzleInput';input.autocomplete='off';inputArea.appendChild(input);
-            const submit=document.createElement('button');submit.className='btn-hd';submit.textContent='Jawab 🌠';submit.onclick=()=>checkAnswer(document.getElementById('puzzleInput').value,p);inputArea.appendChild(submit);
-            input.addEventListener('keydown',e=>{if(e.key==='Enter')checkAnswer(input.value,p);});setTimeout(()=>input.focus(),200);}
-            puzzleContainer.appendChild(inputArea);
-            const fb=document.createElement('div');fb.id='puzzleFeedback';fb.style.cssText='font-size:0.85rem;text-align:center;min-height:1.2rem;font-weight:700;margin-top:0.3rem;';puzzleContainer.appendChild(fb);
-            updateLivesDisplay();updateTimerDisplay();
+        function startGame() {
+            if (state.active) return;
+            getAudioCtx();
+            state.active = true; state.over = false; state.done = false;
+            home.classList.remove('active'); pc.style.display='flex'; pc.classList.add('active');
+            renderPuzzle(0); startTimer();
+            // Mulai musik jika belum
+            if (!isPlaying) toggleMusic();
         }
 
-        function checkAnswer(input,puzzle){
-            if(state.gameOver||state.completed)return;
-            const fb=document.getElementById('puzzleFeedback');const val=input.trim().toLowerCase();
-            let correct=false;
-            if(Array.isArray(puzzle.answer))correct=puzzle.answer.some(a=>a.toLowerCase()===val);
-            else correct=puzzle.answer.toLowerCase()===val;
-            if(puzzle.id==='p6'&&!correct){fb.innerHTML='<span style="color:var(--rose);">Cuma itu? Coba lagi 😉</span>';playBuzzer();return;}
-            if(correct){playPopSound();spawnMegaRainBurst(15);fb.innerHTML='<span style="color:#34d399;">✅ BENAR! ✨</span>';
-                if(puzzle.secretNote)setTimeout(()=>showModal('💌 Catatan Rahasia',puzzle.secretNote),500);
-                else setTimeout(()=>renderPuzzle(state.currentPuzzle+1),700);}
-            else{state.lives--;updateLivesDisplay();playBuzzer();fb.innerHTML=`<span style="color:#fb7185;">❌ Salah! Sisa nyawa: ${state.lives}</span>`;
-                document.querySelector('.wrapper').classList.add('shake');setTimeout(()=>document.querySelector('.wrapper').classList.remove('shake'),450);
-                if(state.lives<=0)setTimeout(()=>gameOver('💔 Nyawa habis!'),600);}
+        function startTimer() {
+            document.getElementById('timerDisplay').textContent = `⏱ 05:00`;
+            state.iv = setInterval(()=>{
+                state.timer--;
+                const m = Math.floor(state.timer/60), s = state.timer%60;
+                document.getElementById('timerDisplay').textContent = `⏱ ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                if(state.timer<=0) { clearInterval(state.timer); gameOver('⏰ Waktu habis!'); }
+            },1000);
         }
 
-        function showModal(title,text){document.getElementById('modalTitle').textContent=title;document.getElementById('modalText').textContent=text;document.getElementById('secretModal').style.display='flex';}
-        function closeModal(){document.getElementById('secretModal').style.display='none';renderPuzzle(state.currentPuzzle+1);}
-        function gameOver(msg){state.gameOver=true;state.gameActive=false;clearInterval(state.timerInterval);playBuzzer();puzzleContainer.style.display='none';puzzleContainer.classList.remove('active');homeSection.classList.add('active');homeSection.querySelector('.card-box p').innerHTML=`<span style="color:#fb7185;">${msg}</span><br><br>Coba lagi ya!`;}
-        function completeGame(){state.completed=true;state.gameActive=false;clearInterval(state.timerInterval);playPopSound();puzzleContainer.style.display='none';puzzleContainer.classList.remove('active');endingSection.classList.add('active');spawnMegaRainBurst(50);}
+        function renderPuzzle(i) {
+            if(i>=puzzles.length){ completeGame(); return; }
+            state.idx=i; const p=puzzles[i]; pc.innerHTML='';
+            const header = `<div class="header-info"><div class="lives" id="livesDisplay">💫 ${'❤️'.repeat(state.lives)}</div><div class="timer" id="timerDisplay">⏱ 05:00</div></div>`;
+            const dots = puzzles.map((_,j)=>`<span class="dot${j<i?' done':''}${j===i?' current':''}">${j<i?'⭐':(j===i?'🌠':'⚪')}</span>`).join('');
+            const prog = `<div class="progress">${dots}</div><div class="progress-bar-container"><div class="progress-bar-fill" style="width:${(i/puzzles.length)*100}%"></div></div>`;
+            pc.innerHTML = header + prog + `<span class="luxury-badge">${p.title} · ${i+1}/${puzzles.length}</span>`;
+            const box = document.createElement('div'); box.className='card-box';
+            box.innerHTML = `<p>${p.q}</p>${p.h?`<span style="color:#c084fc;">${p.h}</span>`:''}`;
+            pc.appendChild(box);
+            const area = document.createElement('div'); area.className='puzzle-input';
+            if(p.type==='choice'){
+                p.c.forEach(c=>{ const btn=document.createElement('button'); btn.className='btn-hd'; btn.textContent=c; btn.onclick=()=>checkAnswer(c,p); area.appendChild(btn); });
+            } else {
+                const inp = document.createElement('input'); inp.className='modern-input'; inp.placeholder=p.ph||'...'; inp.id='pzIn';
+                const btn = document.createElement('button'); btn.className='btn-hd'; btn.textContent='Jawab 🌠';
+                btn.onclick=()=>checkAnswer(document.getElementById('pzIn').value,p); area.appendChild(inp); area.appendChild(btn);
+                inp.addEventListener('keydown',e=>{ if(e.key==='Enter') checkAnswer(inp.value,p); });
+                setTimeout(()=>inp.focus(),200);
+            }
+            pc.appendChild(area);
+            pc.innerHTML += '<div id="fb" style="text-align:center;min-height:1.5rem;"></div>';
+        }
 
-        // Tiup lilin mikrofon + confetti + asap
-        let candleBlown=false,micStream=null,micCtx=null,analyser=null;
+        function checkAnswer(val, p) {
+            if(state.over||state.done) return;
+            const fb = document.getElementById('fb'), v = val.trim().toLowerCase();
+            let correct = Array.isArray(p.a) ? p.a.some(a=>a.toLowerCase()===v) : p.a.toLowerCase()===v;
+            if(p.id==='p6' && !correct){ fb.innerHTML='<span style="color:var(--rose);">Coba lagi 😉</span>'; return; }
+            if(correct){
+                playPopSound(); megaRain(15); fb.innerHTML='<span style="color:#34d399;">✅ BENAR!</span>';
+                if(p.secret) setTimeout(()=>showModal(p.secret),500);
+                else setTimeout(()=>renderPuzzle(state.idx+1),700);
+            } else {
+                state.lives--; fb.innerHTML=`<span style="color:#fb7185;">❌ Salah! Nyawa: ${state.lives}</span>`;
+                document.querySelector('.wrapper').classList.add('shake');
+                setTimeout(()=>document.querySelector('.wrapper').classList.remove('shake'),400);
+                if(state.lives<=0) gameOver('💔 Nyawa habis!');
+            }
+        }
+
+        function showModal(txt){
+            document.getElementById('modalText').textContent=txt;
+            document.getElementById('secretModal').style.display='flex';
+        }
+        window.closeModal = ()=>{ document.getElementById('secretModal').style.display='none'; renderPuzzle(state.idx+1); }
+
+        function gameOver(msg){ state.over=true; clearInterval(state.timer); pc.style.display='none'; home.classList.add('active'); home.querySelector('.card-box p').innerHTML=msg; }
+        function completeGame(){ state.done=true; clearInterval(state.timer); pc.style.display='none'; end.classList.add('active'); megaRain(50); }
+
+        // ==================== TIUP LILIN DENGAN MIKROFON + GANTI LAGU ====================
+        let blown = false, micStream=null, micCtx=null, analyser=null;
+
         function startMic(){
-            if(candleBlown)return;document.getElementById('blowText').textContent='🎤 Tiup layarmu...';
-            navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{micStream=stream;micCtx=new(window.AudioContext||window.webkitAudioContext)();analyser=micCtx.createAnalyser();micCtx.createMediaStreamSource(stream).connect(analyser);analyser.fftSize=256;const data=new Uint8Array(analyser.frequencyBinCount);
-            function detect(){if(candleBlown){stopMic();return;}analyser.getByteFrequencyData(data);let sum=0;for(let i=0;i<data.length;i++)sum+=data[i];if(sum/data.length>28)triggerBlow();else requestAnimationFrame(detect);}detect();}).catch(()=>{document.getElementById('blowText').textContent='✨ KLIK LILIN!';});}
-        function stopMic(){if(micStream){micStream.getTracks().forEach(t=>t.stop());micStream=null;}if(micCtx&&micCtx.state!=='closed'){micCtx.close();micCtx=null;}}
-        function triggerBlow(){if(candleBlown)return;candleBlown=true;stopMic();document.getElementById('candleFlame').style.display='none';document.getElementById('blowText').textContent='✨ HARAPAN TELAH DITIUP ✨';playPopSound();spawnMegaRainBurst(80);
-        confetti({particleCount:180,spread:100,origin:{y:0.6},colors:['#fde047','#f472b6','#a855f7','#ffffff']});
-        for(let i=0;i<15;i++)setTimeout(()=>{const s=document.createElement('div');s.className='smoke-particle';s.style.marginLeft=`${(Math.random()-0.5)*35}px`;document.getElementById('cakeWidget').appendChild(s);setTimeout(()=>s.remove(),1000);},i*70);
-        setTimeout(()=>{const overlay=document.createElement('div');overlay.style.cssText='position:fixed;inset:0;background:black;z-index:10000;opacity:0;transition:opacity 0.8s;display:flex;align-items:center;justify-content:center;';overlay.innerHTML='<div style="font-family:Cinzel;font-size:2.8rem;color:#fde047;text-shadow:0 0 40px #f472b6;opacity:0;transform:scale(0.8);transition:all 1s;" id="cinMsg">🌸 Happy 21st, Sifta! 🌸</div>';document.body.appendChild(overlay);requestAnimationFrame(()=>{overlay.style.opacity='1';setTimeout(()=>{document.getElementById('cinMsg').style.opacity='1';document.getElementById('cinMsg').style.transform='scale(1)';},300);});
-        setTimeout(()=>{overlay.style.opacity='0';setTimeout(()=>overlay.remove(),800);document.getElementById('letterBox').style.display='block';document.getElementById('reasonSection').style.display='block';document.getElementById('resetBtn').style.display='inline-flex';},3200);},800);}
-        function blowCandle(){if(candleBlown)return;startMic();setTimeout(()=>{if(!candleBlown&&!micStream)triggerBlow();},350);}
+            if(blown) return;
+            document.getElementById('blowText').textContent='🎤 Tiup layarmu sekarang...';
+            navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+                micStream=stream; micCtx=new (window.AudioContext||window.webkitAudioContext)();
+                analyser=micCtx.createAnalyser(); micCtx.createMediaStreamSource(stream).connect(analyser);
+                analyser.fftSize=256; const data=new Uint8Array(analyser.frequencyBinCount);
+                function detect(){ if(blown){stopMic();return;} analyser.getByteFrequencyData(data); if(data.reduce((a,b)=>a+b,0)/data.length>30) blow(); else requestAnimationFrame(detect); }
+                detect();
+            }).catch(()=>{ document.getElementById('blowText').textContent='✨ KLIK LILIN UNTUK MENIUP!'; });
+        }
 
-        const loveReasons=["Semoga di usia 21, Sifta makin bahagia 🌸","Terima kasih sudah jadi cerita indah ✨","Sifta tangguh, semoga impian tercapai 💕","Dikelilingi orang baik selalu 🥳","Hari-hari penuh berkah di usia 21 🌌"];
-        function generateLoveReason(){playPopSound();spawnMegaRainBurst(20);document.getElementById('loveReasonText').textContent=loveReasons[Math.floor(Math.random()*loveReasons.length)];}
+        function stopMic(){ if(micStream){ micStream.getTracks().forEach(t=>t.stop()); micStream=null; } if(micCtx) micCtx.close(); }
+
+        function blow(){
+            if(blown) return; blown=true; stopMic();
+            document.getElementById('candleFlame').style.display='none';
+            document.getElementById('blowText').textContent='✨ HARAPAN TELAH DITIUP ✨';
+            playPopSound(); megaRain(100);
+            // Ganti musik ke celebration
+            switchToCelebrationMusic();
+            confetti({particleCount:200, spread:110, origin:{y:0.6}, colors:['#fde047','#f472b6','#a855f7','#fff']});
+            for(let i=0;i<15;i++) setTimeout(()=>{ const s=document.createElement('div'); s.className='smoke-particle'; s.style.marginLeft=`${(Math.random()-0.5)*40}px`; document.getElementById('cakeWidget').appendChild(s); setTimeout(()=>s.remove(),1200); },i*80);
+            setTimeout(()=>{
+                const ov=document.createElement('div'); ov.style.cssText='position:fixed;inset:0;background:black;z-index:10000;opacity:0;transition:0.8s;display:flex;align-items:center;justify-content:center;';
+                ov.innerHTML='<div style="font-family:Cinzel;font-size:3rem;color:#fde047;text-shadow:0 0 40px #f472b6;opacity:0;transform:scale(0.8);transition:1s;">🌸 Happy 21st, Sifta! 🌸</div>';
+                document.body.appendChild(ov); requestAnimationFrame(()=>{ ov.style.opacity='1'; setTimeout(()=>{ ov.children[0].style.opacity='1'; ov.children[0].style.transform='scale(1)'; },300); });
+                setTimeout(()=>{ ov.style.opacity='0'; setTimeout(()=>ov.remove(),800);
+                    document.getElementById('letterBox').style.display='block';
+                    document.getElementById('reasonSection').style.display='block';
+                    document.getElementById('resetBtn').style.display='inline-flex';
+                },3500);
+            },800);
+        }
+
+        window.blowCandle = ()=>{ if(blown) return; startMic(); setTimeout(()=>{ if(!blown && !micStream) blow(); },350); };
+
+        const reasons = ["Bahagia selalu di usia 21 🌸","Sukses & tercapai impian ✨","Dikelilingi cinta 💕","Hari-hari penuh berkah 🌌"];
+        window.generateLoveReason = ()=>{ playPopSound(); megaRain(20); document.getElementById('loveReasonText').textContent = reasons[Math.floor(Math.random()*reasons.length)]; };
     </script>
 </body>
 </html>
