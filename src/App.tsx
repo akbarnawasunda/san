@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import { ArrowDown, ArrowRight, AudioLines, ChevronRight, CircleHelp, Heart, Moon, RotateCcw, Sparkles, Wind } from "lucide-react";
+import { ArchiveSeal, EnvelopeArtifact, HandDrawnStar, MemoryStrip, Waveform } from "./components/ArchiveArtifacts";
 import { ChallengeModal } from "./components/ChallengeModal";
 import { ConstellationMap } from "./components/ConstellationMap";
 import { challenges, BIRTHDAY_DATE, BIRTHDAY_DAY, positiveMessages, secretMemories, successMessages } from "./data/content";
@@ -178,6 +179,7 @@ function App() {
         {scene === "opening" && (
           <section className="opening-scene scene-content" aria-labelledby="opening-title">
             <div className="opening-index">A NOTE / 001</div>
+            <EnvelopeArtifact />
             <div className="opening-copy">
               <p className="eyebrow">For a day worth remembering</p>
               <h1 id="opening-title">Some days deserve<br /><em>their own sky.</em></h1>
@@ -203,6 +205,7 @@ function App() {
                 <div className="welcome-actions"><button className="action-button" type="button" onClick={startConstellation}>Enter the constellation <ArrowRight size={16} /></button><button className="subtle-button" type="button" onClick={() => announce(secretMemories[secretIndex])}><CircleHelp size={15} /> secret note</button></div>
               </div>
             </div>
+            <div className="welcome-art-row"><MemoryStrip /><div className="welcome-hand-note"><HandDrawnStar /><span>not everything<br />needs a photograph.</span></div><Waveform /></div>
             <div className="welcome-footer"><span>made by Akbar</span><span>no pressure / only good wishes</span></div>
           </section>
         )}
@@ -228,6 +231,7 @@ function App() {
             </div>
             <button className="action-button action-button-large" type="button" onClick={blowCandle}>{blown ? <><Wind size={17} /> The light is gone</> : <><Wind size={17} /> Blow the candle</>}</button>
             {microphone.supported && <button className="subtle-button mic-button" type="button" onClick={async () => { const ok = await microphone.start(); announce(ok ? "Mic ready. Blow gently near your phone." : "Mic unavailable. Use the button instead."); }}>{microphone.active ? <><AudioLines size={15} /> Mic listening…</> : <><Wind size={15} /> Or blow with mic</>}</button>}
+            <div className="victory-art-row"><ArchiveSeal /><Waveform /></div>
             <p className="microcopy">{BIRTHDAY_DATE} / one year softer, one year brighter.</p>
           </section>
         )}
@@ -235,7 +239,7 @@ function App() {
         {scene === "message" && (
           <section className="message-scene scene-content" aria-labelledby="message-title">
             <div className="message-layout"><div className="message-index">A NOTE<br /><strong>004</strong></div><div className="message-card"><p className="eyebrow">From Akbar / with good intent</p><h1 id="message-title">Happy birthday,<br /><em>Sifta.</em></h1><div className="message-copy"><p>Selamat ulang tahun untuk 19 September. Semoga di chapter baru ini, impianmu pelan-pelan menemukan jalannya.</p><p>Semoga dikelilingi orang-orang baik, punya ruang untuk tumbuh, dan tetap bisa menemukan hal-hal kecil yang membuatmu tersenyum.</p><p>Walaupun cerita kita sudah berada di bab yang berbeda, doa baik tetap boleh dikirim ke langit.</p><p className="signature">— Akbar</p></div><div className="message-actions"><button className="action-button" type="button" onClick={revealPositive}><Heart size={16} /> show a good thought</button><button className="subtle-button" type="button" onClick={reset}><RotateCcw size={15} /> replay</button></div><div className="positive-message" aria-live="polite">{positiveMessages[positiveIndex]}</div></div></div>
-            <div className="message-footer"><span>19 / 09 / 2005</span><span>some good wishes never need a reply</span></div>
+            <div className="message-footer"><span>19 / 09 / 2005</span><span><HandDrawnStar /> some good wishes never need a reply</span></div>
           </section>
         )}
       </div>
