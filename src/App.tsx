@@ -1,9 +1,10 @@
 import { useCallback, useMemo, useState } from "react";
-import { ArrowDown, ArrowLeft, ArrowRight, AudioLines, CakeSlice, ChevronRight, CircleHelp, Heart, Moon, RotateCcw, Sparkles, Star, Wind, X } from "lucide-react";
+import { ArrowDown, ArrowRight, AudioLines, ChevronRight, CircleHelp, Heart, Moon, RotateCcw, Sparkles, Wind } from "lucide-react";
 import { ChallengeModal } from "./components/ChallengeModal";
 import { ConstellationMap } from "./components/ConstellationMap";
 import { challenges, BIRTHDAY_DATE, BIRTHDAY_DAY, positiveMessages, secretMemories, successMessages } from "./data/content";
 import { useAudio } from "./effects/useAudio";
+import { useMicrophoneBlow } from "./effects/useMicrophoneBlow";
 import { useStarfield } from "./effects/useStarfield";
 import "./styles/app.css";
 
@@ -22,6 +23,18 @@ function App() {
   const [positiveIndex, setPositiveIndex] = useState(0);
   const [blown, setBlown] = useState(false);
   const [toast, setToast] = useState("");
+
+  const blowCandle = useCallback(() => {
+    if (blown) return;
+    setBlown(true);
+    audio.play("airBlow");
+    window.setTimeout(() => audio.play("bubble"), 520);
+    window.setTimeout(() => {
+      audio.play("afterBlow");
+      setScene("message");
+    }, 1080);
+  }, [audio, blown]);
+  const microphone = useMicrophoneBlow(blowCandle);
 
   const completedCount = completed.filter(Boolean).length;
   const active = activeChallenge === null ? null : challenges[activeChallenge];
@@ -115,17 +128,6 @@ function App() {
     audio.play("victory");
     setScene("victory");
     announce("Jalur cepat terbuka.");
-  };
-
-  const blowCandle = () => {
-    if (blown) return;
-    setBlown(true);
-    audio.play("airBlow");
-    window.setTimeout(() => audio.play("bubble"), 520);
-    window.setTimeout(() => {
-      audio.play("afterBlow");
-      setScene("message");
-    }, 1080);
   };
 
   const reset = () => {
@@ -225,6 +227,7 @@ function App() {
               <button className="candle" type="button" onClick={blowCandle} aria-label="Blow out the candle"><span className="flame" /><span className="candle-stick" /></button>
             </div>
             <button className="action-button action-button-large" type="button" onClick={blowCandle}>{blown ? <><Wind size={17} /> The light is gone</> : <><Wind size={17} /> Blow the candle</>}</button>
+            {microphone.supported && <button className="subtle-button mic-button" type="button" onClick={async () => { const ok = await microphone.start(); announce(ok ? "Mic ready. Blow gently near your phone." : "Mic unavailable. Use the button instead."); }}>{microphone.active ? <><AudioLines size={15} /> Mic listening…</> : <><Wind size={15} /> Or blow with mic</>}</button>}
             <p className="microcopy">{BIRTHDAY_DATE} / one year softer, one year brighter.</p>
           </section>
         )}
