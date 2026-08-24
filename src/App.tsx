@@ -9,7 +9,7 @@ import { useMicrophoneBlow } from "./effects/useMicrophoneBlow";
 import { useStarfield } from "./effects/useStarfield";
 import "./styles/app.css";
 
-type Scene = "opening" | "welcome" | "constellation" | "victory" | "message";
+type Scene = "opening" | "welcome" | "constellation" | "victory" | "surprise" | "message";
 
 function App() {
   const starfieldRef = useStarfield();
@@ -23,27 +23,40 @@ function App() {
   const [secretIndex, setSecretIndex] = useState(0);
   const [positiveIndex, setPositiveIndex] = useState(0);
   const [blown, setBlown] = useState(false);
+  const [candleReady, setCandleReady] = useState(false);
   const [toast, setToast] = useState("");
-
-  const blowCandle = useCallback(() => {
-    if (blown) return;
-    setBlown(true);
-    audio.play("airBlow");
-    window.setTimeout(() => audio.play("bubble"), 520);
-    window.setTimeout(() => {
-      audio.play("afterBlow");
-      setScene("message");
-    }, 1080);
-  }, [audio, blown]);
-  const microphone = useMicrophoneBlow(blowCandle);
-
-  const completedCount = completed.filter(Boolean).length;
-  const active = activeChallenge === null ? null : challenges[activeChallenge];
 
   const announce = useCallback((message: string) => {
     setToast(message);
     window.setTimeout(() => setToast(""), 2600);
   }, []);
+
+  const prepareCandle = useCallback(() => {
+    if (candleReady || blown) return;
+    setCandleReady(true);
+    audio.play("chime");
+    announce("Tarik napas. Pikirkan satu hal baik.");
+  }, [announce, audio, blown, candleReady]);
+
+  const blowCandle = useCallback(() => {
+    if (blown) return;
+    if (!candleReady) {
+      prepareCandle();
+      return;
+    }
+    setBlown(true);
+    audio.fadeOut("bgm", 720);
+    audio.play("airBlow");
+    window.setTimeout(() => audio.play("bubble"), 520);
+    window.setTimeout(() => {
+      audio.play("afterBlow");
+      setScene("surprise");
+    }, 1220);
+  }, [audio, blown, candleReady, prepareCandle]);
+  const microphone = useMicrophoneBlow(blowCandle);
+
+  const completedCount = completed.filter(Boolean).length;
+  const active = activeChallenge === null ? null : challenges[activeChallenge];
 
   const openWelcome = () => {
     audio.play("click");
@@ -141,6 +154,7 @@ function App() {
     setInputValue("");
     setFeedback("");
     setBlown(false);
+    setCandleReady(false);
     setScene("opening");
     announce("Kita kembali ke awal.");
   };
@@ -224,15 +238,30 @@ function App() {
             <div className="victory-ornament" aria-hidden="true"><Sparkles size={18} /><span>the sky is open</span><Sparkles size={18} /></div>
             <p className="eyebrow">Chapter three / a small wish</p>
             <h1 id="victory-title">You made it<br /><em>to the quiet part.</em></h1>
-            <p className="lede">Now make one wish before the last light changes shape.</p>
-            <div className={`cake-stage${blown ? " is-blown" : ""}`}>
-              <div className="cake-glow" /><div className="cake-plate" /><div className="cake"><div className="cake-top"><span>19</span></div><div className="cake-body" /><div className="cake-base" /></div>
-              <button className="candle" type="button" onClick={blowCandle} aria-label="Blow out the candle"><span className="flame" /><span className="candle-stick" /></button>
+            <p className="lede">{candleReady ? "Hold the wish for one quiet second, then let the light go." : "Before the surprise, make one wish that belongs only to you."}</p>
+            <div className={`cake-stage${blown ? " is-blown" : ""}${candleReady ? " is-prepared" : ""}`}>
+              <div className="cake-glow" /><div className="candle-halo" /><div className="cake-plate" /><div className="cake"><div className="cake-top"><span>19</span><i>SEP</i></div><div className="cake-body"><b /><b /><b /></div><div className="cake-base" /></div>
+              <button className="candle" type="button" onClick={blowCandle} aria-label={candleReady ? "Blow out the candle" : "Prepare the candle wish"}><span className="flame" /><span className="candle-glint" /><span className="candle-stick" /></button>
             </div>
-            <button className="action-button action-button-large" type="button" onClick={blowCandle}>{blown ? <><Wind size={17} /> The light is gone</> : <><Wind size={17} /> Blow the candle</>}</button>
-            {microphone.supported && <button className="subtle-button mic-button" type="button" onClick={async () => { const ok = await microphone.start(); announce(ok ? "Mic ready. Blow gently near your phone." : "Mic unavailable. Use the button instead."); }}>{microphone.active ? <><AudioLines size={15} /> Mic listening…</> : <><Wind size={15} /> Or blow with mic</>}</button>}
+            <p className="wish-instruction" aria-live="polite">{blown ? "The light has heard you." : candleReady ? "Now, gently." : "Make the wish first."}</p>
+            <button className="action-button action-button-large" type="button" onClick={candleReady ? blowCandle : prepareCandle}>{blown ? <><Wind size={17} /> The light is gone</> : candleReady ? <><Wind size={17} /> Blow the candle</> : <><Sparkles size={17} /> Make a wish</>}</button>
+            {microphone.supported && <button className="subtle-button mic-button" type="button" onClick={async () => { if (!candleReady) { prepareCandle(); announce("Mic siap setelah wish-mu dibuat."); return; } const ok = await microphone.start(); announce(ok ? "Mic ready. Blow gently near your phone." : "Mic unavailable. Use the button instead."); }}>{microphone.active ? <><AudioLines size={15} /> Mic listening…</> : <><Wind size={15} /> Or blow with mic</>}</button>}
             <div className="victory-art-row"><ArchiveSeal /><Waveform /></div>
             <p className="microcopy">{BIRTHDAY_DATE} / one year softer, one year brighter.</p>
+          </section>
+        )}
+
+        {scene === "surprise" && (
+          <section className="surprise-scene scene-content" aria-labelledby="surprise-title">
+            <div className="surprise-rays" aria-hidden="true"><span /><span /><span /><span /><span /><span /></div>
+            <div className="surprise-confetti" aria-hidden="true">{Array.from({ length: 18 }, (_, index) => <i key={index} style={{ "--n": index } as React.CSSProperties} />)}</div>
+            <div className="surprise-seal"><ArchiveSeal /><span>THE WISH<br />WAS SENT</span></div>
+            <p className="eyebrow">A little surprise / kept quiet</p>
+            <h1 id="surprise-title">The light went out.<br /><em>But the good part stayed.</em></h1>
+            <p className="lede">No photograph. No grand explanation. Just one small wish, sent carefully into the night.</p>
+            <div className="surprise-ticket"><span>19 SEP</span><strong>HAPPY<br />BIRTHDAY</strong><small>for Sifta / with good intent</small></div>
+            <button className="action-button action-button-large" type="button" onClick={() => { audio.play("magicWish"); setScene("message"); }}><Heart size={17} /> Open the note</button>
+            <p className="microcopy">wait for the quiet to settle.</p>
           </section>
         )}
 
