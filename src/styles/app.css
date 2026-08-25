@@ -598,3 +598,74 @@ button.is-pressed, .constellation-node.is-pressed { animation: buttonPop .44s va
 @media (prefers-reduced-motion: reduce) {
   .chapter-transition { display: none; } button.is-pressed, .constellation-node.is-pressed { animation: none !important; }
 }
+
+/* Signature moment animations by interaction type */
+.moment-fx { position: fixed; z-index: 22; inset: 0; overflow: hidden; pointer-events: none; }
+.moment-fx .moment-core { position: absolute; left: 50%; top: 50%; display: block; width: 18px; height: 18px; border-radius: 50%; transform: translate(-50%, -50%) scale(.2); opacity: 0; }
+.moment-fx i { position: absolute; left: 50%; top: 50%; display: block; opacity: 0; transform-origin: 0 0; }
+.moment-fx-rain .moment-core { background: rgba(180,148,207,.35); box-shadow: 0 0 0 7px rgba(180,148,207,.07), 0 0 62px rgba(180,148,207,.45); animation: momentCore .78s var(--ease) both; }
+.moment-fx-rain i { width: 1px; height: 36px; background: linear-gradient(180deg, transparent, rgba(255,245,248,.92), transparent); animation: momentRain .7s var(--ease) var(--moment-delay) both; }
+.moment-fx-paper .moment-core { border: 1px solid rgba(243,172,193,.8); background: rgba(255,245,248,.12); animation: momentCore .74s var(--ease) both; }
+.moment-fx-paper i { width: 12px; height: 16px; border: 1px solid rgba(255,245,248,.7); background: rgba(243,172,193,.16); animation: momentPaper .7s var(--ease) var(--moment-delay) both; }
+.moment-fx-star .moment-core { background: var(--champagne); box-shadow: 0 0 38px var(--champagne); animation: momentCore .7s var(--ease) both; }
+.moment-fx-star i { width: 5px; height: 5px; background: var(--champagne); transform: rotate(45deg); box-shadow: 0 0 12px currentColor; animation: momentStar .65s var(--ease) var(--moment-delay) both; }
+.moment-fx-candle .moment-core { width: 12px; height: 28px; border-radius: 70% 70% 70% 20%; background: var(--champagne); box-shadow: 0 0 44px var(--champagne), 0 0 80px rgba(243,172,193,.55); animation: momentFlame .72s var(--ease) both; }
+.moment-fx-candle i { width: 2px; height: 18px; background: linear-gradient(var(--paper), transparent); animation: momentEmber .72s var(--ease) var(--moment-delay) both; }
+.moment-fx-whisper .moment-core { width: 72px; height: 1px; border-radius: 0; background: linear-gradient(90deg, transparent, var(--champagne), transparent); animation: momentWhisper .72s var(--ease) both; }
+.moment-fx-whisper i { width: 42px; height: 1px; background: linear-gradient(90deg, transparent, rgba(243,172,193,.8), transparent); animation: momentWhisperLine .7s var(--ease) var(--moment-delay) both; }
+.moment-fx-bloom .moment-core { background: var(--rose); box-shadow: 0 0 0 8px rgba(223,134,167,.08), 0 0 58px rgba(223,134,167,.42); animation: momentCore .78s var(--ease) both; }
+.moment-fx-bloom i { width: 11px; height: 11px; border-radius: 60% 40% 60% 40%; background: var(--rose); box-shadow: 0 0 12px rgba(223,134,167,.68); animation: momentBloom .76s var(--ease) var(--moment-delay) both; }
+
+button.is-pressed.press-rain { animation-name: pressRain !important; }
+button.is-pressed.press-paper { animation-name: pressPaper !important; }
+button.is-pressed.press-star, .constellation-node.is-pressed.press-star { animation-name: pressStar !important; }
+button.is-pressed.press-candle { animation-name: pressCandle !important; }
+button.is-pressed.press-whisper { animation-name: pressWhisper !important; }
+button.is-pressed.press-bloom { animation-name: pressBloom !important; }
+
+@keyframes momentCore { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.15); } 35% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -50%) scale(7); } }
+@keyframes momentRain { 0% { opacity: 0; transform: rotate(var(--moment-angle)) translateY(-15vh) scaleY(.2); } 26% { opacity: .9; } 100% { opacity: 0; transform: rotate(var(--moment-angle)) translateY(38vh) scaleY(1); } }
+@keyframes momentPaper { 0% { opacity: 0; transform: rotate(var(--moment-angle)) translateX(0) rotate(0); } 24% { opacity: .85; } 100% { opacity: 0; transform: rotate(var(--moment-angle)) translateX(34vw) rotate(210deg); } }
+@keyframes momentStar { 0% { opacity: 1; transform: rotate(var(--moment-angle)) translateX(0) scale(.3); } 100% { opacity: 0; transform: rotate(var(--moment-angle)) translateX(30vw) scale(1.4); } }
+@keyframes momentFlame { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.25) rotate(35deg); } 45% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -60%) scale(5) rotate(35deg); } }
+@keyframes momentEmber { 0% { opacity: 1; transform: rotate(var(--moment-angle)) translateY(0); } 100% { opacity: 0; transform: rotate(var(--moment-angle)) translateY(-28vh); } }
+@keyframes momentWhisper { 0% { opacity: 0; transform: translate(-50%, -50%) scaleX(.1); } 30% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -50%) scaleX(9); } }
+@keyframes momentWhisperLine { 0% { opacity: 0; transform: rotate(var(--moment-angle)) translateX(0); } 30% { opacity: .85; } 100% { opacity: 0; transform: rotate(var(--moment-angle)) translateX(24vw); } }
+@keyframes momentBloom { 0% { opacity: 1; transform: rotate(var(--moment-angle)) translateX(0) scale(.25); } 100% { opacity: 0; transform: rotate(var(--moment-angle)) translateX(28vw) rotate(140deg) scale(1.25); } }
+@keyframes pressRain { 0% { transform: scale(1); } 35% { transform: translateY(3px) scale(.93); } 70% { transform: translateY(-3px) scale(1.035); } 100% { transform: scale(1); } }
+@keyframes pressPaper { 0% { transform: rotate(0) scale(1); } 40% { transform: rotate(-3deg) scale(.92); } 78% { transform: rotate(2deg) scale(1.04); } 100% { transform: rotate(0) scale(1); } }
+@keyframes pressStar { 0% { transform: scale(1) rotate(0); } 40% { transform: scale(.82) rotate(-12deg); } 72% { transform: scale(1.15) rotate(8deg); } 100% { transform: scale(1) rotate(0); } }
+@keyframes pressCandle { 0% { transform: scale(1); } 42% { transform: translateY(4px) scale(.9); } 78% { transform: translateY(-5px) scale(1.06); } 100% { transform: scale(1); } }
+@keyframes pressWhisper { 0% { transform: translateX(0); } 45% { transform: translateX(5px) scale(.95); } 100% { transform: translateX(0); } }
+@keyframes pressBloom { 0% { transform: scale(1); } 38% { transform: scale(.9) rotate(-2deg); } 72% { transform: scale(1.075) rotate(2deg); } 100% { transform: scale(1); } }
+
+@media (max-width: 760px) { .moment-fx i { transform-origin: 0 0; } }
+@media (prefers-reduced-motion: reduce) { .moment-fx { display: none; } button.is-pressed { animation: none !important; } }
+
+/* Final performance guardrails for signature moments */
+.moment-fx { contain: layout paint style; }
+.moment-fx .moment-core, .moment-fx i { will-change: transform, opacity; }
+@media (max-width: 760px) {
+  .moment-fx i:nth-of-type(n + 7) { display: none; }
+  .moment-fx-candle i:nth-of-type(n + 5), .moment-fx-whisper i:nth-of-type(n + 5) { display: none; }
+}
+
+/* Cinematic material realism pass */
+.app-shell { background: radial-gradient(ellipse at 72% 12%, rgba(204, 162, 213, .18), transparent 29%), radial-gradient(ellipse at 16% 93%, rgba(178, 60, 94, .22), transparent 34%), linear-gradient(135deg, #120c17 0%, #201026 48%, #150d1c 100%); }
+.app-shell::after { opacity: .34; background: linear-gradient(112deg, transparent 0 46%, rgba(255,245,248,.045) 46.1%, transparent 46.4%), linear-gradient(23deg, transparent 0 70%, rgba(223,134,167,.08) 70.1%, transparent 70.4%), repeating-linear-gradient(175deg, transparent 0 31px, rgba(255,255,255,.012) 32px 33px, transparent 34px 60px); }
+.rain-layer { background: linear-gradient(180deg, rgba(6,5,12,.12), transparent 42%, rgba(15,7,18,.12)); }
+.rain-layer::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 68% 9%, rgba(255,233,244,.12), transparent 24%), linear-gradient(106deg, transparent 12%, rgba(255,245,248,.035) 37%, transparent 55%); pointer-events: none; }
+.rain-layer i:nth-child(3n) { width: 2px; height: 45px; opacity: .54; }.rain-layer i:nth-child(4n) { height: 20px; opacity: .35; }.rain-layer i:nth-child(5n) { opacity: .72; }
+.scene-prologue::after { content: ""; position: absolute; z-index: -1; right: -2%; bottom: -2%; width: 58%; height: 26%; background: radial-gradient(ellipse at center, rgba(248,154,191,.11), rgba(180,148,207,.045) 34%, transparent 70%); transform: skewX(-14deg); opacity: .8; pointer-events: none; }
+.prologue-photo-frame { box-shadow: inset 0 0 0 1px rgba(255,245,248,.34), inset 0 -30px 32px rgba(34,9,25,.22); }
+.prologue-photo-frame::before { content: ""; position: absolute; z-index: 2; inset: 0; background-image: radial-gradient(ellipse at 16% 12%, rgba(255,255,255,.32) 0 1px, transparent 2px), radial-gradient(ellipse at 82% 25%, rgba(255,255,255,.18) 0 1px, transparent 2px), linear-gradient(101deg, transparent 0 46%, rgba(255,255,255,.08) 46.5% 47.2%, transparent 48%); background-size: 76px 92px, 113px 133px, 100% 100%; opacity: .75; pointer-events: none; }
+.prologue-photo-frame img { filter: saturate(.96) contrast(1.09) brightness(.92); }
+.prologue-portrait { border: 1px solid rgba(255,255,255,.4); background: linear-gradient(135deg, #fffdf8, #e8dfd6 82%); box-shadow: 24px 39px 60px rgba(0,0,0,.44), -7px -5px 24px rgba(255,233,245,.08), inset 0 0 0 1px rgba(129,74,72,.12); }
+.opening-photo-note, .portrait-card { background: linear-gradient(135deg, #fffdf9, #e9dfd5 88%); box-shadow: 16px 24px 44px rgba(0,0,0,.32), inset 0 0 0 1px rgba(120,76,72,.14); }
+.message-card { background: linear-gradient(145deg, rgba(255,247,239,.12), rgba(255,255,255,.025) 52%, rgba(177,111,144,.08)); box-shadow: 0 34px 88px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.08); }
+.memory-gallery { background: linear-gradient(135deg, rgba(255,238,229,.15), rgba(255,255,255,.035) 48%, rgba(180,148,207,.1)); box-shadow: 0 37px 90px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.07); }
+.cake-glow { background: radial-gradient(ellipse at center, rgba(255,225,192,.42), rgba(243,172,193,.16) 45%, transparent 70%); }
+
+@media (max-width: 760px) {
+  .rain-layer i:nth-child(3n) { height: 30px; }.scene-prologue::after { width: 90%; height: 18%; }
+}
