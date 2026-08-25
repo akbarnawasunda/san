@@ -39,8 +39,8 @@ function App() {
   const navigateTo = useCallback((nextScene: Scene) => {
     if (transitioning) return;
     setTransitioning(true);
-    window.setTimeout(() => setScene(nextScene), 260);
-    window.setTimeout(() => setTransitioning(false), 620);
+    window.setTimeout(() => setScene(nextScene), 460);
+    window.setTimeout(() => setTransitioning(false), 1150);
   }, [transitioning]);
 
   const prepareCandle = useCallback(() => {
@@ -210,14 +210,14 @@ function App() {
     const pressClass = `press-${momentKind}`;
     interactive.classList.remove("is-pressed", "press-rain", "press-paper", "press-star", "press-candle", "press-whisper", "press-bloom");
     window.requestAnimationFrame(() => interactive.classList.add("is-pressed", pressClass));
-    window.setTimeout(() => interactive.classList.remove("is-pressed", pressClass), 520);
+    window.setTimeout(() => interactive.classList.remove("is-pressed", pressClass), 780);
     const momentEvent = { id: Date.now() + Math.round(Math.random() * 1000), kind: momentKind };
     setMoment(momentEvent);
-    window.setTimeout(() => setMoment((current) => current?.id === momentEvent.id ? null : current), 820);
+    window.setTimeout(() => setMoment((current) => current?.id === momentEvent.id ? null : current), 1320);
     const bounds = event.currentTarget.getBoundingClientRect();
     const burst = { id: Date.now() + Math.round(Math.random() * 1000), x: event.clientX - bounds.left, y: event.clientY - bounds.top };
     setBursts((current) => [...current.slice(-2), burst]);
-    window.setTimeout(() => setBursts((current) => current.filter((item) => item.id !== burst.id)), 620);
+    window.setTimeout(() => setBursts((current) => current.filter((item) => item.id !== burst.id)), 1050);
   }, []);
   const sceneClass = useMemo(() => `app-shell scene-${scene}`, [scene]);
 
@@ -227,7 +227,7 @@ function App() {
       <div className="ambient ambient-one" aria-hidden="true" />
       <div className="ambient ambient-two" aria-hidden="true" />
       <div className="grain" aria-hidden="true" />
-      <div className="rain-layer" aria-hidden="true">{Array.from({ length: 26 }, (_, index) => <i key={index} style={{ "--i": index, "--x": `${(index * 37) % 101}%`, "--delay": `${(index % 11) * -0.41}s`, "--duration": `${0.72 + (index % 7) * 0.13}s` } as React.CSSProperties} />)}</div>
+      <div className="rain-layer" aria-hidden="true">{Array.from({ length: 26 }, (_, index) => <i key={index} style={{ "--i": index, "--x": `${(index * 37) % 101}%`, "--delay": `${(index % 11) * -0.41}s`, "--duration": `${1.4 + (index % 7) * 0.18}s` } as React.CSSProperties} />)}</div>
       <StickerShower />
       <ClickBursts bursts={bursts} />
       <MomentFX event={moment} />
