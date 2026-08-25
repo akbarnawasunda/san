@@ -1,6 +1,7 @@
-import { useCallback, useMemo, useState, type PointerEvent } from "react";
+import { useCallback, useMemo, useState, type MouseEvent, type PointerEvent } from "react";
 import { ArrowDown, ArrowRight, AudioLines, ChevronRight, CircleHelp, Heart, Moon, RotateCcw, Sparkles, Wind } from "lucide-react";
 import { ArchiveSeal, EnvelopeArtifact, HandDrawnStar, MemoryStrip, Waveform } from "./components/ArchiveArtifacts";
+import { ClickBursts, StickerShower, type ClickBurst } from "./components/CelebrationFX";
 import { MemoryGallery } from "./components/MemoryGallery";
 import { ChallengeModal } from "./components/ChallengeModal";
 import { ConstellationMap } from "./components/ConstellationMap";
@@ -26,6 +27,7 @@ function App() {
   const [blown, setBlown] = useState(false);
   const [candleReady, setCandleReady] = useState(false);
   const [toast, setToast] = useState("");
+  const [bursts, setBursts] = useState<ClickBurst[]>([]);
 
   const announce = useCallback((message: string) => {
     setToast(message);
@@ -191,15 +193,26 @@ function App() {
     event.currentTarget.style.setProperty("--pointer-translate-x", "0px");
     event.currentTarget.style.setProperty("--pointer-translate-y", "0px");
   }, []);
+  const handleGlobalClick = useCallback((event: MouseEvent<HTMLElement>) => {
+    const target = event.target as Element;
+    const interactive = target.closest("button, .constellation-node");
+    if (!interactive) return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const burst = { id: Date.now() + Math.round(Math.random() * 1000), x: event.clientX - bounds.left, y: event.clientY - bounds.top };
+    setBursts((current) => [...current.slice(-5), burst]);
+    window.setTimeout(() => setBursts((current) => current.filter((item) => item.id !== burst.id)), 850);
+  }, []);
   const sceneClass = useMemo(() => `app-shell scene-${scene}`, [scene]);
 
   return (
-    <main className={sceneClass} onPointerMove={handlePointerMove} onPointerLeave={resetPointer}>
+    <main className={sceneClass} onClick={handleGlobalClick} onPointerMove={handlePointerMove} onPointerLeave={resetPointer}>
       <canvas ref={starfieldRef} className="starfield" aria-hidden="true" />
       <div className="ambient ambient-one" aria-hidden="true" />
       <div className="ambient ambient-two" aria-hidden="true" />
       <div className="grain" aria-hidden="true" />
       <div className="rain-layer" aria-hidden="true">{Array.from({ length: 58 }, (_, index) => <i key={index} style={{ "--i": index, "--x": `${(index * 37) % 101}%`, "--delay": `${(index % 11) * -0.41}s`, "--duration": `${0.72 + (index % 7) * 0.13}s` } as React.CSSProperties} />)}</div>
+      <StickerShower />
+      <ClickBursts bursts={bursts} />
       <header className="site-header">
         <button className="wordmark" type="button" onClick={reset} aria-label="Restart experience">
           <span className="wordmark-mark"><Moon size={16} /></span>

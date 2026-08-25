@@ -534,3 +534,32 @@ h1 em, h2 em { color: var(--champagne); font-family: "DM Serif Display", Georgia
 @media (prefers-reduced-motion: reduce) {
   .rain-layer { opacity: .2; }.rain-layer i { animation: none; transform: rotate(13deg); }.prologue-copy .eyebrow, .prologue-copy h1, .prologue-copy .lede, .prologue-button, .prologue-hint, .prologue-portrait, .prologue-ripple { animation: none !important; }
 }
+
+/* Sticker rain + click celebration system */
+.sticker-shower { position: fixed; z-index: 0; inset: 0; overflow: hidden; pointer-events: none; opacity: .42; }
+.shower-sticker { position: absolute; top: -22vh; left: var(--sticker-x); width: var(--sticker-size); max-width: 11vw; height: auto; filter: drop-shadow(0 12px 11px rgba(0,0,0,.18)); opacity: 0; transform: rotate(var(--sticker-rotate)); animation: stickerRain var(--sticker-duration) linear var(--sticker-delay) infinite; }
+.scene-prologue .sticker-shower { opacity: .7; }.scene-victory .sticker-shower, .scene-surprise .sticker-shower { opacity: .58; }
+.scene-message .sticker-shower { opacity: .26; }
+.click-bursts { position: fixed; z-index: 12; inset: 0; pointer-events: none; }
+.click-burst { position: fixed; left: var(--burst-x); top: var(--burst-y); display: block; width: 1px; height: 1px; }
+.click-burst b { position: absolute; left: 50%; top: 50%; display: block; width: 13px; height: 13px; border: 1px solid rgba(255,244,248,.88); border-radius: 50%; box-shadow: 0 0 0 4px rgba(243,172,193,.16), 0 0 22px rgba(243,172,193,.48); transform: translate(-50%, -50%) scale(.4); animation: clickRing .75s var(--ease) forwards; }
+.click-burst i { position: absolute; left: 50%; top: 50%; display: block; width: 5px; height: 5px; border-radius: 50%; background: var(--champagne); box-shadow: 0 0 10px currentColor; opacity: 0; transform: translate(-50%, -50%) rotate(var(--burst-angle)) translateX(0) scale(.5); animation: clickSpark .7s var(--ease) forwards; }
+.click-burst i:nth-child(2n) { background: var(--rose); }.click-burst i:nth-child(3n) { background: var(--violet); }.click-burst i:nth-child(5n) { width: 3px; height: 10px; border-radius: 0; }
+
+@keyframes stickerRain {
+  0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(var(--sticker-rotate)) scale(.72); }
+  9% { opacity: .82; }
+  84% { opacity: .58; }
+  100% { opacity: 0; transform: translate3d(var(--sticker-drift), 128vh, 0) rotate(calc(var(--sticker-rotate) + 165deg)) scale(1.08); }
+}
+@keyframes clickRing { 0% { opacity: .9; transform: translate(-50%, -50%) scale(.35); } 72% { opacity: .24; } 100% { opacity: 0; transform: translate(-50%, -50%) scale(5.2); } }
+@keyframes clickSpark { 0% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--burst-angle)) translateX(0) scale(.45); } 52% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--burst-angle)) translateX(var(--burst-distance)) scale(1); } }
+
+@media (max-width: 760px) {
+  .sticker-shower { opacity: .29; }.scene-prologue .sticker-shower { opacity: .47; }
+  .shower-sticker { max-width: 16vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sticker-shower { opacity: .17; }.shower-sticker { animation: none; transform: rotate(var(--sticker-rotate)); }.click-bursts { display: none; }
+}
