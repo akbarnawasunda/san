@@ -7,22 +7,22 @@ export type ClickBurst = {
 };
 
 const stickerAssets = [
-  "/memory-assets/glitter-heart.png",
-  "/memory-assets/striped-heart.png",
-  "/memory-assets/gingham-bow.png",
-  "/memory-assets/ivory-bow.png",
+  "/memory-assets/optimized/glitter-heart.webp",
+  "/memory-assets/optimized/striped-heart.webp",
+  "/memory-assets/optimized/gingham-bow.webp",
+  "/memory-assets/optimized/ivory-bow.webp",
 ];
 
 export function StickerShower() {
-  const stickers = useMemo(() => Array.from({ length: 30 }, (_, index) => {
-    const size = 42 + ((index * 19) % 58);
+  const stickers = useMemo(() => Array.from({ length: 12 }, (_, index) => {
+    const size = 36 + ((index * 17) % 42);
     return {
       id: index,
       src: stickerAssets[index % stickerAssets.length],
       x: ((index * 43) % 106) - 3,
       size,
       delay: `-${((index * 0.79) % 9.5).toFixed(2)}s`,
-      duration: `${(11 + ((index * 1.37) % 7)).toFixed(2)}s`,
+      duration: `${(13 + ((index * 1.37) % 6)).toFixed(2)}s`,
       drift: `${((index % 2 === 0 ? 1 : -1) * (22 + ((index * 7) % 28))).toFixed(0)}px`,
       rotate: `${((index * 37) % 50) - 25}deg`,
     };
@@ -55,7 +55,7 @@ export function ClickBursts({ bursts }: { bursts: ClickBurst[] }) {
     <div className="click-bursts" aria-hidden="true">
       {bursts.map((burst) => (
         <span className="click-burst" key={burst.id} style={{ "--burst-x": `${burst.x}px`, "--burst-y": `${burst.y}px` } as CSSProperties}>
-          {Array.from({ length: 8 }, (_, index) => <i key={index} style={{ "--burst-angle": `${index * 45}deg`, "--burst-distance": `${25 + (index % 3) * 8}px` } as CSSProperties} />)}
+          {Array.from({ length: 6 }, (_, index) => <i key={index} style={{ "--burst-angle": `${index * 60}deg`, "--burst-distance": `${23 + (index % 3) * 7}px` } as CSSProperties} />)}
           <b />
         </span>
       ))}

@@ -563,3 +563,10 @@ h1 em, h2 em { color: var(--champagne); font-family: "DM Serif Display", Georgia
 @media (prefers-reduced-motion: reduce) {
   .sticker-shower { opacity: .17; }.shower-sticker { animation: none; transform: rotate(var(--sticker-rotate)); }.click-bursts { display: none; }
 }
+
+/* Performance pass: lighter ambience with the same visual language */
+.rain-layer { mix-blend-mode: normal; }
+.sticker-shower { contain: layout paint style; opacity: .36; }
+.scene-prologue .sticker-shower { opacity: .55; }.scene-victory .sticker-shower, .scene-surprise .sticker-shower { opacity: .45; }
+.shower-sticker { filter: none; will-change: transform, opacity; }
+.click-burst b { box-shadow: 0 0 0 3px rgba(243,172,193,.13), 0 0 14px rgba(243,172,193,.32); }

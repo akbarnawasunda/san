@@ -199,8 +199,8 @@ function App() {
     if (!interactive) return;
     const bounds = event.currentTarget.getBoundingClientRect();
     const burst = { id: Date.now() + Math.round(Math.random() * 1000), x: event.clientX - bounds.left, y: event.clientY - bounds.top };
-    setBursts((current) => [...current.slice(-5), burst]);
-    window.setTimeout(() => setBursts((current) => current.filter((item) => item.id !== burst.id)), 850);
+    setBursts((current) => [...current.slice(-2), burst]);
+    window.setTimeout(() => setBursts((current) => current.filter((item) => item.id !== burst.id)), 620);
   }, []);
   const sceneClass = useMemo(() => `app-shell scene-${scene}`, [scene]);
 
@@ -210,7 +210,7 @@ function App() {
       <div className="ambient ambient-one" aria-hidden="true" />
       <div className="ambient ambient-two" aria-hidden="true" />
       <div className="grain" aria-hidden="true" />
-      <div className="rain-layer" aria-hidden="true">{Array.from({ length: 58 }, (_, index) => <i key={index} style={{ "--i": index, "--x": `${(index * 37) % 101}%`, "--delay": `${(index % 11) * -0.41}s`, "--duration": `${0.72 + (index % 7) * 0.13}s` } as React.CSSProperties} />)}</div>
+      <div className="rain-layer" aria-hidden="true">{Array.from({ length: 26 }, (_, index) => <i key={index} style={{ "--i": index, "--x": `${(index * 37) % 101}%`, "--delay": `${(index % 11) * -0.41}s`, "--duration": `${0.72 + (index % 7) * 0.13}s` } as React.CSSProperties} />)}</div>
       <StickerShower />
       <ClickBursts bursts={bursts} />
       <header className="site-header">
