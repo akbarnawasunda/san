@@ -480,3 +480,57 @@ h1 em, h2 em { color: var(--champagne); font-family: "DM Serif Display", Georgia
 }
 
 .action-button { transition: transform .2s var(--ease), border-color .2s ease, background .2s ease, color .2s ease, box-shadow .2s ease; }
+
+/* Rainy birthday prologue */
+.rain-layer { position: fixed; z-index: 0; inset: 0; overflow: hidden; pointer-events: none; opacity: .48; mix-blend-mode: screen; }
+.rain-layer::after { content: ""; position: absolute; inset: auto -10% 0; height: 24vh; background: linear-gradient(180deg, transparent, rgba(171, 102, 151, .08)); filter: blur(18px); }
+.rain-layer i { position: absolute; top: -18%; left: var(--x); display: block; width: 1px; height: clamp(14px, 2.6vh, 30px); border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,235,247,.74), rgba(255,255,255,0)); opacity: calc(.18 + (var(--i) % 5) * .08); transform: rotate(13deg); animation: rainfall var(--duration) linear var(--delay) infinite; }
+.scene-prologue { background: radial-gradient(ellipse at 72% 88%, rgba(245, 148, 189, .11), transparent 29%), radial-gradient(ellipse at 20% 23%, rgba(180, 148, 207, .15), transparent 32%), linear-gradient(145deg, rgba(12, 10, 18, .33), transparent); }
+.scene-prologue .rain-layer { opacity: .7; }
+.scene-prologue .starfield { opacity: .45; }
+.scene-prologue .site-footer { opacity: .45; }
+.prologue-scene { position: relative; display: grid; grid-template-columns: minmax(0, .96fr) minmax(270px, .64fr); align-items: center; gap: clamp(42px, 8vw, 130px); overflow: hidden; }
+.prologue-scene::before { content: ""; position: absolute; z-index: -1; right: -8%; bottom: -20%; width: min(65vw, 860px); height: min(42vw, 520px); border-radius: 50%; background: radial-gradient(ellipse at center, rgba(239, 161, 195, .11), transparent 67%); filter: blur(8px); }
+.prologue-copy { position: relative; z-index: 2; max-width: 700px; padding-left: clamp(0px, 5vw, 70px); }
+.prologue-kicker { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 34px; color: rgba(255,245,248,.72); font-size: 9px; font-weight: 800; letter-spacing: .2em; }
+.prologue-kicker::before { content: ""; width: 36px; height: 1px; background: var(--champagne); box-shadow: 0 0 12px var(--champagne); }
+.prologue-copy .eyebrow { animation: softRise .7s var(--ease) .08s both; }
+.prologue-copy h1 { max-width: 760px; margin-bottom: 27px; font-size: clamp(3.9rem, 9.7vw, 8.8rem); animation: softRise .85s var(--ease) .15s both; }
+.prologue-copy .lede { max-width: 465px; margin-bottom: 36px; color: #d1c6d3; animation: softRise .75s var(--ease) .28s both; }
+.prologue-button { position: relative; display: inline-flex; align-items: center; gap: 11px; min-height: 52px; padding: 0 19px; border: 1px solid rgba(243,172,193,.68); color: var(--paper); background: rgba(242, 166, 194, .1); box-shadow: 0 16px 36px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.12); cursor: pointer; font-size: 11px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; transition: transform .28s var(--ease), background .25s ease, box-shadow .28s ease; animation: softRise .75s var(--ease) .36s both; }
+.prologue-button::before { content: ""; position: absolute; inset: 5px; border: 1px solid rgba(255,245,248,.16); pointer-events: none; }
+.prologue-button:hover { transform: translateY(-5px) rotate(-.5deg); background: rgba(243,172,193,.23); box-shadow: 0 24px 44px rgba(0,0,0,.26), 0 0 0 7px rgba(243,172,193,.05); }
+.prologue-button:active { transform: translateY(-1px) scale(.97); }
+.prologue-hint { display: block; margin: 17px 0 0 2px; color: var(--muted); font-family: "DM Serif Display", Georgia, serif; font-size: 15px; font-style: italic; opacity: .88; animation: softRise .75s var(--ease) .48s both; }
+.prologue-portrait { position: relative; z-index: 1; width: min(100%, 354px); margin: 8vh auto 0; padding: 11px 11px 51px; background: #f8f1eb; box-shadow: 20px 31px 58px rgba(0,0,0,.37), -1px -1px 0 rgba(255,255,255,.35); transform: rotate(5deg); animation: prologuePhotoIn 1.15s var(--ease) .12s both; }
+.prologue-photo-frame { position: relative; overflow: hidden; background: #3a1d31; }
+.prologue-photo-frame::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, rgba(255,255,255,.18), transparent 24% 68%, rgba(255,255,255,.06)); mix-blend-mode: screen; pointer-events: none; }
+.prologue-photo-frame img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; filter: saturate(.92) contrast(1.05); }
+.prologue-photo-frame span { position: absolute; z-index: 1; right: 8px; bottom: 8px; padding: 4px 6px; color: #fff8ef; background: rgba(54,18,39,.7); font-size: 8px; font-weight: 800; letter-spacing: .16em; }
+.prologue-portrait figcaption { position: absolute; right: 15px; bottom: 13px; color: #873f4d; font-family: "DM Serif Display", Georgia, serif; font-size: 19px; font-style: italic; line-height: .85; text-align: right; }
+.prologue-heart { position: absolute; z-index: 2; bottom: -37px; left: -41px; width: 108px; filter: drop-shadow(0 15px 14px rgba(0,0,0,.22)); transform: rotate(-13deg); animation: stickerPulse 5.5s ease-in-out infinite; }
+.prologue-ripple { position: absolute; z-index: -1; border: 1px solid rgba(243,172,193,.16); border-radius: 50%; opacity: .62; animation: rainRipple 4.6s ease-out infinite; }
+.prologue-ripple-one { right: 6%; bottom: 5%; width: 208px; height: 58px; transform: rotate(-11deg); }
+.prologue-ripple-two { right: 28%; bottom: 13%; width: 126px; height: 36px; animation-delay: -2.4s; }
+
+@keyframes rainfall { from { transform: translate3d(0, -18vh, 0) rotate(13deg); } to { transform: translate3d(-12vw, 124vh, 0) rotate(13deg); } }
+@keyframes prologuePhotoIn { from { opacity: 0; transform: translateY(46px) rotate(9deg) scale(.92); filter: blur(4px); } to { opacity: 1; transform: translateY(0) rotate(5deg) scale(1); filter: blur(0); } }
+@keyframes rainRipple { 0% { opacity: 0; transform: rotate(-11deg) scale(.7); } 24% { opacity: .52; } 100% { opacity: 0; transform: rotate(-11deg) scale(1.42); } }
+
+@media (max-width: 760px) {
+  .rain-layer { opacity: .35; }.scene-prologue .rain-layer { opacity: .5; }
+  .prologue-scene { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 22px; padding-top: 122px; padding-bottom: 80px; }
+  .prologue-copy { max-width: 620px; padding: 0; }.prologue-kicker { margin-bottom: 21px; }
+  .prologue-copy h1 { font-size: clamp(3.45rem, 15vw, 5.75rem); }
+  .prologue-copy .lede { margin-bottom: 26px; }
+  .prologue-portrait { align-self: flex-end; width: min(69vw, 310px); margin: 6px 7vw 0 0; }
+  .prologue-ripple-one { right: -10%; bottom: 7%; }.prologue-ripple-two { display: none; }
+}
+
+@media (max-width: 460px) {
+  .rain-layer i { height: 17px; }.prologue-scene { gap: 17px; }.prologue-kicker { font-size: 8px; letter-spacing: .14em; }.prologue-copy h1 { font-size: clamp(3.2rem, 14.2vw, 4.6rem); }.prologue-portrait { width: min(77vw, 294px); margin-right: 4vw; padding: 8px 8px 40px; }.prologue-portrait figcaption { right: 11px; bottom: 10px; font-size: 16px; }.prologue-heart { left: -27px; bottom: -29px; width: 82px; }.prologue-hint { font-size: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rain-layer { opacity: .2; }.rain-layer i { animation: none; transform: rotate(13deg); }.prologue-copy .eyebrow, .prologue-copy h1, .prologue-copy .lede, .prologue-button, .prologue-hint, .prologue-portrait, .prologue-ripple { animation: none !important; }
+}

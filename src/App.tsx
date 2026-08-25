@@ -10,12 +10,12 @@ import { useMicrophoneBlow } from "./effects/useMicrophoneBlow";
 import { useStarfield } from "./effects/useStarfield";
 import "./styles/app.css";
 
-type Scene = "opening" | "welcome" | "constellation" | "victory" | "surprise" | "message";
+type Scene = "prologue" | "opening" | "welcome" | "constellation" | "victory" | "surprise" | "message";
 
 function App() {
   const starfieldRef = useStarfield();
   const audio = useAudio();
-  const [scene, setScene] = useState<Scene>("opening");
+  const [scene, setScene] = useState<Scene>("prologue");
   const [completed, setCompleted] = useState<boolean[]>(() => challenges.map(() => false));
   const [activeChallenge, setActiveChallenge] = useState<number | null>(null);
   const [clickProgress, setClickProgress] = useState(0);
@@ -58,6 +58,12 @@ function App() {
 
   const completedCount = completed.filter(Boolean).length;
   const active = activeChallenge === null ? null : challenges[activeChallenge];
+
+  const openOpening = () => {
+    audio.play("click");
+    audio.play("whoosh");
+    setScene("opening");
+  };
 
   const openWelcome = () => {
     audio.play("click");
@@ -156,7 +162,7 @@ function App() {
     setFeedback("");
     setBlown(false);
     setCandleReady(false);
-    setScene("opening");
+    setScene("prologue");
     announce("Kita kembali ke awal.");
   };
 
@@ -193,6 +199,7 @@ function App() {
       <div className="ambient ambient-one" aria-hidden="true" />
       <div className="ambient ambient-two" aria-hidden="true" />
       <div className="grain" aria-hidden="true" />
+      <div className="rain-layer" aria-hidden="true">{Array.from({ length: 58 }, (_, index) => <i key={index} style={{ "--i": index, "--x": `${(index * 37) % 101}%`, "--delay": `${(index % 11) * -0.41}s`, "--duration": `${0.72 + (index % 7) * 0.13}s` } as React.CSSProperties} />)}</div>
       <header className="site-header">
         <button className="wordmark" type="button" onClick={reset} aria-label="Restart experience">
           <span className="wordmark-mark"><Moon size={16} /></span>
@@ -206,6 +213,24 @@ function App() {
       </header>
 
       <div className="scene-wrap">
+        {scene === "prologue" && (
+          <section className="prologue-scene scene-content" aria-labelledby="prologue-title">
+            <div className="prologue-copy">
+              <p className="prologue-kicker">19 SEPTEMBER / A RAINY ARCHIVE</p>
+              <p className="eyebrow">Before the good wishes begin</p>
+              <h1 id="prologue-title">Tonight,<br /><em>the rain kept</em><br />your name.</h1>
+              <p className="lede">A small birthday archive opened quietly, while the city outside kept falling into soft light.</p>
+              <button className="prologue-button" type="button" onClick={openOpening}>Step into the night <ArrowRight size={17} /></button>
+              <span className="prologue-hint">tap when the rain feels right</span>
+            </div>
+            <figure className="prologue-portrait">
+              <div className="prologue-photo-frame"><img src="/memory-assets/portrait-shadow.jpg" alt="Portrait of Sifta in a pink-red hijab with soft dramatic light" /><span>19 / 09</span></div>
+              <figcaption>kept warm,<br />despite the weather.</figcaption>
+              <img className="prologue-heart" src="/memory-assets/glitter-heart.png" alt="" aria-hidden="true" />
+            </figure>
+            <div className="prologue-ripple prologue-ripple-one" aria-hidden="true" /><div className="prologue-ripple prologue-ripple-two" aria-hidden="true" />
+          </section>
+        )}
         {scene === "opening" && (
           <section className="opening-scene scene-content" aria-labelledby="opening-title">
             <div className="opening-index">A NOTE / 001</div>
