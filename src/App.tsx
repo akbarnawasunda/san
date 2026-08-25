@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { ArrowDown, ArrowRight, AudioLines, ChevronRight, CircleHelp, Heart, Moon, RotateCcw, Sparkles, Wind } from "lucide-react";
 import { ArchiveSeal, EnvelopeArtifact, HandDrawnStar, MemoryStrip, Waveform } from "./components/ArchiveArtifacts";
+import { MemoryGallery } from "./components/MemoryGallery";
 import { ChallengeModal } from "./components/ChallengeModal";
 import { ConstellationMap } from "./components/ConstellationMap";
 import { challenges, BIRTHDAY_DATE, BIRTHDAY_DAY, positiveMessages, secretMemories, successMessages } from "./data/content";
@@ -194,6 +195,11 @@ function App() {
           <section className="opening-scene scene-content" aria-labelledby="opening-title">
             <div className="opening-index">A NOTE / 001</div>
             <EnvelopeArtifact />
+            <div className="opening-photo-note" aria-hidden="true">
+              <img className="opening-portrait" src="/memory-assets/portrait-wood.jpg" alt="" />
+              <img className="opening-heart-sticker" src="/memory-assets/striped-heart.png" alt="" />
+              <span>kept for<br />the day</span>
+            </div>
             <div className="opening-copy">
               <p className="eyebrow">For a day worth remembering</p>
               <h1 id="opening-title">Some days deserve<br /><em>their own sky.</em></h1>
@@ -219,7 +225,8 @@ function App() {
                 <div className="welcome-actions"><button className="action-button" type="button" onClick={startConstellation}>Enter the constellation <ArrowRight size={16} /></button><button className="subtle-button" type="button" onClick={() => announce(secretMemories[secretIndex])}><CircleHelp size={15} /> secret note</button></div>
               </div>
             </div>
-            <div className="welcome-art-row"><MemoryStrip /><div className="welcome-hand-note"><HandDrawnStar /><span>not everything<br />needs a photograph.</span></div><Waveform /></div>
+            <img className="welcome-bow" src="/memory-assets/gingham-bow.png" alt="" aria-hidden="true" />
+            <div className="welcome-art-row"><MemoryStrip /><div className="welcome-hand-note"><HandDrawnStar /><span>some things are<br />worth keeping.</span></div><Waveform /></div>
             <div className="welcome-footer"><span>made by Akbar</span><span>no pressure / only good wishes</span></div>
           </section>
         )}
@@ -239,6 +246,7 @@ function App() {
             <p className="eyebrow">Chapter three / a small wish</p>
             <h1 id="victory-title">You made it<br /><em>to the quiet part.</em></h1>
             <p className="lede">{candleReady ? "Hold the wish for one quiet second, then let the light go." : "Before the surprise, make one wish that belongs only to you."}</p>
+            <img className="victory-heart-sticker" src="/memory-assets/striped-heart.png" alt="" aria-hidden="true" />
             <div className={`cake-stage${blown ? " is-blown" : ""}${candleReady ? " is-prepared" : ""}`}>
               <div className="cake-glow" /><div className="candle-halo" /><div className="cake-plate" /><div className="cake"><div className="cake-top"><span>19</span><i>SEP</i></div><div className="cake-body"><b /><b /><b /></div><div className="cake-base" /></div>
               <button className="candle" type="button" onClick={blowCandle} aria-label={candleReady ? "Blow out the candle" : "Prepare the candle wish"}><span className="flame" /><span className="candle-glint" /><span className="candle-stick" /></button>
@@ -269,6 +277,7 @@ function App() {
           <section className="message-scene scene-content" aria-labelledby="message-title">
             <div className="message-layout"><div className="message-index">A NOTE<br /><strong>004</strong></div><div className="message-card"><p className="eyebrow">From Akbar / with good intent</p><h1 id="message-title">Happy birthday,<br /><em>Sifta.</em></h1><div className="message-copy"><p>Selamat ulang tahun untuk 19 September. Semoga di chapter baru ini, impianmu pelan-pelan menemukan jalannya.</p><p>Semoga dikelilingi orang-orang baik, punya ruang untuk tumbuh, dan tetap bisa menemukan hal-hal kecil yang membuatmu tersenyum.</p><p>Walaupun cerita kita sudah berada di bab yang berbeda, doa baik tetap boleh dikirim ke langit.</p><p className="signature">— Akbar</p></div><div className="message-actions"><button className="action-button" type="button" onClick={revealPositive}><Heart size={16} /> show a good thought</button><button className="subtle-button" type="button" onClick={reset}><RotateCcw size={15} /> replay</button></div><div className="positive-message" aria-live="polite">{positiveMessages[positiveIndex]}</div></div></div>
             <div className="message-footer"><span>19 / 09 / 2005</span><span><HandDrawnStar /> some good wishes never need a reply</span></div>
+            <MemoryGallery />
           </section>
         )}
       </div>
