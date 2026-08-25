@@ -393,3 +393,90 @@ h1 em, h2 em { color: var(--champagne); font-family: "DM Serif Display", Georgia
   .portrait-card figcaption { right: 6px; bottom: 7px; font-size: .65rem; }
   .portrait-number { right: 4px; bottom: 4px; padding: 2px 3px; font-size: 6px; }
 }
+
+/* A softer, more tactile motion layer */
+.app-shell { --pointer-x: 0%; --pointer-y: 0%; --pointer-translate-x: 0px; --pointer-translate-y: 0px; background: radial-gradient(ellipse at calc(52% + var(--pointer-x)), calc(14% + var(--pointer-y)), rgba(228, 140, 180, .2), transparent 32%), radial-gradient(ellipse at calc(15% - var(--pointer-x)), calc(78% - var(--pointer-y)), rgba(223, 134, 167, .13), transparent 35%), var(--ink); }
+.app-shell::before { transition: opacity .5s ease; }
+.grain { opacity: .13; transition: opacity .5s ease; }
+.app-shell:hover .grain { opacity: .17; }
+.ambient { will-change: transform; }
+.scene-content { transition: filter .5s ease; }
+
+.opening-copy > .eyebrow, .opening-copy > h1, .opening-copy > .lede, .opening-copy > .opening-meta, .opening-copy > .text-link { animation: softRise .72s var(--ease) both; }
+.opening-copy > h1 { animation-delay: 80ms; }
+.opening-copy > .lede { animation-delay: 150ms; }
+.opening-copy > .opening-meta { animation-delay: 210ms; }
+.opening-copy > .text-link { animation-delay: 270ms; }
+.opening-photo-note { transform: translate3d(var(--pointer-translate-x), var(--pointer-translate-y), 0) rotate(5deg); transition: transform .65s var(--ease), filter .35s ease; animation: photoAppear .9s var(--ease) .18s both; }
+.opening-photo-note:hover { filter: brightness(1.05); }
+.opening-heart-sticker { animation: stickerPulse 5.5s ease-in-out infinite; }
+.envelope-art { transform: translate3d(var(--pointer-translate-x), var(--pointer-translate-y), 0) rotate(7deg); }
+
+.section-kicker { position: relative; }
+.section-kicker::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 72px; height: 1px; background: linear-gradient(90deg, var(--champagne), transparent); transform-origin: left; animation: lineBreathe 3.8s ease-in-out infinite; }
+.welcome-grid > div, .constellation-heading > div, .constellation-heading > p { animation: softRise .65s var(--ease) both; }
+.welcome-grid > div:nth-child(2), .constellation-heading > p { animation-delay: 90ms; }
+.welcome-bow { transform: translate3d(var(--pointer-translate-x), var(--pointer-translate-y), 0) rotate(8deg); transition: transform .65s var(--ease), filter .25s ease; animation: bowSway 6.5s ease-in-out infinite alternate; }
+.welcome-art-row { animation: softRise .75s var(--ease) .18s both; }
+.memory-strip { transition: transform .35s var(--ease), box-shadow .35s ease; }
+.memory-strip:hover { transform: rotate(-.7deg) translateY(-7px); box-shadow: 17px 22px 0 rgba(223,134,167,.1), 0 23px 38px rgba(0,0,0,.2); }
+.welcome-hand-note { transition: transform .35s var(--ease), color .3s ease; }
+.welcome-hand-note:hover { color: #ffd4e2; transform: rotate(1deg) translateY(-4px); }
+
+.action-button { position: relative; overflow: hidden; box-shadow: 0 12px 28px rgba(243, 172, 193, .12), inset 0 1px 0 rgba(255,255,255,.36); }
+.action-button::after { content: ""; position: absolute; top: -45%; left: -38%; width: 28%; height: 190%; background: rgba(255,255,255,.38); transform: rotate(19deg) translateX(-460%); transition: transform .65s var(--ease); pointer-events: none; }
+.action-button:hover { transform: translateY(-4px) rotate(-.35deg); box-shadow: 0 19px 38px rgba(243, 172, 193, .23), inset 0 1px 0 rgba(255,255,255,.42); }
+.action-button:hover::after { transform: rotate(19deg) translateX(680%); }
+.action-button:active { transform: translateY(-1px) scale(.97); }
+.subtle-button { position: relative; transition: color .2s ease, transform .2s var(--ease), letter-spacing .2s ease; }
+.subtle-button::after { content: ""; position: absolute; right: 0; bottom: 2px; left: 0; height: 1px; background: currentColor; opacity: .36; transform: scaleX(0); transform-origin: right; transition: transform .26s var(--ease); }
+.subtle-button:hover { transform: translateX(3px); letter-spacing: .14em; }
+.subtle-button:hover::after { transform: scaleX(1); transform-origin: left; }
+.text-link { position: relative; border-bottom-color: transparent; }
+.text-link::after { content: ""; position: absolute; right: 0; bottom: -1px; left: 0; height: 1px; background: var(--champagne); transform-origin: right; transition: transform .25s var(--ease); }
+.text-link:hover::after { transform: scaleX(.38); }
+
+.constellation-map { transition: border-color .4s ease, box-shadow .4s ease, transform .4s var(--ease); }
+.constellation-map:hover { border-color: rgba(243,172,193,.28); box-shadow: 0 24px 64px rgba(0,0,0,.12); transform: translateY(-3px); }
+.constellation-node { animation: nodeBreath 4.8s ease-in-out infinite; animation-delay: calc(var(--node, 0) * -310ms); }
+.constellation-node:nth-of-type(2n) { animation-delay: -1.2s; }.constellation-node:nth-of-type(3n) { animation-delay: -2.4s; }.constellation-node:nth-of-type(5n) { animation-delay: -3.4s; }
+.constellation-node.is-done { animation: doneGlow 2.8s ease-in-out infinite; }
+.constellation-node:hover { animation-play-state: paused; }
+
+.victory-heart-sticker { transform: translate3d(var(--pointer-translate-x), var(--pointer-translate-y), 0) rotate(13deg); animation: stickerFloat 5.3s ease-in-out infinite alternate; }
+.cake-stage { transition: transform .5s var(--ease), filter .5s ease; }
+.victory-scene:hover .cake-stage { transform: translateY(-4px) rotate(-.5deg); filter: drop-shadow(0 18px 24px rgba(0,0,0,.16)); }
+.surprise-ticket { transition: transform .35s var(--ease), box-shadow .35s ease; }
+.surprise-ticket:hover { transform: rotate(.6deg) translateY(-5px); box-shadow: 12px 17px 0 rgba(223,134,167,.1), 0 21px 35px rgba(0,0,0,.16); }
+
+.message-card { transition: transform .45s var(--ease), box-shadow .45s ease, border-color .35s ease; }
+.message-card:hover { border-color: rgba(243,172,193,.34); transform: rotate(-.2deg) translateY(-5px); box-shadow: 0 37px 90px rgba(0,0,0,.25); }
+.memory-gallery { transition: transform .55s var(--ease), box-shadow .55s ease; }
+.memory-gallery:hover { transform: translateY(-5px); box-shadow: 0 38px 96px rgba(0,0,0,.25); }
+.gallery-bow { transform: translate3d(var(--pointer-translate-x), var(--pointer-translate-y), 0) rotate(-7deg); animation: bowSway 6.8s ease-in-out infinite alternate-reverse; }
+.gallery-heart { transform: translate3d(var(--pointer-translate-x), var(--pointer-translate-y), 0) rotate(14deg); animation: stickerFloat 5.7s ease-in-out infinite alternate-reverse; }
+.portrait-card { transform-origin: center bottom; }
+.portrait-card::before { content: ""; position: absolute; z-index: 2; inset: 9px 9px 37px; background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,.24) 44%, transparent 61%); opacity: 0; transform: translateX(-58%); transition: opacity .35s ease, transform .75s var(--ease); pointer-events: none; }
+.portrait-card:hover::before { opacity: 1; transform: translateX(60%); }
+.portrait-card-shadow:hover, .portrait-card-blue:hover, .portrait-card-close:hover { filter: brightness(1.025); }
+
+@keyframes softRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes photoAppear { from { opacity: 0; filter: blur(3px); } to { opacity: 1; filter: blur(0); } }
+@keyframes stickerPulse { 0%, 100% { transform: rotate(-14deg) scale(1); } 50% { transform: rotate(-10deg) scale(1.05); } }
+@keyframes bowSway { from { filter: drop-shadow(0 14px 17px rgba(0,0,0,.17)); } to { filter: drop-shadow(0 20px 23px rgba(0,0,0,.26)); } }
+@keyframes stickerFloat { from { filter: drop-shadow(0 10px 13px rgba(0,0,0,.16)); } to { filter: drop-shadow(0 19px 23px rgba(0,0,0,.27)); } }
+@keyframes lineBreathe { 0%, 100% { opacity: .5; transform: scaleX(.72); } 50% { opacity: 1; transform: scaleX(1.06); } }
+@keyframes nodeBreath { 0%, 100% { box-shadow: 0 0 0 0 rgba(243,172,193,0); } 50% { box-shadow: 0 0 0 7px rgba(243,172,193,.045), 0 0 25px rgba(243,172,193,.08); } }
+@keyframes doneGlow { 0%, 100% { box-shadow: 0 0 15px rgba(243,172,193,.13); } 50% { box-shadow: 0 0 0 7px rgba(243,172,193,.05), 0 0 32px rgba(243,172,193,.27); } }
+
+@media (max-width: 760px), (pointer: coarse) {
+  .app-shell::before, .opening-photo-note, .welcome-bow, .victory-heart-sticker, .gallery-bow, .gallery-heart { transform: none; }
+  .action-button:hover, .constellation-map:hover, .victory-scene:hover .cake-stage, .message-card:hover, .memory-gallery:hover { transform: none; }
+  .portrait-card-shadow:hover, .portrait-card-blue:hover, .portrait-card-close:hover { animation: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opening-copy > .eyebrow, .opening-copy > h1, .opening-copy > .lede, .opening-copy > .opening-meta, .opening-copy > .text-link, .welcome-grid > div, .constellation-heading > div, .constellation-heading > p, .welcome-art-row, .opening-photo-note { animation: none !important; }
+}
+
+.action-button { transition: transform .2s var(--ease), border-color .2s ease, background .2s ease, color .2s ease, box-shadow .2s ease; }

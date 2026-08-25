@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, type PointerEvent } from "react";
 import { ArrowDown, ArrowRight, AudioLines, ChevronRight, CircleHelp, Heart, Moon, RotateCcw, Sparkles, Wind } from "lucide-react";
 import { ArchiveSeal, EnvelopeArtifact, HandDrawnStar, MemoryStrip, Waveform } from "./components/ArchiveArtifacts";
 import { MemoryGallery } from "./components/MemoryGallery";
@@ -170,10 +170,25 @@ function App() {
     setSecretIndex((index) => (index + 1) % secretMemories.length);
   };
 
+  const handlePointerMove = useCallback((event: PointerEvent<HTMLElement>) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 8;
+    const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 7;
+    event.currentTarget.style.setProperty("--pointer-x", `${x.toFixed(2)}%`);
+    event.currentTarget.style.setProperty("--pointer-y", `${y.toFixed(2)}%`);
+    event.currentTarget.style.setProperty("--pointer-translate-x", `${(x * 1.6).toFixed(2)}px`);
+    event.currentTarget.style.setProperty("--pointer-translate-y", `${(y * 1.45).toFixed(2)}px`);
+  }, []);
+  const resetPointer = useCallback((event: PointerEvent<HTMLElement>) => {
+    event.currentTarget.style.setProperty("--pointer-x", "0%");
+    event.currentTarget.style.setProperty("--pointer-y", "0%");
+    event.currentTarget.style.setProperty("--pointer-translate-x", "0px");
+    event.currentTarget.style.setProperty("--pointer-translate-y", "0px");
+  }, []);
   const sceneClass = useMemo(() => `app-shell scene-${scene}`, [scene]);
 
   return (
-    <main className={sceneClass}>
+    <main className={sceneClass} onPointerMove={handlePointerMove} onPointerLeave={resetPointer}>
       <canvas ref={starfieldRef} className="starfield" aria-hidden="true" />
       <div className="ambient ambient-one" aria-hidden="true" />
       <div className="ambient ambient-two" aria-hidden="true" />
