@@ -693,3 +693,69 @@ button.is-pressed.press-bloom { animation-name: pressBloom !important; }
 
 @keyframes headerArrival { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes footerArrival { from { opacity: 0; transform: translateY(12px); } to { opacity: .45; transform: translateY(0); } }
+
+/* Living-interface motion system */
+.scene-content > :is(.section-kicker, .opening-index, .victory-ornament, .surprise-seal, .message-layout, .message-footer, .memory-gallery, .welcome-footer, .welcome-art-row) { animation: elementDriftIn 1.15s var(--ease) both; }
+.scene-content > :nth-child(2) { animation-delay: .12s; }.scene-content > :nth-child(3) { animation-delay: .24s; }.scene-content > :nth-child(4) { animation-delay: .36s; }.scene-content > :nth-child(5) { animation-delay: .48s; }
+.scene-content :is(h1, h2) { text-shadow: 0 12px 34px rgba(0,0,0,.14); animation: headingAwake 1.25s var(--ease) both; }
+.scene-content .lede { animation: copyBreatheIn 1.2s var(--ease) .24s both; }
+.scene-content .eyebrow { animation: eyebrowSignal 1.1s var(--ease) .1s both; }
+.scene-content .section-kicker { animation: lineReveal 1.3s var(--ease) both; }
+.action-button:not(.is-pressed), .prologue-button:not(.is-pressed) { animation: invitationGlow 5.6s ease-in-out infinite; }
+.subtle-button:not(.is-pressed), .text-link:not(.is-pressed) { animation: quietTide 6.4s ease-in-out infinite; }
+.action-button svg, .prologue-button svg, .text-link svg { animation: iconNod 2.8s ease-in-out infinite; }
+.wordmark-mark { animation: moonBreathe 5.8s ease-in-out infinite; }
+.sound-button svg { animation: soundSway 3.8s ease-in-out infinite; }
+.prologue-photo-frame, .opening-photo-note .opening-portrait { animation: photoBreathe 7.6s ease-in-out infinite; }
+.memory-strip .strip-cells { animation: stripShimmer 7.2s ease-in-out infinite; }
+.welcome-hand-note .hand-drawn-star { animation: starScribble 5.4s ease-in-out infinite; }
+.archive-seal { animation: sealTurn 9s ease-in-out infinite; }
+.archive-seal-small { animation-duration: 7s; }
+.message-card::after { animation: cardMark 8s ease-in-out infinite; }
+.portrait-image-wrap { animation: imageBreath 8.4s ease-in-out infinite; }
+.portrait-card:nth-child(2) .portrait-image-wrap { animation-delay: -2.8s; }.portrait-card:nth-child(3) .portrait-image-wrap { animation-delay: -5.2s; }
+.gallery-stamp { animation: stampFlicker 6s ease-in-out infinite; }
+.constellation-caption { animation: captionFloat 5.5s ease-in-out infinite; }
+.constellation-node::before { animation: orbitRing 4.8s ease-in-out infinite; }
+.cake { animation: cakeBreathe 5.6s ease-in-out infinite; }
+.surprise-ticket strong { animation: ticketType 5.7s steps(2, end) infinite; }
+.surprise-seal .archive-seal { animation-duration: 8s; }
+.positive-message { animation: positiveIn 1.1s var(--ease) both; }
+.challenge-modal > :is(h2, .modal-prompt, .modal-hint) { animation: modalDetailIn .8s var(--ease) both; }
+.challenge-modal .modal-prompt { animation-delay: .12s; }.challenge-modal .modal-hint { animation-delay: .22s; }
+.choice-button { position: relative; overflow: hidden; }
+.choice-button::before { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 0 35%, rgba(243,172,193,.1) 50%, transparent 65%); transform: translateX(-115%); animation: choiceSheen 7s ease-in-out infinite; pointer-events: none; }
+.choice-button:nth-child(2)::before { animation-delay: -2.3s; }.choice-button:nth-child(3)::before { animation-delay: -4.4s; }
+
+@keyframes elementDriftIn { from { opacity: 0; transform: translateY(22px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes headingAwake { from { opacity: 0; letter-spacing: -.08em; transform: translateY(26px) scale(.985); } to { opacity: 1; letter-spacing: -.055em; transform: translateY(0) scale(1); } }
+@keyframes copyBreatheIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes eyebrowSignal { from { opacity: 0; letter-spacing: .42em; transform: translateY(8px); } to { opacity: 1; letter-spacing: .19em; transform: translateY(0); } }
+@keyframes lineReveal { from { opacity: 0; transform: scaleX(.72); transform-origin: left; } to { opacity: 1; transform: scaleX(1); } }
+@keyframes invitationGlow { 0%, 100% { box-shadow: 0 12px 28px rgba(243,172,193,.12), inset 0 1px 0 rgba(255,255,255,.36); } 50% { box-shadow: 0 17px 34px rgba(243,172,193,.28), 0 0 0 4px rgba(243,172,193,.045), inset 0 1px 0 rgba(255,255,255,.42); } }
+@keyframes quietTide { 0%, 100% { opacity: .76; } 50% { opacity: 1; } }
+@keyframes iconNod { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
+@keyframes moonBreathe { 0%, 100% { box-shadow: 0 0 0 rgba(243,172,193,0); } 50% { box-shadow: 0 0 19px rgba(243,172,193,.38); } }
+@keyframes soundSway { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(9deg); } }
+@keyframes photoBreathe { 0%, 100% { filter: brightness(.98) saturate(.98); } 50% { filter: brightness(1.06) saturate(1.05); } }
+@keyframes stripShimmer { 0%, 100% { filter: brightness(.96); } 50% { filter: brightness(1.08); } }
+@keyframes starScribble { 0%, 100% { transform: rotate(-12deg) scale(1); } 50% { transform: rotate(8deg) scale(1.15); } }
+@keyframes sealTurn { 0%, 100% { transform: rotate(-13deg); } 50% { transform: rotate(-5deg); } }
+@keyframes cardMark { 0%, 100% { opacity: .45; transform: rotate(45deg) translate(0,0); } 50% { opacity: .82; transform: rotate(52deg) translate(-5px,-5px); } }
+@keyframes imageBreath { 0%, 100% { filter: saturate(.9) contrast(1.03); } 50% { filter: saturate(1.04) contrast(1.07) brightness(1.04); } }
+@keyframes stampFlicker { 0%, 100% { opacity: .62; letter-spacing: .18em; } 50% { opacity: 1; letter-spacing: .22em; } }
+@keyframes captionFloat { 0%, 100% { transform: translate(-50%, -50%); } 50% { transform: translate(-50%, calc(-50% - 6px)); } }
+@keyframes orbitRing { 0%, 100% { opacity: .34; transform: scale(1); } 50% { opacity: .78; transform: scale(1.22); } }
+@keyframes cakeBreathe { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-4px); } }
+@keyframes ticketType { 0%, 100% { opacity: 1; transform: translateY(0); } 50% { opacity: .78; transform: translateY(-1px); } }
+@keyframes positiveIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes modalDetailIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes choiceSheen { 0%, 35% { transform: translateX(-115%); } 55%, 100% { transform: translateX(115%); } }
+
+@media (max-width: 760px) {
+  .scene-content :is(h1, h2) { animation-duration: .9s; }
+  .action-button:not(.is-pressed), .prologue-button:not(.is-pressed) { animation-duration: 6.5s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene-content > *, .scene-content :is(h1,h2,.lede,.eyebrow,.section-kicker), .action-button, .prologue-button, .subtle-button, .text-link, .wordmark-mark, .sound-button svg, .prologue-photo-frame, .opening-photo-note .opening-portrait, .memory-strip .strip-cells, .welcome-hand-note .hand-drawn-star, .archive-seal, .message-card::after, .portrait-image-wrap, .gallery-stamp, .constellation-caption, .constellation-node::before, .cake, .surprise-ticket strong, .choice-button::before { animation: none !important; }
+}
