@@ -570,3 +570,31 @@ h1 em, h2 em { color: var(--champagne); font-family: "DM Serif Display", Georgia
 .scene-prologue .sticker-shower { opacity: .55; }.scene-victory .sticker-shower, .scene-surprise .sticker-shower { opacity: .45; }
 .shower-sticker { filter: none; will-change: transform, opacity; }
 .click-burst b { box-shadow: 0 0 0 3px rgba(243,172,193,.13), 0 0 14px rgba(243,172,193,.32); }
+
+/* Chapter-wipe transitions and button choreography */
+.chapter-transition { position: fixed; z-index: 40; inset: 0; overflow: hidden; pointer-events: none; opacity: 0; }
+.chapter-transition::before { content: ""; position: absolute; inset: -18%; background: radial-gradient(circle at 50% 55%, rgba(255,244,248,.95) 0 1%, rgba(243,172,193,.68) 4%, rgba(31,13,28,.94) 24%, rgba(12,8,17,.98) 54%); transform: scale(.08); opacity: 0; }
+.chapter-transition::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 0 24%, rgba(243,172,193,.12) 48%, transparent 76%); opacity: 0; }
+.chapter-transition span { position: absolute; top: -14%; display: block; width: 1px; height: 128%; background: linear-gradient(180deg, transparent, rgba(255,235,247,.88), transparent); opacity: 0; transform: rotate(21deg) scaleY(.14); }
+.chapter-transition span:nth-child(1) { left: 27%; }.chapter-transition span:nth-child(2) { left: 50%; }.chapter-transition span:nth-child(3) { left: 73%; }
+.chapter-transition.is-active { animation: chapterFade .62s var(--ease) both; }
+.chapter-transition.is-active::before { animation: chapterBloom .62s var(--ease) both; }
+.chapter-transition.is-active::after { animation: chapterGlint .5s ease both; }
+.chapter-transition.is-active span { animation: chapterStreak .48s var(--ease) both; }.chapter-transition.is-active span:nth-child(2) { animation-delay: 40ms; }.chapter-transition.is-active span:nth-child(3) { animation-delay: 85ms; }
+button.is-pressed, .constellation-node.is-pressed { animation: buttonPop .44s var(--ease) both !important; }
+.action-button.is-pressed { box-shadow: 0 0 0 7px rgba(243,172,193,.12), 0 16px 36px rgba(243,172,193,.25), inset 0 1px 0 rgba(255,255,255,.45); }
+.prologue-button.is-pressed { box-shadow: 0 0 0 9px rgba(243,172,193,.1), 0 24px 44px rgba(0,0,0,.26); }
+
+@keyframes chapterFade { 0% { opacity: 0; } 19% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes chapterBloom { 0% { opacity: 0; transform: scale(.06); } 22% { opacity: 1; transform: scale(.72); } 54% { opacity: 1; transform: scale(1.08); } 100% { opacity: 0; transform: scale(1.34); } }
+@keyframes chapterGlint { 0% { opacity: 0; transform: translateX(-70%); } 28% { opacity: .75; } 100% { opacity: 0; transform: translateX(70%); } }
+@keyframes chapterStreak { 0% { opacity: 0; transform: rotate(21deg) scaleY(.08); } 34% { opacity: .72; } 100% { opacity: 0; transform: rotate(21deg) scaleY(1); } }
+@keyframes buttonPop { 0% { transform: scale(1); } 36% { transform: scale(.91) rotate(-1.5deg); } 67% { transform: scale(1.045) rotate(.7deg); } 100% { transform: scale(1) rotate(0); } }
+
+@media (max-width: 760px) {
+  .chapter-transition::before { inset: -38%; }.chapter-transition span { opacity: .72; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chapter-transition { display: none; } button.is-pressed, .constellation-node.is-pressed { animation: none !important; }
+}

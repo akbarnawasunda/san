@@ -28,11 +28,18 @@ function App() {
   const [candleReady, setCandleReady] = useState(false);
   const [toast, setToast] = useState("");
   const [bursts, setBursts] = useState<ClickBurst[]>([]);
+  const [transitioning, setTransitioning] = useState(false);
 
   const announce = useCallback((message: string) => {
     setToast(message);
     window.setTimeout(() => setToast(""), 2600);
   }, []);
+  const navigateTo = useCallback((nextScene: Scene) => {
+    if (transitioning) return;
+    setTransitioning(true);
+    window.setTimeout(() => setScene(nextScene), 260);
+    window.setTimeout(() => setTransitioning(false), 620);
+  }, [transitioning]);
 
   const prepareCandle = useCallback(() => {
     if (candleReady || blown) return;
@@ -53,9 +60,9 @@ function App() {
     window.setTimeout(() => audio.play("bubble"), 520);
     window.setTimeout(() => {
       audio.play("afterBlow");
-      setScene("surprise");
+      navigateTo("surprise");
     }, 1220);
-  }, [audio, blown, candleReady, prepareCandle]);
+  }, [audio, blown, candleReady, navigateTo, prepareCandle]);
   const microphone = useMicrophoneBlow(blowCandle);
 
   const completedCount = completed.filter(Boolean).length;
@@ -64,19 +71,19 @@ function App() {
   const openOpening = () => {
     audio.play("click");
     audio.play("whoosh");
-    setScene("opening");
+    navigateTo("opening");
   };
 
   const openWelcome = () => {
     audio.play("click");
     audio.play("whoosh");
-    setScene("welcome");
+    navigateTo("welcome");
   };
 
   const startConstellation = () => {
     audio.play("magic");
     if (!audio.musicOn) audio.toggleMusic();
-    setScene("constellation");
+    navigateTo("constellation");
   };
 
   const selectChallenge = (index: number) => {
@@ -142,14 +149,14 @@ function App() {
     }
     audio.fadeOut("bgm", 420);
     audio.play("victory");
-    setScene("victory");
+    navigateTo("victory");
   };
 
   const skipToVictory = () => {
     setCompleted(challenges.map(() => true));
     audio.fadeOut("bgm", 420);
     audio.play("victory");
-    setScene("victory");
+    navigateTo("victory");
     announce("Jalur cepat terbuka.");
   };
 
@@ -164,7 +171,7 @@ function App() {
     setFeedback("");
     setBlown(false);
     setCandleReady(false);
-    setScene("prologue");
+    navigateTo("prologue");
     announce("Kita kembali ke awal.");
   };
 
@@ -197,6 +204,9 @@ function App() {
     const target = event.target as Element;
     const interactive = target.closest("button, .constellation-node");
     if (!interactive) return;
+    interactive.classList.remove("is-pressed");
+    window.requestAnimationFrame(() => interactive.classList.add("is-pressed"));
+    window.setTimeout(() => interactive.classList.remove("is-pressed"), 440);
     const bounds = event.currentTarget.getBoundingClientRect();
     const burst = { id: Date.now() + Math.round(Math.random() * 1000), x: event.clientX - bounds.left, y: event.clientY - bounds.top };
     setBursts((current) => [...current.slice(-2), burst]);
@@ -213,6 +223,7 @@ function App() {
       <div className="rain-layer" aria-hidden="true">{Array.from({ length: 26 }, (_, index) => <i key={index} style={{ "--i": index, "--x": `${(index * 37) % 101}%`, "--delay": `${(index % 11) * -0.41}s`, "--duration": `${0.72 + (index % 7) * 0.13}s` } as React.CSSProperties} />)}</div>
       <StickerShower />
       <ClickBursts bursts={bursts} />
+      <div className={`chapter-transition${transitioning ? " is-active" : ""}`} aria-hidden="true"><span /><span /><span /></div>
       <header className="site-header">
         <button className="wordmark" type="button" onClick={reset} aria-label="Restart experience">
           <span className="wordmark-mark"><Moon size={16} /></span>
@@ -321,7 +332,7 @@ function App() {
             <h1 id="surprise-title">The light went out.<br /><em>But the good part stayed.</em></h1>
             <p className="lede">No photograph. No grand explanation. Just one small wish, sent carefully into the night.</p>
             <div className="surprise-ticket"><span>19 SEP</span><strong>HAPPY<br />BIRTHDAY</strong><small>for Sifta / with good intent</small></div>
-            <button className="action-button action-button-large" type="button" onClick={() => { audio.play("magicWish"); setScene("message"); }}><Heart size={17} /> Open the note</button>
+            <button className="action-button action-button-large" type="button" onClick={() => { audio.play("magicWish"); navigateTo("message"); }}><Heart size={17} /> Open the note</button>
             <p className="microcopy">wait for the quiet to settle.</p>
           </section>
         )}
