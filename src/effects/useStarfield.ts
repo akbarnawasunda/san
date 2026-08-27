@@ -11,8 +11,8 @@ export function useStarfield() {
     if (!context) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const mobile = window.matchMedia("(max-width: 600px)").matches;
-    const stars = Array.from({ length: mobile ? 46 : 86 }, () => ({
+    const mobile = window.matchMedia("(max-width: 700px)").matches;
+    const stars = Array.from({ length: mobile ? 28 : 56 }, () => ({
       x: Math.random(),
       y: Math.random(),
       radius: 0.3 + Math.random() * 1.25,
@@ -22,6 +22,8 @@ export function useStarfield() {
       tone: Math.random() > 0.78 ? "196, 178, 255" : "255, 255, 255",
     }));
     let frame = 0;
+    let lastDraw = 0;
+    const frameInterval = mobile ? 1000 / 24 : 1000 / 30;
     let visible = !document.hidden;
 
     const resize = () => {
@@ -35,6 +37,11 @@ export function useStarfield() {
 
     const draw = (time: number) => {
       if (!visible) return;
+      if (!reducedMotion && time - lastDraw < frameInterval) {
+        frame = requestAnimationFrame(draw);
+        return;
+      }
+      lastDraw = time;
       const width = window.innerWidth;
       const height = window.innerHeight;
       context.clearRect(0, 0, width, height);
@@ -64,7 +71,8 @@ export function useStarfield() {
         context.stroke();
       }
 
-      frame = requestAnimationFrame(draw);
+      if (!reducedMotion) frame = requestAnimationFrame(draw);
+      else frame = 0;
     };
 
     const handleVisibility = () => {

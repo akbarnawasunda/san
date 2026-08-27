@@ -217,7 +217,7 @@ function App() {
     window.setTimeout(() => setMoment((current) => current?.id === momentEvent.id ? null : current), 1320);
     const bounds = event.currentTarget.getBoundingClientRect();
     const burst = { id: Date.now() + Math.round(Math.random() * 1000), x: event.clientX - bounds.left, y: event.clientY - bounds.top };
-    setBursts((current) => [...current.slice(-2), burst]);
+    setBursts((current) => [...current.slice(-1), burst]);
     window.setTimeout(() => setBursts((current) => current.filter((item) => item.id !== burst.id)), 1050);
   }, []);
   const sceneClass = useMemo(() => `app-shell scene-${scene}`, [scene]);
@@ -228,7 +228,7 @@ function App() {
       <div className="ambient ambient-one" aria-hidden="true" />
       <div className="ambient ambient-two" aria-hidden="true" />
       <div className="grain" aria-hidden="true" />
-      <div className="rain-layer" aria-hidden="true">{Array.from({ length: 26 }, (_, index) => <i key={index} style={{ "--i": index, "--x": `${(index * 37) % 101}%`, "--delay": `${(index % 11) * -0.41}s`, "--duration": `${1.4 + (index % 7) * 0.18}s` } as React.CSSProperties} />)}</div>
+      <div className="rain-layer" aria-hidden="true">{Array.from({ length: 18 }, (_, index) => <i key={index} style={{ "--i": index, "--x": `${(index * 37) % 101}%`, "--delay": `${(index % 11) * -0.41}s`, "--duration": `${1.4 + (index % 7) * 0.18}s` } as React.CSSProperties} />)}</div>
       <StickerShower />
       <ClickBursts bursts={bursts} />
       <MomentFX event={moment} />
@@ -258,9 +258,9 @@ function App() {
               <span className="prologue-hint">tap when the rain feels right</span>
             </div>
             <figure className="prologue-portrait">
-              <div className="prologue-photo-frame"><img src="/memory-assets/portrait-shadow.jpg" alt="Portrait of Sifta in a pink-red hijab with soft dramatic light" /><span>19 / 09</span></div>
+              <div className="prologue-photo-frame"><img src="/memory-assets/optimized/portrait-shadow.webp" alt="Portrait of Sifta in a pink-red hijab with soft dramatic light" /><span>19 / 09</span></div>
               <figcaption>kept warm,<br />despite the weather.</figcaption>
-              <img className="prologue-heart" src="/memory-assets/glitter-heart.png" alt="" aria-hidden="true" />
+              <img className="prologue-heart" src="/memory-assets/optimized/glitter-heart.webp" alt="" aria-hidden="true" />
             </figure>
             <div className="prologue-ripple prologue-ripple-one" aria-hidden="true" /><div className="prologue-ripple prologue-ripple-two" aria-hidden="true" />
           </section>
@@ -270,8 +270,8 @@ function App() {
             <div className="opening-index">A NOTE / 001</div>
             <EnvelopeArtifact />
             <div className="opening-photo-note" aria-hidden="true">
-              <img className="opening-portrait" src="/memory-assets/portrait-wood.jpg" alt="" />
-              <img className="opening-heart-sticker" src="/memory-assets/striped-heart.png" alt="" />
+              <img className="opening-portrait" src="/memory-assets/optimized/portrait-wood.webp" alt="" />
+              <img className="opening-heart-sticker" src="/memory-assets/optimized/striped-heart.webp" alt="" />
               <span>kept for<br />the day</span>
             </div>
             <div className="opening-copy">
@@ -299,7 +299,7 @@ function App() {
                 <div className="welcome-actions"><button className="action-button" type="button" onClick={startConstellation}>Enter the constellation <ArrowRight size={16} /></button><button className="subtle-button" type="button" onClick={() => announce(secretMemories[secretIndex])}><CircleHelp size={15} /> secret note</button></div>
               </div>
             </div>
-            <img className="welcome-bow" src="/memory-assets/gingham-bow.png" alt="" aria-hidden="true" />
+            <img className="welcome-bow" src="/memory-assets/optimized/gingham-bow.webp" alt="" aria-hidden="true" />
             <div className="welcome-art-row"><MemoryStrip /><div className="welcome-hand-note"><HandDrawnStar /><span>some things are<br />worth keeping.</span></div><Waveform /></div>
             <div className="welcome-footer"><span>made by Akbar</span><span>no pressure / only good wishes</span></div>
           </section>
@@ -320,7 +320,7 @@ function App() {
             <p className="eyebrow">Chapter three / a small wish</p>
             <h1 id="victory-title">You made it<br /><em>to the quiet part.</em></h1>
             <p className="lede">{candleReady ? "Hold the wish for one quiet second, then let the light go." : "Before the surprise, make one wish that belongs only to you."}</p>
-            <img className="victory-heart-sticker" src="/memory-assets/striped-heart.png" alt="" aria-hidden="true" />
+            <img className="victory-heart-sticker" src="/memory-assets/optimized/striped-heart.webp" alt="" aria-hidden="true" />
             <div className={`cake-stage${blown ? " is-blown" : ""}${candleReady ? " is-prepared" : ""}`}>
               <div className="cake-glow" /><div className="candle-halo" /><div className="cake-plate" /><div className="cake"><div className="cake-top"><span>19</span><i>SEP</i></div><div className="cake-body"><b /><b /><b /></div><div className="cake-base" /></div>
               <button className="candle" type="button" onClick={blowCandle} aria-label={candleReady ? "Blow out the candle" : "Prepare the candle wish"}><span className="flame" /><span className="candle-glint" /><span className="candle-stick" /></button>

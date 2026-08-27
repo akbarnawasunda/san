@@ -14,8 +14,8 @@ const stickerAssets = [
 ];
 
 export function StickerShower() {
-  const stickers = useMemo(() => Array.from({ length: 12 }, (_, index) => {
-    const size = 36 + ((index * 17) % 42);
+  const stickers = useMemo(() => Array.from({ length: 8 }, (_, index) => {
+    const size = 32 + ((index * 17) % 35);
     return {
       id: index,
       src: stickerAssets[index % stickerAssets.length],

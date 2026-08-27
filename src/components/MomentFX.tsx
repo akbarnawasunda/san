@@ -6,12 +6,12 @@ export type MomentEvent = {
 };
 
 const particleCounts: Record<MomentKind, number> = {
-  rain: 10,
-  paper: 7,
-  star: 8,
-  candle: 6,
-  whisper: 5,
-  bloom: 9,
+  rain: 7,
+  paper: 5,
+  star: 6,
+  candle: 5,
+  whisper: 4,
+  bloom: 6,
 };
 
 export function MomentFX({ event }: { event: MomentEvent | null }) {
