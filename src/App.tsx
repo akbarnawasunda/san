@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState, type MouseEvent, type PointerEvent } from "react";
 import { ArrowDown, ArrowRight, AudioLines, ChevronRight, CircleHelp, Heart, Moon, RotateCcw, Sparkles, Wind } from "lucide-react";
 import { ArchiveSeal, EnvelopeArtifact, HandDrawnStar, MemoryStrip, Waveform } from "./components/ArchiveArtifacts";
+import { ArchiveChrome } from "./components/ArchiveChrome";
 import { ClickBursts, StickerShower, type ClickBurst } from "./components/CelebrationFX";
 import { MemoryGallery } from "./components/MemoryGallery";
 import { MomentFX, type MomentEvent, type MomentKind } from "./components/MomentFX";
@@ -232,6 +233,7 @@ function App() {
       <ClickBursts bursts={bursts} />
       <MomentFX event={moment} />
       <div className={`chapter-transition${transitioning ? " is-active" : ""}`} aria-hidden="true"><span /><span /><span /></div>
+      <ArchiveChrome scene={scene} completedCount={completedCount} />
       <header className="site-header">
         <button className="wordmark" type="button" onClick={reset} aria-label="Restart experience">
           <span className="wordmark-mark"><Moon size={16} /></span>
