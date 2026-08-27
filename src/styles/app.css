@@ -872,3 +872,90 @@ h1 { max-width: 900px; font-size: clamp(4.2rem, 9.3vw, 9.2rem); line-height: .86
   .site-header,
   .site-footer { animation: none !important; transition-duration: 0.01ms !important; }
 }
+
+/* Final finishing details — small, tactile, and deliberate. */
+.site-header::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -13px;
+  width: 42px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,225,231,.76), transparent);
+  transform: translateX(-50%);
+  opacity: .68;
+  animation: headerSignal 5.6s ease-in-out infinite;
+}
+.scene-prologue .prologue-portrait::before {
+  content: "19 SEP / KEPT SAFE";
+  position: absolute;
+  z-index: 3;
+  top: -12px;
+  right: 30px;
+  padding: 7px 12px 6px;
+  color: rgba(72,40,51,.72);
+  background: rgba(255,247,236,.88);
+  box-shadow: 0 4px 10px rgba(0,0,0,.12);
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  transform: rotate(3deg);
+}
+.scene-prologue .prologue-portrait figcaption {
+  display: inline-block;
+  padding: 3px 5px;
+  background: rgba(255,249,241,.78);
+  box-shadow: 0 3px 8px rgba(0,0,0,.13);
+}
+.prologue-button svg,
+.action-button svg,
+.text-link svg { transition: transform .38s var(--ease); }
+.prologue-button:hover svg,
+.action-button:hover svg,
+.text-link:hover svg { transform: translateX(5px) rotate(-8deg); }
+.subtle-button:hover svg { transform: rotate(14deg) scale(1.12); }
+.welcome-note::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  right: 16%;
+  width: 47px;
+  height: 11px;
+  background: rgba(255,247,235,.18);
+  border-left: 1px solid rgba(255,247,235,.19);
+  border-right: 1px solid rgba(255,247,235,.19);
+  transform: rotate(-2deg);
+}
+.constellation-node:not(.is-done)::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border: 1px solid rgba(241,180,190,.14);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(.84);
+  transition: opacity .32s var(--ease), transform .46s var(--ease);
+}
+.constellation-node:hover::after,
+.constellation-node:focus-visible::after { opacity: 1; transform: scale(1); }
+.surprise-ticket::after {
+  content: "WITH CARE / 19 SEPTEMBER";
+  position: absolute;
+  right: 17px;
+  bottom: 13px;
+  color: rgba(67,36,50,.42);
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: .18em;
+}
+@keyframes headerSignal { 0%, 100% { opacity: .3; transform: translateX(-50%) scaleX(.65); } 50% { opacity: .9; transform: translateX(-50%) scaleX(1); } }
+@media (max-width: 640px) {
+  .scene-prologue .prologue-portrait::before { right: 18px; font-size: 6px; }
+  .welcome-note::after { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header::after { animation: none; }
+  .prologue-button svg,
+  .action-button svg,
+  .text-link svg { transition: none; }
+}
