@@ -178,19 +178,20 @@ p { margin: 0; }
 .victory-scene .kicker { display: inline-flex; align-items: center; gap: 8px; }
 .victory-scene .lede { margin-left: auto; margin-right: auto; }
 .victory-scene .action-button { margin-top: 24px; }
-.cake-stage { position: relative; width: min(340px, 80vw); height: 300px; margin: 14px auto 0; }
+.cake-stage { --cake-top: 92px; position: relative; width: min(340px, 80vw); height: 300px; margin: 14px auto 0; }
 .cake-glow { position: absolute; left: 50%; top: 56%; width: 240px; height: 120px; border-radius: 50%; background: rgba(224, 122, 156, .22); transform: translate(-50%, -50%); }
-.candle-halo { position: absolute; left: 50%; top: 22px; width: 90px; height: 90px; border-radius: 50%; transform: translateX(-50%); background: radial-gradient(circle, rgba(251, 227, 154, .55), transparent 70%); opacity: 0; transition: opacity .5s ease; }
+.candle-halo { position: absolute; left: 50%; top: calc(var(--cake-top) - 80px); width: 90px; height: 90px; border-radius: 50%; transform: translateX(-50%); background: radial-gradient(circle, rgba(251, 227, 154, .55), transparent 70%); opacity: 0; transition: opacity .5s ease; }
 .cake-plate { position: absolute; left: 50%; bottom: 6px; width: 320px; height: 36px; border-radius: 50%; background: var(--paper-deep); border: 2px solid var(--ink); transform: translateX(-50%); }
 .cake { position: absolute; left: 50%; bottom: 30px; width: 260px; transform: translateX(-50%); }
 .cake-top { position: relative; z-index: 2; display: grid; place-items: center; height: 46px; border: 2px solid var(--ink); border-bottom: 0; border-radius: 50% 50% 0 0; background: var(--rose-soft); }
+.cake-top::after { content: ""; position: absolute; left: -2px; right: -2px; bottom: -12px; height: 14px; background: radial-gradient(circle at 11px 0, var(--rose-soft) 10px, transparent 10.5px) repeat-x; background-size: 22px 14px; }
 .cake-top span { font-family: "DM Serif Display", serif; font-size: 22px; line-height: 1; }
 .cake-top i { position: absolute; bottom: 4px; font-size: 9px; font-style: normal; font-weight: 800; letter-spacing: .14em; }
-.cake-body { display: flex; height: 110px; border: 2px solid var(--ink); background: #fff3e8; }
+.cake-body { display: flex; height: 110px; border: 2px solid var(--ink); border-radius: 0 0 14px 14px; background: #fff3e8; }
 .cake-body b { flex: 1; border-right: 2px dashed rgba(59, 42, 51, .2); }
 .cake-body b:last-child { border-right: 0; }
-.cake-base { height: 22px; border: 2px solid var(--ink); border-top: 0; background: var(--rose); }
-.candle { position: absolute; left: 50%; top: 2px; z-index: 3; width: 22px; height: 56px; padding: 0; border: 0; background: none; transform: translate(-50%, -100%); cursor: pointer; }
+.cake-base { height: 22px; border: 2px solid var(--ink); border-top: 0; border-radius: 0 0 10px 10px; background: var(--rose); }
+.candle { position: absolute; left: 50%; top: var(--cake-top); z-index: 3; width: 22px; height: 56px; padding: 0; border: 0; background: none; transform: translate(-50%, -100%); cursor: pointer; }
 .candle-stick { position: absolute; left: 50%; bottom: 0; width: 10px; height: 46px; border: 2px solid var(--ink); border-radius: 3px; background: var(--butter); transform: translateX(-50%); }
 .flame { position: absolute; left: 50%; top: 0; width: 16px; height: 24px; border-radius: 50% 50% 50% 8%; background: #ffb84d; box-shadow: 0 0 14px rgba(255, 184, 77, .8); transform: translateX(-50%) rotate(45deg); transform-origin: center; animation: flame 1.6s ease-in-out infinite alternate; }
 .candle-glint { position: absolute; left: 50%; top: 6px; width: 4px; height: 4px; border-radius: 50%; background: #fff; transform: translateX(-50%); }
@@ -292,7 +293,7 @@ p { margin: 0; }
 .moment-fx i:nth-child(3n+2) { background: var(--butter); }
 
 /* ---------- Mascot: Bintang kecil ---------- */
-.mascot { position: fixed; z-index: 15; right: clamp(12px, 2.4vw, 30px); bottom: clamp(70px, 10vh, 96px); width: clamp(52px, 6vw, 68px); height: clamp(52px, 6vw, 68px); padding: 0; border: 0; color: inherit; background: none; animation: mascotBob 3.4s ease-in-out infinite; transform-origin: 50% 85%; }
+.mascot { position: fixed; z-index: 15; right: clamp(12px, 2.4vw, 30px); bottom: clamp(120px, 16vh, 150px); width: clamp(52px, 6vw, 68px); height: clamp(52px, 6vw, 68px); padding: 0; border: 0; color: inherit; background: none; animation: mascotBob 3.4s ease-in-out infinite; transform-origin: 50% 85%; }
 .mascot-button { cursor: pointer; transition: scale .3s var(--ease); -webkit-tap-highlight-color: transparent; }
 .mascot-button:hover { scale: 1.1; }
 .mascot-button:active { scale: .92; }
@@ -345,7 +346,8 @@ p { margin: 0; }
   .site-header .header-status { display: none; }
 }
 @media (max-width: 560px) {
-  .mascot { width: 46px; height: 46px; right: 12px; bottom: 74px; }
+  .mascot { width: 46px; height: 46px; right: 12px; bottom: 120px; }
+  .cake-stage { --cake-top: 62px; }
   .constellation-node .node-core { width: 44px; height: 44px; }
   .polaroid-b { margin-top: 0; }
   .sticker-bow { width: 90px; }
