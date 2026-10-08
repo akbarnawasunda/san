@@ -17,7 +17,7 @@ const positions: [number, number][] = [
 export function ConstellationMap({ challenges, completed, onSelect }: Props) {
   const line = positions.map(([x, y]) => `${x},${y}`).join(" ");
   return (
-    <div className="constellation-map" aria-label="Peta rasi bintang tantangan">
+    <div className="constellation-map" aria-label="Peta tantangan">
       <svg className="constellation-path" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
         <polyline points={line} />
       </svg>
@@ -39,8 +39,8 @@ export function ConstellationMap({ challenges, completed, onSelect }: Props) {
         );
       })}
       <div className="constellation-caption">
-        <span>RASI KECIL</span>
-        <strong>10 cara sederhana untuk bilang: kamu berarti.</strong>
+        <span>BINTANG</span>
+        <strong>10 hal kecil. Semuanya buat kamu.</strong>
       </div>
     </div>
   );

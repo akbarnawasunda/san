@@ -47,7 +47,7 @@ export function ChallengeModal({
   return (
     <div className="modal-layer" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
       <section className="challenge-modal" role="dialog" aria-modal="true" aria-labelledby="challenge-title">
-        <button className="modal-close" type="button" onClick={onClose} aria-label="Tutup tantangan">
+        <button className="modal-close" type="button" onClick={onClose} aria-label="Tutup">
           <X size={18} />
         </button>
         <span className="eyebrow">{challenge.eyebrow}</span>

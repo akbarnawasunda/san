@@ -27,7 +27,7 @@ const mouths: Record<MascotMood, string> = {
   shy: "M45 63 Q50 60 55 63",
 };
 
-export function Mascot({ mood = "idle", label = "Bintang kecil", onPoke }: Props) {
+export function Mascot({ mood = "idle", label = "Bintang", onPoke }: Props) {
   const body = useMemo(() => BODY, []);
   const content = (
     <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
@@ -49,7 +49,7 @@ export function Mascot({ mood = "idle", label = "Bintang kecil", onPoke }: Props
   }
 
   return (
-    <button className={`mascot mascot-button mood-${mood}`} type="button" onClick={onPoke} aria-label={`${label}, tekan untuk menyapa`}>
+    <button className={`mascot mascot-button mood-${mood}`} type="button" onClick={onPoke} aria-label={`${label}, tekan untuk ngobrol`}>
       {content}
     </button>
   );

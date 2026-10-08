@@ -18,8 +18,8 @@ const sceneOrder: Scene[] = ["prologue", "opening", "welcome", "constellation", 
 const sceneLabels: Record<Scene, string> = {
   prologue: "Sampul",
   opening: "Catatan",
-  welcome: "Bab satu",
-  constellation: "Rasi bintang",
+  welcome: "Bagian 1",
+  constellation: "Bintang",
   victory: "Harapan",
   surprise: "Kejutan",
   message: "Surat",
@@ -59,7 +59,7 @@ function App() {
     if (candleReady || blown) return;
     setCandleReady(true);
     audio.play("chime");
-    announce("Tarik napas. Pikirkan satu hal baik.");
+    announce("Tarik napas. Pikirin satu hal baik.");
   }, [announce, audio, blown, candleReady]);
 
   const blowCandle = useCallback(() => {
@@ -102,7 +102,7 @@ function App() {
 
   const selectChallenge = (index: number) => {
     if (completed[index]) {
-      announce("Orbit ini sudah menyala.");
+      announce("Yang ini udah nyala.");
       audio.play("click");
       return;
     }
@@ -134,7 +134,7 @@ function App() {
     const passes = active.minLength ? value.length >= active.minLength : isCorrect;
     if (passes) completeChallenge();
     else {
-      setFeedback("Belum cocok. Coba sekali lagi dengan santai.");
+      setFeedback("Belum tepat, coba lagi.");
       audio.play("error");
     }
   };
@@ -158,7 +158,7 @@ function App() {
 
   const continueToVictory = () => {
     if (completedCount < challenges.length) {
-      announce("Belum semua orbit menyala.");
+      announce("Belum semua bintang nyala.");
       audio.play("error");
       return;
     }
@@ -172,7 +172,7 @@ function App() {
     audio.fadeOut("bgm", 420);
     audio.play("victory");
     navigateTo("victory");
-    announce("Jalur cepat terbuka.");
+    announce("Oke, langsung ke akhir.");
   };
 
   const reset = () => {
@@ -186,7 +186,7 @@ function App() {
     setBlown(false);
     setCandleReady(false);
     navigateTo("prologue");
-    announce("Kita kembali ke awal.");
+    announce("Balik ke awal.");
   };
 
   const revealPositive = () => {
@@ -274,11 +274,11 @@ function App() {
       <MomentFX event={moment} />
       <div className={`chapter-transition${transitioning ? " is-active" : ""}`} aria-hidden="true"><span /><span /><span /></div>
       <header className="site-header">
-        <button className="wordmark" type="button" onClick={reset} aria-label="Mulai dari awal">
+        <button className="wordmark" type="button" onClick={reset} aria-label="Balik ke awal">
           <span className="wordmark-mark"><Moon size={15} /></span>
           <span>19 / 09</span>
         </button>
-        <div className="progress" aria-label={`Bab ${sceneIndex + 1} dari ${sceneOrder.length}: ${sceneLabel}`}>
+        <div className="progress" aria-label={`Bagian ${sceneIndex + 1} dari ${sceneOrder.length}: ${sceneLabel}`}>
           <div className="progress-dots" aria-hidden="true">
             {sceneOrder.map((key, index) => <span key={key} className={index <= sceneIndex ? "is-reached" : ""} />)}
           </div>
@@ -286,7 +286,7 @@ function App() {
         </div>
         <button className={`sound-button${audio.musicOn ? " is-on" : ""}`} type="button" onClick={audio.toggleMusic} aria-label={audio.musicOn ? "Matikan musik" : "Nyalakan musik"}>
           <AudioLines size={16} />
-          <span>{audio.musicOn ? "musik menyala" : "musik mati"}</span>
+          <span>{audio.musicOn ? "musik nyala" : "musik mati"}</span>
         </button>
       </header>
 
@@ -294,15 +294,14 @@ function App() {
         {scene === "prologue" && (
           <section className="prologue-scene scene-content" aria-labelledby="prologue-title">
             <div className="prologue-copy">
-              <p className="kicker" data-reveal>19 September · sebuah arsip hujan</p>
-              <p className="handwrite" data-reveal style={{ "--d": "1" } as CSSProperties}>sebelum doa-doa baik dimulai</p>
-              <h1 id="prologue-title" data-reveal style={{ "--d": "2" } as CSSProperties}>Malam ini, hujan<br /><em>ikut menyimpan</em><br />namamu.</h1>
-              <p className="lede" data-reveal style={{ "--d": "3" } as CSSProperties}>Sebuah arsip kecil dibuka pelan-pelan, sementara kota di luar terus jatuh dalam cahaya yang lembut. Tidak ada yang perlu dikejar hari ini.</p>
-              <button className="prologue-button" data-reveal style={{ "--d": "4" } as CSSProperties} type="button" onClick={openOpening}>Masuk ke malam ini <ArrowRight size={17} /></button>
-              <span className="prologue-hint">sentuh saat hujannya terasa pas</span>
+              <p className="kicker" data-reveal>19 September</p>
+              <h1 id="prologue-title" data-reveal style={{ "--d": "1" } as CSSProperties}>Selamat ulang tahun, <em>Sifta.</em></h1>
+              <p className="lede" data-reveal style={{ "--d": "2" } as CSSProperties}>Aku bikin ini kecil-kecilan. Nggak banyak, cuma beberapa hal yang pengen aku bilang.</p>
+              <button className="prologue-button" data-reveal style={{ "--d": "3" } as CSSProperties} type="button" onClick={openOpening}>Lanjut <ArrowRight size={17} /></button>
+              <span className="prologue-hint">santai aja</span>
             </div>
             <div className="prologue-art" data-reveal style={{ "--d": "2" } as CSSProperties}>
-              <Polaroid className="polaroid-hero" src="/memory-assets/optimized/portrait-shadow.webp" alt="Potret Sifta dengan jilbab merah muda dan cahaya lembut" caption="tetap hangat, meski cuaca tak ramah." number="19 / 09" tilt />
+              <Polaroid className="polaroid-hero" src="/memory-assets/optimized/portrait-shadow.webp" alt="Potret Sifta dengan jilbab merah muda dan cahaya lembut" caption="kamu, di hari yang bagus" number="19 / 09" tilt />
               <img className="sticker sticker-heart-hero" src="/memory-assets/optimized/glitter-heart.webp" alt="" aria-hidden="true" />
             </div>
           </section>
@@ -311,133 +310,133 @@ function App() {
         {scene === "opening" && (
           <section className="opening-scene scene-content" aria-labelledby="opening-title">
             <div className="opening-copy">
-              <p className="eyebrow" data-reveal>Catatan 001</p>
-              <h1 id="opening-title" data-reveal style={{ "--d": "1" } as CSSProperties}>Ada hari yang pantas punya <em>langitnya sendiri.</em></h1>
-              <p className="lede" data-reveal style={{ "--d": "2" } as CSSProperties}>Kumpulan harapan baik, dibuat untuk satu orang yang cahayanya selalu terasa hangat, dan untuk tanggal yang selalu membawa kabar baik setiap tahunnya.</p>
-              <div className="opening-meta" data-reveal style={{ "--d": "3" } as CSSProperties}><span>19 September 2005</span><span className="meta-dot" /><span>dengan niat baik</span></div>
-              <button className="text-link" data-reveal style={{ "--d": "4" } as CSSProperties} type="button" onClick={openWelcome}>Buka catatannya <ArrowRight size={17} /></button>
+              <p className="eyebrow" data-reveal>Catatan 1</p>
+              <h1 id="opening-title" data-reveal style={{ "--d": "1" } as CSSProperties}>Buat kamu, <em>dari aku.</em></h1>
+              <p className="lede" data-reveal style={{ "--d": "2" } as CSSProperties}>Isinya nggak panjang. Aku cuma pengen hari ini kamu ngerasa diingat.</p>
+              <div className="opening-meta" data-reveal style={{ "--d": "3" } as CSSProperties}><span>19 September 2005</span><span className="meta-dot" /><span>tanpa maksud lain</span></div>
+              <button className="text-link" data-reveal style={{ "--d": "4" } as CSSProperties} type="button" onClick={openWelcome}>Buka <ArrowRight size={17} /></button>
             </div>
             <div className="opening-stack" aria-hidden="true" data-reveal style={{ "--d": "2" } as CSSProperties}>
               <div className="note-paper">
                 <Tape className="tape-top" />
-                <p className="handwrite">Untuk Sifta,</p>
-                <p className="handwrite small">semoga hari ini manis, pelan, dan penuh hal-hal kecil yang bikin kamu tersenyum.</p>
-                <span className="handwrite sign">— A.</span>
+                <p className="handwrite">Sifta,</p>
+                <p className="handwrite small">selamat ulang tahun. Semoga hari ini nggak ribet.</p>
+                <span className="handwrite sign">Akbar</span>
               </div>
-              <Polaroid className="polaroid-back" src="/memory-assets/optimized/portrait-wood.webp" caption="disimpan untuk hari ini" tilt />
+              <Polaroid className="polaroid-back" src="/memory-assets/optimized/portrait-wood.webp" caption="buat hari ini" tilt />
               <img className="sticker sticker-stripe" src="/memory-assets/optimized/striped-heart.webp" alt="" />
             </div>
-            <div className="scroll-cue"><ArrowDown size={15} /><span>pelan-pelan saja</span></div>
+            <div className="scroll-cue"><ArrowDown size={15} /><span>scroll aja</span></div>
           </section>
         )}
 
         {scene === "welcome" && (
           <section className="welcome-scene scene-content" aria-labelledby="welcome-title">
-            <div className="section-kicker" data-reveal><span>Bab satu</span><span>19.09</span></div>
+            <div className="section-kicker" data-reveal><span>Bagian 1</span><span>19.09</span></div>
             <div className="welcome-grid">
               <div>
-                <p className="eyebrow" data-reveal>Malam ini langitnya sepenuhnya milikmu</p>
-                <h1 id="welcome-title" data-reveal style={{ "--d": "1" } as CSSProperties}>Untuk <em>Sifta</em>,<br />dengan sedikit cahaya.</h1>
+                <p className="eyebrow" data-reveal>Ini bagian yang santai</p>
+                <h1 id="welcome-title" data-reveal style={{ "--d": "1" } as CSSProperties}>Untuk <em>Sifta.</em></h1>
               </div>
               <div className="paper-card welcome-note" data-reveal style={{ "--d": "2" } as CSSProperties}>
                 <Tape className="tape-top" />
-                <p>Ada orang yang kehadirannya tidak perlu dijelaskan panjang. Kamu salah satunya, dan hari ini layak mendapat ruang yang lebih lapang.</p>
-                <p>Sepuluh orbit kecil. Satu harapan utama. Tidak ada tekanan, tidak ada tenggat; hanya ucapan, tawa kecil, dan doa yang dikirim tanpa pamrih.</p>
+                <p>Aku siapin sedikit. Ada 10 bagian kecil, nggak ada yang susah.</p>
+                <p>Nggak ada nilai atau target. Kamu bisa berhenti kapan aja.</p>
                 <div className="welcome-actions">
-                  <button className="action-button" type="button" onClick={startConstellation}>Masuki rasi bintang <ArrowRight size={16} /></button>
-                  <button className="subtle-button" type="button" onClick={() => announce(secretMemories[secretIndex])}><CircleHelp size={15} /> catatan rahasia</button>
+                  <button className="action-button" type="button" onClick={startConstellation}>Mulai <ArrowRight size={16} /></button>
+                  <button className="subtle-button" type="button" onClick={() => announce(secretMemories[secretIndex])}><CircleHelp size={15} /> ada satu lagi</button>
                 </div>
               </div>
             </div>
             <div className="welcome-scrap" data-reveal>
-              <div className="washi">19.09 · simpan ini</div>
-              <div className="hand-note"><HandDrawnStar /><span className="handwrite">ada hal yang layak<br />selalu disimpan.</span></div>
+              <div className="washi">19.09</div>
+              <div className="hand-note"><HandDrawnStar /><span className="handwrite">sebagian hal memang<br />enak disimpan.</span></div>
               <Waveform />
               <img className="sticker sticker-bow" src="/memory-assets/optimized/gingham-bow.webp" alt="" aria-hidden="true" />
             </div>
-            <div className="welcome-footer"><span>dibuat oleh Akbar</span><span>tanpa tekanan, hanya doa baik</span></div>
+            <div className="welcome-footer"><span>dibuat sama Akbar</span><span>nggak ada tekanan</span></div>
           </section>
         )}
 
         {scene === "constellation" && (
           <section className="constellation-scene scene-content" aria-labelledby="constellation-title">
-            <div className="section-kicker" data-reveal><span>Bab dua · {String(completedCount).padStart(2, "0")} dari 10 orbit menyala</span><span>{BIRTHDAY_DAY}</span></div>
+            <div className="section-kicker" data-reveal><span>Bagian 2 · {String(completedCount).padStart(2, "0")} dari 10</span><span>{BIRTHDAY_DAY}</span></div>
             <div className="constellation-heading" data-reveal>
               <div>
-                <p className="eyebrow">Permainan kecil yang pelan</p>
-                <h1 id="constellation-title">Biarkan langit<br /><em>membentuk dirinya.</em></h1>
+                <p className="eyebrow">Mainan kecil</p>
+                <h1 id="constellation-title">Pilih <em>satu-satu.</em></h1>
               </div>
-              <p>Sentuh satu orbit, jawab saat kamu siap, dan biarkan malam pelan-pelan berubah menjadi pesan.</p>
+              <p>Tap bintangnya, jawab kalau udah siap. Nggak perlu buru-buru.</p>
             </div>
             <div data-reveal style={{ "--d": "1" } as CSSProperties}>
               <ConstellationMap challenges={challenges} completed={completed} onSelect={selectChallenge} />
             </div>
             <div className="constellation-actions" data-reveal>
               <button className="action-button" type="button" onClick={continueToVictory} disabled={completedCount < challenges.length}>Lanjut <ChevronRight size={16} /></button>
-              <button className="subtle-button" type="button" onClick={skipToVictory}>Lewati orbit <ArrowRight size={15} /></button>
+              <button className="subtle-button" type="button" onClick={skipToVictory}>Lewati <ArrowRight size={15} /></button>
             </div>
           </section>
         )}
 
         {scene === "victory" && (
           <section className="victory-scene scene-content" aria-labelledby="victory-title">
-            <p className="kicker" data-reveal><Sparkles size={14} /> Bab tiga · sebuah harapan</p>
-            <h1 id="victory-title" data-reveal style={{ "--d": "1" } as CSSProperties}>Kamu sampai<br /><em>di bagian yang tenang.</em></h1>
-            <p className="lede" data-reveal style={{ "--d": "2" } as CSSProperties}>{candleReady ? "Tahan harapanmu sebentar, lalu lepaskan cahayanya perlahan." : "Sebelum kejutan, buat satu harapan yang hanya milikmu."}</p>
+            <p className="kicker" data-reveal>Bagian 3</p>
+            <h1 id="victory-title" data-reveal style={{ "--d": "1" } as CSSProperties}>Sekarang <em>bikin harapan.</em></h1>
+            <p className="lede" data-reveal style={{ "--d": "2" } as CSSProperties}>{candleReady ? "Tahan sebentar, terus tiup." : "Satu harapan aja, yang kamu simpan buat diri sendiri."}</p>
             <div className={`cake-stage${blown ? " is-blown" : ""}${candleReady ? " is-prepared" : ""}`} data-reveal style={{ "--d": "2" } as CSSProperties}>
               <div className="cake-glow" /><div className="candle-halo" /><div className="cake-plate" />
               <div className="cake"><div className="cake-top"><span>19</span><i>SEP</i></div><div className="cake-body"><b /><b /><b /></div><div className="cake-base" /></div>
               <button className="candle" type="button" onClick={blowCandle} aria-label={candleReady ? "Tiup lilinnya" : "Siapkan harapan"}><span className="flame" /><span className="candle-glint" /><span className="candle-stick" /></button>
             </div>
-            <p className="wish-instruction" aria-live="polite">{blown ? "Harapannya sudah sampai." : candleReady ? "Sekarang, pelan-pelan." : "Buat harapanmu dulu."}</p>
-            <button className="action-button action-button-large" type="button" onClick={candleReady ? blowCandle : prepareCandle} data-reveal>{blown ? <><Wind size={17} /> Cahayanya sudah padam</> : candleReady ? <><Wind size={17} /> Tiup lilinnya</> : <><Sparkles size={17} /> Buat harapan</>}</button>
-            {microphone.supported && <button className="subtle-button mic-button" type="button" data-reveal onClick={async () => { if (!candleReady) { prepareCandle(); announce("Mic siap setelah harapanmu dibuat."); return; } const ok = await microphone.start(); announce(ok ? "Mic aktif. Tiup pelan ke ponselmu." : "Mic belum tersedia. Pakai tombol saja."); }}>{microphone.active ? <><AudioLines size={15} /> Mic mendengarkan…</> : <><Wind size={15} /> Atau tiup lewat mikrofon</>}</button>}
-            <p className="microcopy" data-reveal>{BIRTHDAY_DATE} · satu tahun lebih lembut, satu tahun lebih terang.</p>
+            <p className="wish-instruction" aria-live="polite">{blown ? "Udah ditiup." : candleReady ? "Tiup pelan." : "Buat harapan dulu."}</p>
+            <button className="action-button action-button-large" type="button" onClick={candleReady ? blowCandle : prepareCandle} data-reveal>{blown ? <><Wind size={17} /> Udah ditiup</> : candleReady ? <><Wind size={17} /> Tiup</> : <><Sparkles size={17} /> Buat harapan</>}</button>
+            {microphone.supported && <button className="subtle-button mic-button" type="button" data-reveal onClick={async () => { if (!candleReady) { prepareCandle(); announce("Mic bisa dipakai setelah harapannya dibuat."); return; } const ok = await microphone.start(); announce(ok ? "Mic aktif, tiup pelan ya." : "Mic nggak bisa dipakai, pakai tombol aja."); }}>{microphone.active ? <><AudioLines size={15} /> Mic lagi dengerin…</> : <><Wind size={15} /> Tiup pakai mic</>}</button>}
+            <p className="microcopy" data-reveal>{BIRTHDAY_DATE}</p>
           </section>
         )}
 
         {scene === "surprise" && (
           <section className="surprise-scene scene-content" aria-labelledby="surprise-title">
             <div className="surprise-confetti" aria-hidden="true">{Array.from({ length: 18 }, (_, index) => <i key={index} style={{ "--n": index } as CSSProperties} />)}</div>
-            <div className="surprise-seal" data-reveal><ArchiveSeal /><span>HARAPANMU<br />SUDAH TERKIRIM</span></div>
-            <p className="eyebrow" data-reveal style={{ "--d": "1" } as CSSProperties}>Kejutan kecil · disimpan dengan tenang</p>
-            <h1 id="surprise-title" data-reveal style={{ "--d": "2" } as CSSProperties}>Lilinnya padam.<br /><em>Tapi bagian baiknya tetap tinggal.</em></h1>
-            <p className="lede" data-reveal style={{ "--d": "3" } as CSSProperties}>Tidak ada foto besar, tidak ada penjelasan panjang. Hanya satu harapan kecil yang dikirim dengan hati-hati ke langit malam.</p>
-            <div className="surprise-ticket" data-reveal style={{ "--d": "4" } as CSSProperties}><span>19 SEP</span><strong>SELAMAT<br />ULANG TAHUN</strong><small>untuk Sifta · dengan niat baik</small></div>
-            <button className="action-button action-button-large" type="button" data-reveal onClick={() => { audio.play("magicWish"); navigateTo("message"); }}><Heart size={17} /> Buka catatannya</button>
-            <p className="microcopy">tunggu sebentar sampai hening.</p>
+            <div className="surprise-seal" data-reveal><ArchiveSeal /><span>HARAPANNYA<br />UDAH KEKIRIM</span></div>
+            <p className="eyebrow" data-reveal style={{ "--d": "1" } as CSSProperties}>Ada satu lagi</p>
+            <h1 id="surprise-title" data-reveal style={{ "--d": "2" } as CSSProperties}>Lilinnya mati. <em>Harapannya aman.</em></h1>
+            <p className="lede" data-reveal style={{ "--d": "3" } as CSSProperties}>Nggak ada kejutan yang heboh. Cuma satu hal kecil yang aku siapin buat kamu.</p>
+            <div className="surprise-ticket" data-reveal style={{ "--d": "4" } as CSSProperties}><span>19 SEP</span><strong>SELAMAT<br />ULANG TAHUN</strong><small>untuk Sifta</small></div>
+            <button className="action-button action-button-large" type="button" data-reveal onClick={() => { audio.play("magicWish"); navigateTo("message"); }}><Heart size={17} /> Buka</button>
+            <p className="microcopy">santai, nggak buru-buru.</p>
           </section>
         )}
 
         {scene === "message" && (
           <section className="message-scene scene-content" aria-labelledby="message-title">
             <div className="message-layout">
-              <div className="message-index" data-reveal>Catatan<br /><strong>004</strong></div>
+              <div className="message-index" data-reveal>Surat<br /><strong>004</strong></div>
               <div className="paper-card message-card" data-reveal style={{ "--d": "1" } as CSSProperties}>
                 <Tape className="tape-top" />
-                <p className="eyebrow">Dari Akbar · dengan niat baik</p>
-                <h1 id="message-title">Selamat ulang tahun,<br /><em>Sifta.</em></h1>
+                <p className="eyebrow">Dari Akbar</p>
+                <h1 id="message-title">Selamat ulang tahun, <em>Sifta.</em></h1>
                 <div className="message-copy">
-                  <p className="reveal-line" style={{ "--d": "0" } as CSSProperties}>Hari ini kamu bertambah satu tahun, dan aku ingin kamu tahu bahwa hari ini pantas dirayakan pelan-pelan. Bukan karena kamu harus hebat, tapi karena kamu sudah sejauh ini dengan caramu sendiri.</p>
-                  <p className="reveal-line" style={{ "--d": "1" } as CSSProperties}>Semoga di bab baru ini, impianmu menemukan jalannya, pelan tapi pasti. Semoga kamu dikelilingi orang-orang yang tulus, diberi ruang untuk tumbuh, dan tetap bisa menemukan hal-hal kecil yang membuatmu tersenyum.</p>
-                  <p className="reveal-line" style={{ "--d": "2" } as CSSProperties}>Cerita kita sudah berada di bab yang berbeda, dan itu tidak apa-apa. Ada hal yang selesai dengan baik, dan doa baik tetap boleh dikirim ke langit, tanpa perlu dibalas.</p>
-                  <p className="signature reveal-line" style={{ "--d": "3" } as CSSProperties}>— Akbar</p>
+                  <p className="reveal-line" style={{ "--d": "0" } as CSSProperties}>Aku nggak pinter bikin kata-kata bagus, jadi aku tulis yang jujur aja. Kamu udah banyak berjuang, dan aku harap kamu tahu itu.</p>
+                  <p className="reveal-line" style={{ "--d": "1" } as CSSProperties}>Semoga tahun ini kamu dapet hal-hal yang kamu kejar, orang-orang yang baik sama kamu, dan waktu buat istirahat. Kalau bisa, yang bikin kamu ketawa lepas juga.</p>
+                  <p className="reveal-line" style={{ "--d": "2" } as CSSProperties}>Sekarang kita udah jalan di cerita yang beda. Nggak apa-apa. Aku tetap pengen kamu baik-baik aja.</p>
+                  <p className="signature reveal-line" style={{ "--d": "3" } as CSSProperties}>Akbar</p>
                 </div>
                 <div className="message-actions">
-                  <button className="action-button" type="button" onClick={revealPositive}><Heart size={16} /> kirim satu pikiran baik</button>
-                  <button className="subtle-button" type="button" onClick={reset}><RotateCcw size={15} /> ulangi dari awal</button>
+                  <button className="action-button" type="button" onClick={revealPositive}><Heart size={16} /> kirim satu harapan</button>
+                  <button className="subtle-button" type="button" onClick={reset}><RotateCcw size={15} /> ulang dari awal</button>
                 </div>
                 <div className="positive-message" aria-live="polite" key={positiveIndex}>{positiveMessages[positiveIndex]}</div>
               </div>
             </div>
-            <div className="message-footer" data-reveal><span>19 / 09 / 2005</span><span><HandDrawnStar /> beberapa ucapan tidak pernah perlu dibalas</span></div>
+            <div className="message-footer" data-reveal><span>19 / 09 / 2005</span><span><HandDrawnStar /> nggak perlu dibales</span></div>
             <MemoryGallery />
           </section>
         )}
       </div>
 
       <Mascot mood={mascotMood} onPoke={pokeMascot} />
-      <footer className="site-footer"><span>AKBAR · CATATAN PRIBADI</span><span>dibuat pelan-pelan untuk hari yang cerah</span></footer>
+      <footer className="site-footer"><span>Akbar</span><span>dibuat buat kamu</span></footer>
       {toast && <div className="toast" role="status">{toast}</div>}
       <ChallengeModal challenge={active} clickProgress={clickProgress} inputValue={inputValue} feedback={feedback} onInputChange={setInputValue} onClickProgress={progressClick} onSubmitInput={submitInput} onChoose={chooseOption} onClose={() => setActiveChallenge(null)} />
     </main>
