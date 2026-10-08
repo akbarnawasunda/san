@@ -47,7 +47,7 @@ export function ChallengeModal({
   return (
     <div className="modal-layer" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
       <section className="challenge-modal" role="dialog" aria-modal="true" aria-labelledby="challenge-title">
-        <button className="modal-close" type="button" onClick={onClose} aria-label="Close challenge">
+        <button className="modal-close" type="button" onClick={onClose} aria-label="Tutup tantangan">
           <X size={18} />
         </button>
         <span className="eyebrow">{challenge.eyebrow}</span>
@@ -63,7 +63,7 @@ export function ChallengeModal({
 
         {challenge.type === "input" && (
           <form className="input-action" onSubmit={(event) => { event.preventDefault(); onSubmitInput(); }}>
-            <label className="sr-only" htmlFor="challenge-input">Your answer</label>
+            <label className="sr-only" htmlFor="challenge-input">Jawabanmu</label>
             <input
               ref={inputRef}
               id="challenge-input"
@@ -72,7 +72,7 @@ export function ChallengeModal({
               placeholder={challenge.placeholder}
               autoComplete="off"
             />
-            <button className="action-button" type="submit"><ArrowRight size={17} /> Send</button>
+            <button className="action-button" type="submit"><ArrowRight size={17} /> Kirim</button>
           </form>
         )}
 

@@ -3,21 +3,24 @@ import { Polaroid } from "./ArchiveArtifacts";
 const portraits = [
   {
     src: "/memory-assets/optimized/portrait-shadow.webp",
-    alt: "Portrait of Sifta in a pink-red hijab with soft dramatic light",
-    caption: "a little light",
+    alt: "Potret Sifta dengan jilbab merah muda dan cahaya lembut",
+    caption: "sedikit cahaya",
     className: "polaroid-a",
+    tilt: true,
   },
   {
     src: "/memory-assets/optimized/portrait-soft-blue.webp",
-    alt: "Portrait of Sifta in a red hijab against a soft blue background",
-    caption: "the sky was kind",
+    alt: "Potret Sifta dengan jilbab merah di latar biru lembut",
+    caption: "langit yang baik hati",
     className: "polaroid-b",
+    tilt: true,
   },
   {
     src: "/memory-assets/optimized/portrait-close.webp",
-    alt: "Close portrait of Sifta in a deep red hijab",
-    caption: "kept close",
+    alt: "Potret dekat Sifta dengan jilbab merah tua",
+    caption: "tetap dekat",
     className: "polaroid-c",
+    tilt: true,
   },
 ];
 
@@ -26,16 +29,16 @@ export function MemoryGallery() {
     <section className="memory-gallery" aria-labelledby="memory-gallery-title">
       <img className="sticker gallery-sticker" src="/memory-assets/optimized/ivory-bow.webp" alt="" aria-hidden="true" />
       <div className="gallery-intro">
-        <p className="eyebrow">A few frames for the archive</p>
-        <h2 id="memory-gallery-title">A little proof<br /><em>of a bright day.</em></h2>
-        <p>Not a grand album. Just a few small frames, placed here with care.</p>
+        <p className="eyebrow">Beberapa bingkai untuk arsip</p>
+        <h2 id="memory-gallery-title">Bukti kecil<br /><em>dari hari yang cerah.</em></h2>
+        <p>Bukan album besar. Hanya beberapa bingkai kecil, dipasang di sini dengan hati-hati.</p>
       </div>
       <div className="polaroid-row">
         {portraits.map((portrait, index) => (
-          <Polaroid key={portrait.src} src={portrait.src} alt={portrait.alt} caption={portrait.caption} className={portrait.className} number={`0${index + 1}`} />
+          <Polaroid key={portrait.src} src={portrait.src} alt={portrait.alt} caption={portrait.caption} className={portrait.className} number={`0${index + 1}`} tilt={portrait.tilt} />
         ))}
       </div>
-      <p className="gallery-stamp">19 SEPTEMBER / FOR SIFTA</p>
+      <p className="gallery-stamp">19 SEPTEMBER · UNTUK SIFTA</p>
     </section>
   );
 }
