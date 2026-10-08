@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState, type CSSProperties, type MouseEvent, type PointerEvent } from "react";
 import { ArrowDown, ArrowRight, AudioLines, ChevronRight, CircleHelp, Heart, Moon, RotateCcw, Sparkles, Wind } from "lucide-react";
 import { ArchiveSeal, HandDrawnStar, Polaroid, Tape, Waveform } from "./components/ArchiveArtifacts";
-import { ClickBursts, StickerShower, type ClickBurst } from "./components/CelebrationFX";
+import { ClickBursts, type ClickBurst } from "./components/CelebrationFX";
 import { MemoryGallery } from "./components/MemoryGallery";
 import { MomentFX, type MomentEvent, type MomentKind } from "./components/MomentFX";
 import { Mascot, type MascotMood } from "./components/Mascot";
@@ -269,7 +269,6 @@ function App() {
   return (
     <main className={sceneClass} onClick={handleGlobalClick} onPointerMove={handlePointerMove} onPointerLeave={resetPointer}>
       <div className="paper-texture" aria-hidden="true" />
-      <StickerShower />
       <ClickBursts bursts={bursts} />
       <MomentFX event={moment} />
       <div className={`chapter-transition${transitioning ? " is-active" : ""}`} aria-hidden="true"><span /><span /><span /></div>

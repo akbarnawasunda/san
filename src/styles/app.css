@@ -38,7 +38,7 @@ img { max-width: 100%; }
 h1, h2 { margin: 0; font-family: "DM Serif Display", Georgia, serif; font-weight: 400; line-height: .98; letter-spacing: -.01em; }
 h1 { font-size: clamp(2.9rem, 6.6vw, 5.6rem); }
 h2 { font-size: clamp(2.2rem, 4.4vw, 3.6rem); }
-h1 em, h2 em { color: var(--ink); font-style: italic; padding: 0 .06em; background: linear-gradient(transparent 58%, var(--butter) 58%, var(--butter) 90%, transparent 90%); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+h1 em, h2 em { color: var(--rose-deep); font-style: italic; }
 p { margin: 0; }
 .eyebrow, .kicker { margin: 0 0 18px; color: var(--ink-soft); font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
 .lede { max-width: 520px; margin-top: 24px; color: var(--ink-soft); font-size: clamp(1rem, 1.5vw, 1.12rem); line-height: 1.7; }
@@ -292,7 +292,7 @@ p { margin: 0; }
 .moment-fx i:nth-child(3n+2) { background: var(--butter); }
 
 /* ---------- Mascot: Bintang kecil ---------- */
-.mascot { position: fixed; z-index: 15; left: clamp(10px, 2.4vw, 26px); bottom: clamp(64px, 9vh, 88px); width: clamp(52px, 6vw, 68px); height: clamp(52px, 6vw, 68px); padding: 0; border: 0; color: inherit; background: none; animation: mascotBob 3.4s ease-in-out infinite; transform-origin: 50% 85%; }
+.mascot { position: fixed; z-index: 15; right: clamp(12px, 2.4vw, 30px); bottom: clamp(70px, 10vh, 96px); width: clamp(52px, 6vw, 68px); height: clamp(52px, 6vw, 68px); padding: 0; border: 0; color: inherit; background: none; animation: mascotBob 3.4s ease-in-out infinite; transform-origin: 50% 85%; }
 .mascot-button { cursor: pointer; transition: scale .3s var(--ease); -webkit-tap-highlight-color: transparent; }
 .mascot-button:hover { scale: 1.1; }
 .mascot-button:active { scale: .92; }
@@ -345,6 +345,7 @@ p { margin: 0; }
   .site-header .header-status { display: none; }
 }
 @media (max-width: 560px) {
+  .mascot { width: 46px; height: 46px; right: 12px; bottom: 74px; }
   .constellation-node .node-core { width: 44px; height: 44px; }
   .polaroid-b { margin-top: 0; }
   .sticker-bow { width: 90px; }
