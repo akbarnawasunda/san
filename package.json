@@ -10,6 +10,8 @@
     "check": "tsc -b --pretty false"
   },
   "dependencies": {
+    "@fontsource-variable/manrope": "^5.2.8",
+    "@fontsource/dm-serif-display": "^5.2.8",
     "@vitejs/plugin-react": "latest",
     "lucide-react": "latest",
     "react": "latest",

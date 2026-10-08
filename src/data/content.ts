@@ -135,14 +135,6 @@ export const successMessages = [
   "Sifta-approved.",
 ];
 
-export const secretMemories = [
-  "Ada hari tertentu yang selalu terasa lebih dekat dari hari lain.",
-  "Beberapa cerita selesai, tapi doa baik tidak pernah expired.",
-  "Tanggal baru, chapter baru, hati yang semoga lebih tenang.",
-  "Microsite ini dibuat tanpa tekanan. Cuma ucapan dan tawa kecil.",
-  "Semoga Sifta bahagia, bukan cuma hari ini, tapi di banyak hari setelahnya.",
-];
-
 export const positiveMessages = [
   "Sifta versi 19 September: semoga makin keren, makin bijak, makin tenang, dan tetap punya tawa yang enak.",
   "Semoga semua mimpi pelan-pelan jadi nyata, bukan cuma jadi draft jam dua pagi.",
@@ -151,4 +143,20 @@ export const positiveMessages = [
   "Chapter baru: lebih kuat, lebih bersinar, dan lebih sayang diri sendiri.",
   "Kalau ada yang bikin sedih, ingat: kamu tetap layak mendapat hal-hal baik.",
   "Semoga sehat selalu, dompet aman, hati tenang, dan kopi tetap ada.",
+];
+
+export const secretMemories = [
+  "Ada hari tertentu yang selalu terasa lebih dekat dari hari lain.",
+  "Beberapa cerita selesai, tapi doa baik tidak pernah expired.",
+  "Tanggal baru, chapter baru, hati yang semoga lebih tenang.",
+  "Microsite ini dibuat tanpa tekanan. Cuma ucapan dan tawa kecil.",
+  "Semoga Sifta bahagia, bukan cuma hari ini, tapi di banyak hari setelahnya.",
+];
+
+export const mascotLines = [
+  "Halo, aku bintang kecil penjaga hari ini. Pencet lagi kalau mau!",
+  "Hari ini semua orbit boleh pelan-pelan menyala.",
+  "Jangan lupa tarik napas dulu, ya.",
+  "Ssst... ada doa baik yang lagi lewat di langit.",
+  "Aku sudah hitung: kamu layak dapat banyak cahaya hari ini.",
 ];

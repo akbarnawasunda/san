@@ -5,9 +5,10 @@ import { ArchiveChrome } from "./components/ArchiveChrome";
 import { ClickBursts, StickerShower, type ClickBurst } from "./components/CelebrationFX";
 import { MemoryGallery } from "./components/MemoryGallery";
 import { MomentFX, type MomentEvent, type MomentKind } from "./components/MomentFX";
+import { Mascot, type MascotMood } from "./components/Mascot";
 import { ChallengeModal } from "./components/ChallengeModal";
 import { ConstellationMap } from "./components/ConstellationMap";
-import { challenges, BIRTHDAY_DATE, BIRTHDAY_DAY, positiveMessages, secretMemories, successMessages } from "./data/content";
+import { challenges, BIRTHDAY_DATE, BIRTHDAY_DAY, mascotLines, positiveMessages, secretMemories, successMessages } from "./data/content";
 import { useAudio } from "./effects/useAudio";
 import { useMicrophoneBlow } from "./effects/useMicrophoneBlow";
 import { useStarfield } from "./effects/useStarfield";
@@ -25,6 +26,8 @@ function App() {
   const [inputValue, setInputValue] = useState("");
   const [feedback, setFeedback] = useState("");
   const [secretIndex, setSecretIndex] = useState(0);
+  const [mascotMood, setMascotMood] = useState<MascotMood>("idle");
+  const [mascotIndex, setMascotIndex] = useState(0);
   const [positiveIndex, setPositiveIndex] = useState(0);
   const [blown, setBlown] = useState(false);
   const [candleReady, setCandleReady] = useState(false);
@@ -105,6 +108,7 @@ function App() {
   const completeChallenge = () => {
     if (activeChallenge === null || completed[activeChallenge]) return;
     setCompleted((current) => current.map((value, index) => index === activeChallenge ? true : value));
+    flashMascot("cheer", 1600);
     setActiveChallenge(null);
     setClickProgress(0);
     setInputValue("");
@@ -166,7 +170,6 @@ function App() {
   const reset = () => {
     audio.stop("bgm");
     audio.stop("afterBlow");
-    audio.stop("fire");
     setCompleted(challenges.map(() => false));
     setActiveChallenge(null);
     setClickProgress(0);
@@ -186,6 +189,18 @@ function App() {
   const changeSecret = () => {
     audio.play("click");
     setSecretIndex((index) => (index + 1) % secretMemories.length);
+  };
+
+  const flashMascot = useCallback((mood: MascotMood, duration: number) => {
+    setMascotMood(mood);
+    window.setTimeout(() => setMascotMood("idle"), duration);
+  }, []);
+
+  const pokeMascot = () => {
+    audio.play("bubble");
+    flashMascot("shy", 1400);
+    setMascotIndex((index) => (index + 1) % mascotLines.length);
+    announce(mascotLines[mascotIndex]);
   };
 
   const handlePointerMove = useCallback((event: PointerEvent<HTMLElement>) => {
@@ -227,11 +242,11 @@ function App() {
       <canvas ref={starfieldRef} className="starfield" aria-hidden="true" />
       <div className="ambient ambient-one" aria-hidden="true" />
       <div className="ambient ambient-two" aria-hidden="true" />
-      <div className="grain" aria-hidden="true" />
       <div className="rain-layer" aria-hidden="true">{Array.from({ length: 18 }, (_, index) => <i key={index} style={{ "--i": index, "--x": `${(index * 37) % 101}%`, "--delay": `${(index % 11) * -0.41}s`, "--duration": `${1.4 + (index % 7) * 0.18}s` } as React.CSSProperties} />)}</div>
       <StickerShower />
       <ClickBursts bursts={bursts} />
       <MomentFX event={moment} />
+      <Mascot mood={mascotMood} onPoke={pokeMascot} />
       <div className={`chapter-transition${transitioning ? " is-active" : ""}`} aria-hidden="true"><span /><span /><span /></div>
       <ArchiveChrome scene={scene} completedCount={completedCount} />
       <header className="site-header">
