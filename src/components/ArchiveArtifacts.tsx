@@ -1,4 +1,5 @@
-import { Music2, Paperclip, Star } from "lucide-react";
+import { Star } from "lucide-react";
+import type { PointerEvent } from "react";
 
 export function ArchiveSeal({ small = false }: { small?: boolean }) {
   return (
@@ -9,34 +10,45 @@ export function ArchiveSeal({ small = false }: { small?: boolean }) {
   );
 }
 
-export function EnvelopeArtifact() {
-  return (
-    <div className="envelope-art" aria-hidden="true">
-      <div className="envelope-back" />
-      <div className="envelope-paper">
-        <span className="paper-rule" />
-        <span className="paper-rule short" />
-        <span className="paper-sign">A.</span>
-        <ArchiveSeal small />
-      </div>
-      <div className="envelope-front"><span /></div>
-      <div className="artifact-caption"><Paperclip size={14} /> filed under: good intent</div>
-      <div className="artifact-pencil">a small note, not a grand gesture</div>
-    </div>
-  );
+export function Tape({ className = "" }: { className?: string }) {
+  return <span className={`tape ${className}`} aria-hidden="true" />;
 }
 
-export function MemoryStrip() {
+type PolaroidProps = {
+  src: string;
+  alt?: string;
+  caption: string;
+  className?: string;
+  number?: string;
+  tilt?: boolean;
+};
+
+export function Polaroid({ src, alt = "", caption, className = "", number, tilt = false }: PolaroidProps) {
+  // Pointer-driven 3D tilt with a soft glare; pure transform + CSS variables, no re-render.
+  const onMove = (event: PointerEvent<HTMLElement>) => {
+    if (!tilt) return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const px = (event.clientX - bounds.left) / bounds.width;
+    const py = (event.clientY - bounds.top) / bounds.height;
+    const el = event.currentTarget;
+    el.style.setProperty("--ry", `${((px - 0.5) * 14).toFixed(2)}deg`);
+    el.style.setProperty("--rx", `${((0.5 - py) * 12).toFixed(2)}deg`);
+    el.style.setProperty("--gx", `${(px * 100).toFixed(1)}%`);
+    el.style.setProperty("--gy", `${(py * 100).toFixed(1)}%`);
+  };
+  const onLeave = (event: PointerEvent<HTMLElement>) => {
+    event.currentTarget.style.setProperty("--ry", "0deg");
+    event.currentTarget.style.setProperty("--rx", "0deg");
+  };
   return (
-    <div className="memory-strip" aria-hidden="true">
-      <div className="strip-header"><span>CONTACT / 19 SEP</span><span>NO. 04</span></div>
-      <div className="strip-cells">
-        <div className="strip-cell strip-cell-one"><span /></div>
-        <div className="strip-cell strip-cell-two"><span /><i /></div>
-        <div className="strip-cell strip-cell-three"><span /></div>
+    <figure className={`polaroid${tilt ? " is-tiltable" : ""} ${className}`} onPointerMove={onMove} onPointerLeave={onLeave}>
+      <Tape className="tape-top" />
+      <div className="polaroid-photo">
+        <img src={src} alt={alt} loading="lazy" />
+        {number && <span className="polaroid-number">{number}</span>}
       </div>
-      <div className="strip-footer"><span>some things stay soft</span><Music2 size={13} /></div>
-    </div>
+      <figcaption>{caption}</figcaption>
+    </figure>
   );
 }
 
@@ -50,7 +62,5 @@ export function Waveform() {
 }
 
 export function HandDrawnStar() {
-  return (
-    <span className="hand-drawn-star" aria-hidden="true"><Star size={17} strokeWidth={1.2} /></span>
-  );
+  return <span className="hand-drawn-star" aria-hidden="true"><Star size={18} strokeWidth={1.6} /></span>;
 }

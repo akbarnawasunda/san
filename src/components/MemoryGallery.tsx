@@ -1,46 +1,44 @@
+import { Polaroid } from "./ArchiveArtifacts";
+
 const portraits = [
   {
     src: "/memory-assets/optimized/portrait-shadow.webp",
-    alt: "Portrait of Sifta in a pink-red hijab with soft dramatic light",
-    caption: "a little light",
-    className: "portrait-card portrait-card-shadow",
+    alt: "Potret Sifta dengan jilbab merah muda dan cahaya lembut",
+    caption: "lagi cerah",
+    className: "polaroid-a",
+    tilt: true,
   },
   {
     src: "/memory-assets/optimized/portrait-soft-blue.webp",
-    alt: "Portrait of Sifta in a red hijab against a soft blue background",
-    caption: "the sky was kind",
-    className: "portrait-card portrait-card-blue",
+    alt: "Potret Sifta dengan jilbab merah di latar biru lembut",
+    caption: "langitnya lumayan",
+    className: "polaroid-b",
+    tilt: true,
   },
   {
     src: "/memory-assets/optimized/portrait-close.webp",
-    alt: "Close portrait of Sifta in a deep red hijab",
-    caption: "kept close",
-    className: "portrait-card portrait-card-close",
+    alt: "Potret dekat Sifta dengan jilbab merah tua",
+    caption: "yang ini favorit",
+    className: "polaroid-c",
+    tilt: true,
   },
 ];
 
 export function MemoryGallery() {
   return (
     <section className="memory-gallery" aria-labelledby="memory-gallery-title">
-      <img className="gallery-bow gallery-bow-ivory" src="/memory-assets/optimized/ivory-bow.webp" alt="" aria-hidden="true" />
-      <img className="gallery-heart" src="/memory-assets/optimized/glitter-heart.webp" alt="" aria-hidden="true" />
+      <img className="sticker gallery-sticker" src="/memory-assets/optimized/ivory-bow.webp" alt="" aria-hidden="true" />
       <div className="gallery-intro">
-        <p className="eyebrow">A few frames for the archive</p>
-        <h2 id="memory-gallery-title">A little proof<br /><em>of a bright day.</em></h2>
-        <p>Not a grand album. Just a few small frames, placed here with care.</p>
+        <p className="eyebrow">Beberapa foto</p>
+        <h2 id="memory-gallery-title">Yang paling <em>aku simpan.</em></h2>
+        <p>Nggak banyak. Cuma beberapa.</p>
       </div>
-      <div className="portrait-grid">
+      <div className="polaroid-row">
         {portraits.map((portrait, index) => (
-          <figure className={portrait.className} key={portrait.src}>
-            <div className="portrait-image-wrap">
-              <img src={portrait.src} alt={portrait.alt} loading="lazy" />
-              <span className="portrait-number">0{index + 1}</span>
-            </div>
-            <figcaption>{portrait.caption}</figcaption>
-          </figure>
+          <Polaroid key={portrait.src} src={portrait.src} alt={portrait.alt} caption={portrait.caption} className={portrait.className} number={`0${index + 1}`} tilt={portrait.tilt} />
         ))}
       </div>
-      <p className="gallery-stamp">19 SEPTEMBER / FOR SIFTA</p>
+      <p className="gallery-stamp">19 SEPTEMBER · SIFTA</p>
     </section>
   );
 }
